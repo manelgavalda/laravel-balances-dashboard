@@ -12,27 +12,23 @@ beforeEach(function () {
 test('you_can_get_the_historical_balances_from_supabase', function () {
     $balances = $this->databaseService->getHistoricalBalances();
 
-    $date = Carbon::createFromFormat('M d', end($balances['dates']));
-
-    expect($balances['dates'])->toHaveCount(28);
-    expect(end($balances['dates']))
-        ->toStartWith($date->shortMonthName)
-        ->toEndWith($date->day);
+    expect($balances['prices'])->toHaveCount(28);
+    expect(end($balances['prices']))->toBeNumeric();
 
     expect($balances['ethereum'])->toHaveCount(28);
     expect(end($balances['ethereum']))->toBeNumeric();
-
-    expect($balances['prices'])->toHaveCount(28);
-    expect(end($balances['prices']))->toBeNumeric();
 
     expect($balances['totals'])->toHaveCount(28);
     expect(end($balances['totals']))->toBeNumeric()
         ->toBe(end($balances['ethereum']) * end($balances['prices']));
 
-    $firstBalanceDate = Carbon::parse($balances['dates'][0]);
-    $lastBalanceDate = Carbon::parse(end($balances['dates']));
+    $lastDate = Carbon::createFromFormat('M d', end($balances['dates']));
 
-    expect($firstBalanceDate->lt($lastBalanceDate))->toBetrue();
+    expect($balances['dates'])->toHaveCount(28);
+    expect(end($balances['dates']))
+        ->toStartWith($lastDate->shortMonthName)
+        ->toEndWith($lastDate->day);
+    expect(Carbon::parse($balances['dates'][0])->lt($lastDate))->toBetrue();
 })->group('supabase');
 
 test('you_can_get_the_tokens_from_supabase', function () {
