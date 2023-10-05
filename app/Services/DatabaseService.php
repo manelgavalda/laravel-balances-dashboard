@@ -28,6 +28,15 @@ class DatabaseService
         ];
     }
 
+    public function getTokens()
+    {
+        return $this->execute('balances', [
+            'select' => 'pool,price,balance,parent,created_at',
+            'limit' => 15,
+            'order' => 'created_at.desc'
+        ]);
+    }
+
     protected function executeHistoricalBalances()
     {
         return $this->execute('totals', [

@@ -7,37 +7,40 @@ beforeEach(function () {
     $config = config('supabase');
 
     $this->databaseService = new DatabaseService($config['api_key'], $config['url']);
+
+    $this->balances = $this->databaseService->getHistoricalBalances();
 });
 
 test('you_can_get_the_historical_balances_from_supabase', function () {
-    $balances = $this->databaseService->getHistoricalBalances();
+    $this->balances = $this->databaseService->getHistoricalBalances();
 
-    expect($balances['prices'])->toHaveCount(28);
-    expect(end($balances['prices']))->toBeNumeric();
+    expect($this->balances['prices'])->toHaveCount(28);
+    expect(end($this->balances['prices']))->toBeNumeric();
 
-    expect($balances['ethereum'])->toHaveCount(28);
-    expect(end($balances['ethereum']))->toBeNumeric();
+    expect($this->balances['ethereum'])->toHaveCount(28);
+    expect(end($this->balances['ethereum']))->toBeNumeric();
 
-    expect($balances['totals'])->toHaveCount(28);
-    expect(end($balances['totals']))->toBeNumeric()
-        ->toBe(end($balances['ethereum']) * end($balances['prices']));
+    expect($this->balances['totals'])->toHaveCount(28);
+    expect(end($this->balances['totals']))->toBeNumeric()
+        ->toBe(end($this->balances['ethereum']) * end($this->balances['prices']));
 
-    $lastDate = Carbon::createFromFormat('M d', end($balances['dates']));
+    $lastDate = Carbon::createFromFormat('M d', end($this->balances['dates']));
 
-    expect($balances['dates'])->toHaveCount(28);
-    expect(end($balances['dates']))
+    expect($this->balances['dates'])->toHaveCount(28);
+    expect(end($this->balances['dates']))
         ->toStartWith($lastDate->shortMonthName)
         ->toEndWith($lastDate->day);
-    expect(Carbon::parse($balances['dates'][0])->lt($lastDate))->toBetrue();
+    expect(Carbon::parse($this->balances['dates'][0])->lt($lastDate))->toBetrue();
 })->group('supabase');
 
 test('you_can_get_the_tokens_from_supabase', function () {
-    // $config = config('supabase');
+    $tokens = $this->databaseService->getTokens();
 
-    // $tokens = (new DatabaseService($config['api_key'], $config['url']))
-    //     ->getTokens();
+    expect($tokens)->toHaveCount(15);
 
-    // expect($tokens)->toHaveCount(13);
+    expect($tokens[0])->toHaveProperties([
+        'pool', 'price', 'balance', 'parent', 'created_at'
+    ]);
 
-    // expect($firstBalanceDate->lt($lastBalanceDate))->toBetrue();
+    expect(Carbon::parse($tokens[0]->created_at)->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
 })->group('supabase');
