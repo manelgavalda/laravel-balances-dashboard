@@ -13,8 +13,8 @@
         </div>
 
         <div class="flex py-2">
-            <div class="w-full">
-                <div class="flex flex-col col-span-full sm:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <div class="w-full p-1">
+                <div class="flex flex-col col-span-full sm:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
                     <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center">
                         <h2 class="font-semibold text-slate-800 dark:text-slate-100">ETH Balance</h2>
                     </header>
@@ -35,8 +35,8 @@
                 </div>
             </div>
 
-            <div class="w-full px-2">
-                <div class="flex flex-col col-span-full sm:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <div class="w-full p-1">
+                <div class="flex flex-col col-span-full sm:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
                     <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center">
                         <h2 class="font-semibold text-slate-800 dark:text-slate-100">ETH Price</h2>
                     </header>
@@ -57,8 +57,8 @@
                 </div>
             </div>
 
-            <div class="w-full">
-                <div class="flex flex-col col-span-full sm:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <div class="w-full p-1">
+                <div class="flex flex-col col-span-full sm:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
                     <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center">
                         <h2 class="font-semibold text-slate-800 dark:text-slate-100">Total USD</h2>
                     </header>
@@ -83,67 +83,38 @@
 </x-app-layout>
 
 <script>
-    const ctx = document.getElementById('total_eth');
-
-    new Chart(ctx, {
+    [{
+        element: 'total_eth',
+        data: @json($balances['ethereum']),
+        color: 'blue',
+        label: 'ETH Balance'
+    }, {
+        element: 'price_usd',
+        data: @json($balances['prices']),
+        color: 'red',
+        label: 'ETH Price'
+    }, {
+        element: 'total_usd',
+        data: @json($balances['totals']),
+        color: 'green',
+        label: 'Total USD'
+    }].forEach(chart => new Chart(document.getElementById(chart.element), {
         type: 'line',
         data: {
             labels: @json($balances['dates']),
             datasets: [{
-                label: '# ETH Balance',
-                data: @json($balances['ethereum']),
+                label: chart.label,
+                data: chart.data
             }]
         },
         options: {
+            backgroundColor: chart.color,
+            borderColor: chart.color,
             color: 'white',
             scales: {
                 y: { ticks: { color: 'white' } },
                 x: { ticks: { color: 'white' } }
             }
         }
-    });
-
-    const ctx2 = document.getElementById('price_usd');
-
-    new Chart(ctx2, {
-        type: 'line',
-        data: {
-            labels: @json($balances['dates']),
-            datasets: [{
-                label: '# ETH Price',
-                data: @json($balances['prices']),
-            }]
-        },
-        options: {
-            backgroundColor: 'red',
-            borderColor: 'red',
-            color: 'white',
-            scales: {
-                y: { ticks: { color: 'white' } },
-                x: { ticks: { color: 'white' } }
-            }
-        }
-    });
-
-    const ctx3 = document.getElementById('total_usd');
-
-    new Chart(ctx3, {
-        type: 'line',
-        data: {
-            labels: @json($balances['dates']),
-            datasets: [{
-                label: '# Total USD',
-                data: @json($balances['totals']),
-            }]
-        },
-        options: {
-            backgroundColor: 'green',
-            borderColor: 'green',
-            color: 'white',
-            scales: {
-                y: { ticks: { color: 'white' } },
-                x: { ticks: { color: 'white' } }
-            }
-        }
-    });
+    }))
 </script>
