@@ -15,7 +15,28 @@
             </div>
         </div>
         <div>
-            <canvas id="{{ $chart }}" height="120"></canvas>
+            <canvas id="{{ $element }}" height="20"></canvas>
         </div>
     </div>
 </div>
+<script>
+    new Chart({{ $element }}, {
+        type: 'line',
+        data: {
+            labels: @json($dates),
+            datasets: [{
+                label: '{{ $label }}',
+                data: @json($data)
+            }]
+        },
+        options: {
+            backgroundColor: '{{ $color }}',
+            borderColor: '{{ $color }}',
+            color: 'white',
+            scales: {
+                y: { ticks: { color: 'white' } },
+                x: { ticks: { color: 'white' } }
+            }
+        }
+    })
+</script>
