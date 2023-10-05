@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div>
+    <div class="flex">
         <x-dashboard.chart
             total="{{ number_format(end($balances['ethereum']), 2, ',', '.') }}"
             element="total_eth"
