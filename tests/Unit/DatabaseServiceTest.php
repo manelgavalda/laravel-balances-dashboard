@@ -6,21 +6,16 @@ use App\Services\DatabaseService;
 test('you_can_get_the_historical_balances_from_supabase', function () {
     $config = config('supabase');
 
-    $databaseService = new DatabaseService($config['api_key'], $config['url']);
+    $balances = (new DatabaseService($config['api_key'], $config['url']))
+        ->getHistoricalBalances();
 
-    $historicalBalances = $databaseService->getHistoricalBalances();
+    expect($balances['dates'])->toHaveCount(28);
+    expect($balances['ethereum'])->toHaveCount(28);
+    expect($balances['prices'])->toHaveCount(28);
+    expect($balances['totals'])->toHaveCount(28);
 
-    expect($historicalBalances)
-        ->toBeIterable()
-        ->toHaveCount(28);
+    $firstBalanceDate = Carbon::parse($balances['dates'][0]);
+    $lastBalanceDate = Carbon::parse(end($balances['dates']));
 
-    $firstBalance = $historicalBalances->first();
-
-    expect($firstBalance)->toHaveProperties([
-        'created_at', 'balance', 'price'
-    ]);
-
-    $lastBalanceDate = Carbon::parse($historicalBalances->last()->created_at);
-
-    expect(Carbon::parse($firstBalance->created_at)->lt($lastBalanceDate))->toBetrue();
+    expect($firstBalanceDate->lt($lastBalanceDate))->toBetrue();
 })->group('supabase');

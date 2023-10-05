@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use PHPSupabase\Service;
 
 class DatabaseService
@@ -15,6 +16,20 @@ class DatabaseService
 
     public function getHistoricalBalances()
     {
+        $balances = collect($this->executeHistoricalBalances())
+            ->reverse()
+            ->values();
+
+        return [
+            'prices' => $balances->pluck('price')->all(),
+            'ethereum' => $balances->pluck('balance')->all(),
+            'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance)->all(),
+            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('y-m-d'))->all()
+        ];
+    }
+
+    protected function executeHistoricalBalances()
+    {
         return $this->execute('totals', [
             'select' => 'price,balance,created_at',
             'limit' => 28,
@@ -23,9 +38,9 @@ class DatabaseService
     }
 
     protected function execute($table, $query) {
-        return collect($this->service
+        return $this->service
             ->initializeDatabase($table)
             ->createCustomQuery($query)
-            ->getResult())->reverse()->values();
+            ->getResult();
     }
 }
