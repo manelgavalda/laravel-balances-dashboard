@@ -30,6 +30,12 @@ class DatabaseService
 
     public function getTokens()
     {
+        return collect($this->executeTokens())
+            ->each(fn ($token) => $token->rewards = []);
+    }
+
+    protected function executeTokens()
+    {
         return $this->execute('balances', [
             'select' => 'pool,price,balance,parent,created_at',
             'limit' => 15,

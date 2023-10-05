@@ -1,5 +1,5 @@
-<div class="w-1/3 p-1">
-    <div class="flex flex-col col-span-full sm:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
+<div class="w-1/3">
+    <div class="flex flex-col col-span-full sm:col-span-12 bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-700">
         <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center">
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Total</h2>
         </header>
