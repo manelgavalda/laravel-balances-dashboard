@@ -13,7 +13,7 @@ class ShowDashboard extends Controller
         $balances = $balanceHistory->pluck('balance')->all();
 
         $dates = $balanceHistory->map(fn ($balance) =>
-            Carbon::parse($balance->created_at)->format('Y-m-d')
+            Carbon::parse($balance->created_at)->format('y-m-d')
         )->all();
 
         return view('dashboard', compact('balances', 'dates'));

@@ -12,7 +12,7 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
 
     expect($historicalBalances)
         ->toBeIterable()
-        ->toHaveCount(25);
+        ->toHaveCount(28);
 
     $firstBalance = $historicalBalances->first();
 
@@ -22,5 +22,5 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
 
     $lastBalanceDate = Carbon::parse($historicalBalances->last()->created_at);
 
-    expect(Carbon::parse($firstBalance->created_at)->gt($lastBalanceDate))->toBetrue();
+    expect(Carbon::parse($firstBalance->created_at)->lt($lastBalanceDate))->toBetrue();
 })->group('supabase');

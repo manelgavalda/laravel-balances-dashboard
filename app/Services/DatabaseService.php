@@ -17,7 +17,7 @@ class DatabaseService
     {
         return $this->execute('totals', [
             'select' => 'price,balance,created_at',
-            'limit' => 25,
+            'limit' => 28,
             'order' => 'created_at.desc'
         ]);
     }
@@ -26,6 +26,6 @@ class DatabaseService
         return collect($this->service
             ->initializeDatabase($table)
             ->createCustomQuery($query)
-            ->getResult());
+            ->getResult())->reverse()->values();
     }
 }
