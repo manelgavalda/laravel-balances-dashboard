@@ -8,17 +8,17 @@
     <div>
         <div class="flex py-2">
             <x-dashboard.chart
-                :total="end($balances['ethereum'])"
+                total="{{ number_format(end($balances['ethereum']), 2, ',', '.') }}"
                 chart="total_eth"
             />
 
             <x-dashboard.chart
-                :total="end($balances['prices'])"
+                total="{{ '$' . number_format(end($balances['prices']), 2, ',', '.') }}"
                 chart="price_usd"
             />
 
             <x-dashboard.chart
-                :total="end($balances['ethereum']) * end($balances['prices'])"
+                total="{{ '$' . number_format(end($balances['ethereum']) * end($balances['prices']), 2, ',', '.') }}"
                 chart="total_usd"
             />
         </div>
@@ -41,23 +41,28 @@
         data: @json($balances['totals']),
         color: 'green',
         label: 'Total USD'
-    }].forEach(chart => new Chart(document.getElementById(chart.element), {
-        type: 'line',
-        data: {
-            labels: @json($balances['dates']),
-            datasets: [{
-                label: chart.label,
-                data: chart.data
-            }]
-        },
-        options: {
-            backgroundColor: chart.color,
-            borderColor: chart.color,
-            color: 'white',
-            scales: {
-                y: { ticks: { color: 'white' } },
-                x: { ticks: { color: 'white' } }
+    }].forEach(createChart)
+
+
+    function createChart(chart) {
+        new Chart(document.getElementById(chart.element), {
+            type: 'line',
+            data: {
+                labels: @json($balances['dates']),
+                datasets: [{
+                    label: chart.label,
+                    data: chart.data
+                }]
+            },
+            options: {
+                backgroundColor: chart.color,
+                borderColor: chart.color,
+                color: 'white',
+                scales: {
+                    y: { ticks: { color: 'white' } },
+                    x: { ticks: { color: 'white' } }
+                }
             }
-        }
-    }))
+        })
+    }
 </script>
