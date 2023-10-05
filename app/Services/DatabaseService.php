@@ -24,7 +24,7 @@ class DatabaseService
             'prices' => $balances->pluck('price')->all(),
             'ethereum' => $balances->pluck('balance')->all(),
             'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance)->all(),
-            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('y-m-d'))->all()
+            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d'))->all()
         ];
     }
 
