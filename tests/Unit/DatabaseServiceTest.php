@@ -37,7 +37,6 @@ test('you_can_get_the_tokens_from_supabase', function () {
     $tokens = $this->databaseService->getTokens();
 
     expect($tokens)->toHaveCount(15);
-
     expect($tokens[0])->toHaveProperties([
         'pool', 'price', 'balance', 'parent', 'created_at'
     ]);
