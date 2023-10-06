@@ -36,7 +36,7 @@ class DatabaseService
     public function getTokens()
     {
         return collect($this->executeTokens())
-            ->sortByDesc(fn ($token) => $token->price * $token->balance)
+            ->sortByDesc(fn ($token) => $token->total = $token->price * $token->balance)
             ->groupBy('created_at');
     }
 

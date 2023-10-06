@@ -6,9 +6,8 @@
         <div class="flex flex-wrap justify-between items-end">
             <div class="flex items-start">
                 <div class="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{{ $total }}</div>
-                @php(
-                    $change = (end($data) - $prevTotal = prev($data)) / $prevTotal * 100
-                )
+                @php($change = (end($data) - $prevTotal = prev($data)) / $prevTotal * 100)
+
                 <div @class([
                     'text-sm font-semibold text-white px-1.5 rounded-full',
                     'bg-green-500' => $change >= 0,
