@@ -10,8 +10,8 @@
 
                 <div @class([
                     'text-sm font-semibold text-white px-1.5 rounded-full',
-                    'bg-green-500' => $change >= 0,
-                    'bg-red-500' => $change < 0
+                    'bg-green-700' => $change >= 0,
+                    'bg-red-700' => $change < 0
                 ])>{{ number_format($change, 2) }}%</div>
             </div>
             <div id="dashboard-card-08-legend" class="grow ml-2 mb-1">
