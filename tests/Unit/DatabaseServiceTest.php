@@ -17,25 +17,25 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
     $prices = $this->balances['prices'];
 
     expect($prices)->toHaveCount(28);
-    expect(end($prices))->toBeNumeric();
+    expect($prices->last())->toBeNumeric();
 
     $ethereum = $this->balances['ethereum'];
 
     expect($ethereum)->toHaveCount(28);
-    expect(end($ethereum))->toBeNumeric();
+    expect($ethereum->last())->toBeNumeric();
 
     $totals = $this->balances['totals'];
 
     expect($totals)->toHaveCount(28);
-    expect(end($totals))->toBeNumeric()
-        ->toBe(end($ethereum) * end($prices));
+    expect($totals->last())->toBeNumeric()
+        ->toBe($ethereum->last() * $prices->last());
 
     $dates = $this->balances['dates'];
 
-    $lastDate = Carbon::createFromFormat('M d', end($dates));
+    $lastDate = Carbon::createFromFormat('M d', $dates->last());
 
     expect($dates)->toHaveCount(28);
-    expect(end($dates))
+    expect($dates->last())
         ->toStartWith($lastDate->shortMonthName)
         ->toEndWith($lastDate->day);
     expect(Carbon::parse($dates[0])->lt($lastDate))->toBetrue();
@@ -58,5 +58,5 @@ test('you_can_get_the_tokens_from_supabase', function () {
     ]);
     expect($firstToken->rewards)->toBeArray();
 
-    expect(Carbon::parse($firstToken->created_at)->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
+    expect(Carbon::parse($firstToken->created_at)->isSameDay(Carbon::parse($this->balances['dates']->last())))->toBeTrue();
 })->group('supabase');

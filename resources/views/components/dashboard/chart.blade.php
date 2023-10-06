@@ -23,7 +23,7 @@
     new Chart({{ $element }}, {
         type: 'line',
         data: {
-            labels: @json($dates),
+            labels: @json($dates->values()),
             datasets: [{
                 label: '{{ $label }}',
                 data: @json($data)

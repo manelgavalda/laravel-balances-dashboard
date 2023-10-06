@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="flex">
         <x-dashboard.chart
-            total="{{ number_format(end($balances['ethereum']), 2, ',', '.') }}"
+            total="{{ number_format($balances['ethereum']->last(), 2, ',', '.') }}"
             element="total_eth"
             :data="$balances['ethereum']"
             :dates="$balances['dates']"
@@ -10,7 +10,7 @@
         />
 
         <x-dashboard.chart
-            total="${{ number_format(end($balances['prices']), 2, ',', '.') }}"
+            total="${{ number_format($balances['prices']->last(), 2, ',', '.') }}"
             element="price_usd"
             :data="$balances['prices']"
             :dates="$balances['dates']"
@@ -19,7 +19,7 @@
         />
 
         <x-dashboard.chart
-            total="${{ number_format(end($balances['totals']), 2, ',', '.') }}"
+            total="${{ number_format($balances['totals']->last(), 2, ',', '.') }}"
             element="total_usd"
             :data="$balances['totals']"
             :dates="$balances['dates']"
