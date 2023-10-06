@@ -10,7 +10,7 @@
                 label='EUR Price'
             />
             <x-dashboard.chart
-                total="${{ number_format($ethereumPrice, 2, ',', '.') }}"
+                total="${{ number_format(end($balances['prices']), 2, ',', '.') }}"
                 element="price_usd"
                 :data="$balances['prices']"
                 :dates="$balances['dates']"
@@ -48,13 +48,11 @@
             />
         </div>
     </div>
-
     <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
         <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Balances</h2>
         </header>
         <div class="p-3">
-
             <!-- Table -->
             <div class="overflow-x-auto">
                 <table class="table-auto w-full dark:text-slate-300">
@@ -108,7 +106,7 @@
                                     <div class="text-right text-red-300">${{ number_format($token->price, 2) }}</div>
                                 </td>
                                 <td class="p-2">
-                                    <div class="text-right text-sky-300">{{ number_format(($token->price * $token->balance) / $ethereumPrice, 3) }}</div>
+                                    <div class="text-right text-sky-300">{{ number_format(($token->price * $token->balance) / end($balances['prices']), 3) }}</div>
                                 </td>
                                 <td class="p-2">
                                     <div class="text-right text-emerald-300">{{ number_format($token->price_eur * $token->balance, 2) }}€</div>
