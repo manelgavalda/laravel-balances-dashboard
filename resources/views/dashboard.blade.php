@@ -99,22 +99,22 @@
                                     </div>
                                 </td>
                                 <td class="p-2">
-                                    <div class="text-right text-yellow-500">{{ number_format($token->balance, 3) }}</div>
+                                    <div class="text-right text-yellow-300">{{ number_format($token->balance, 3) }}</div>
                                 </td>
                                 <td class="p-2">
-                                    <div class="text-right text-red-500">{{ number_format($token->price_eur, 2) }}€</div>
+                                    <div class="text-right text-red-300">{{ number_format($token->price_eur, 2) }}€</div>
                                 </td>
                                 <td class="p-2">
-                                    <div class="text-right text-red-500">${{ number_format($token->price, 2) }}</div>
+                                    <div class="text-right text-red-300">${{ number_format($token->price, 2) }}</div>
                                 </td>
                                 <td class="p-2">
-                                    <div class="text-right text-sky-500">{{ number_format(($token->price * $token->balance) / $ethereumPrice, 3) }}</div>
+                                    <div class="text-right text-sky-300">{{ number_format(($token->price * $token->balance) / $ethereumPrice, 3) }}</div>
                                 </td>
                                 <td class="p-2">
-                                    <div class="text-right text-emerald-500">{{ number_format($token->price_eur * $token->balance, 2) }}€</div>
+                                    <div class="text-right text-emerald-300">{{ number_format($token->price_eur * $token->balance, 2) }}€</div>
                                 </td>
                                 <td class="p-2">
-                                    <div class="text-right text-emerald-500">${{ number_format($token->price * $token->balance, 2) }}</div>
+                                    <div class="text-right text-emerald-300">${{ number_format($token->price * $token->balance, 2) }}</div>
                                 </td>
                             </tr>
                         @endforeach
