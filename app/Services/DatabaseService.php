@@ -32,8 +32,7 @@ class DatabaseService
     {
         return collect($this->executeTokens())
             ->each(fn ($token) => $token->rewards = [])
-            ->sortByDesc(fn ($token) => $token->price * $token->balance)
-            ->values()->toArray();
+            ->sortByDesc(fn ($token) => $token->price * $token->balance);
     }
 
     protected function executeTokens()
