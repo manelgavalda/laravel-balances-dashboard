@@ -53,9 +53,9 @@
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Balances</h2>
         </header>
         <!-- Table -->
-        <table class="table-autodark:text-slate-300 mx-auto w-full">
+        <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
             <!-- Table header -->
-            <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+            <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm cursor-pointer">
                 <tr>
                     <th class="p-2">
                         <div class="font-semibold text-left">Name</div>
@@ -97,7 +97,7 @@
                             <div class="text-right text-yellow-300">{{ number_format($token->balance, 3) }}</div>
                         </td>
                         <td class="p-2">
-                            <div class="text-right text-red-300">{{ number_format($token->price_eur, 2) }}€</div>
+                            <div class="text-right text-red-300">{{ number_format($token->price_eur, 2) }}</div>
                         </td>
                         <td class="p-2">
                             <div class="text-right text-red-300">
@@ -115,7 +115,7 @@
                             </div>
                         </td>
                         <td class="p-2">
-                            <div class="text-right text-emerald-300">{{ number_format($token->price_eur * $token->balance, 2) }}€</div>
+                            <div class="text-right text-emerald-300">{{ number_format($token->price_eur * $token->balance, 2) }}</div>
                         </td>
                         <td class="p-2">
                             <div class="text-right text-emerald-300">${{ number_format($token->total, 2) }}</div>
