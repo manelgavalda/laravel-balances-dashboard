@@ -48,7 +48,7 @@
             />
         </div>
     </div>
-    <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-2">
+    <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
         <header class="px-5 py-2 border-b border-slate-100 dark:border-slate-700">
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Balances</h2>
         </header>
@@ -88,7 +88,7 @@
                 <!-- Row -->
                 @foreach($tokens as $token)
                     <tr>
-                        <td class="p-2 w-1/3">
+                        <td class="p-2 w-1/4">
                             <div class="flex items-center">
                                 <div class="text-slate-800 dark:text-slate-100 pl-3">{{ $token->pool }}</div>
                             </div>
@@ -108,13 +108,12 @@
                             <div class="text-right">
                                 @php($change = 1)
                                 <span @class([
-                                    'text-xs',
                                     'text-green-500' => $change >= 0,
                                     'text-red-500' => $change < 0
                                 ])>{{ number_format($change, 1) }}%</span>
                             </div>
                         </td>
-                        <td class="p-2 w-1/12">
+                        <td class="p-2">
                             <div class="text-right text-emerald-300">{{ number_format($token->price_eur * $token->balance, 2) }}€</div>
                         </td>
                         <td class="p-2">
