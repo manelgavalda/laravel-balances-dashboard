@@ -7,6 +7,10 @@ use PHPSupabase\Service;
 
 class DatabaseService
 {
+    const DAYS = 2;
+    const NUMBER_OF_TOKENS = 15;
+    const NUMBER_OF_BALANCES = 28;
+
     protected $service;
 
     function __construct($apiKey, $url)
@@ -39,18 +43,18 @@ class DatabaseService
     protected function executeTokens()
     {
         return $this->execute('balances', [
-            'select' => 'pool,price,price_eur,balance,parent,created_at',
-            'limit' => 15 * 2,
-            'order' => 'created_at.desc'
+            'order' => 'created_at.desc',
+            'limit' => self::NUMBER_OF_TOKENS * self::DAYS,
+            'select' => 'pool,price,price_eur,balance,parent,created_at'
         ]);
     }
 
     protected function executeHistoricalBalances()
     {
         return $this->execute('totals', [
-            'select' => 'price,price_eur,balance,created_at',
-            'limit' => 28,
-            'order' => 'created_at.desc'
+            'order' => 'created_at.desc',
+            'limit' => self::NUMBER_OF_BALANCES,
+            'select' => 'price,price_eur,balance,created_at'
         ]);
     }
 
