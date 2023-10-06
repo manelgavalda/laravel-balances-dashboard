@@ -41,8 +41,8 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
 
     $dates = $this->balances['dates'];
 
-    expect($dates)->toHaveCount(28);
     expect(reset($dates))->toBe($dates[0]);
+    expect($dates)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
 
     $lastDate = Carbon::createFromFormat('M d', end($dates));
 
@@ -53,9 +53,9 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
 test('you_can_get_the_tokens_from_supabase', function () {
     $tokens = $this->databaseService->getTokens();
 
-    expect($tokens)->toHaveCount(2);
-    expect($tokens->last())->toHaveCount(15);
-    expect($tokens->first())->toHaveCount(15);
+    expect($tokens)->toHaveCount(DatabaseService::DAYS);
+    expect($tokens->last())->toHaveCount(DatabaseService::NUMBER_OF_TOKENS);
+    expect($tokens->first())->toHaveCount(DatabaseService::NUMBER_OF_TOKENS);
     expect($tokens->first()->first())->toHaveProperties(['pool', 'price', 'price_eur', 'balance', 'parent', 'created_at']);
     expect(Carbon::parse($tokens->first()->first()->created_at)->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
     expect(Carbon::parse($tokens->last()->last()->created_at)->isSameDay(Carbon::parse(prev($this->balances['dates']))))->toBeTrue();
