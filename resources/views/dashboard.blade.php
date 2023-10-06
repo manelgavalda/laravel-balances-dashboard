@@ -6,7 +6,7 @@
                 element="prices_eur"
                 :data="$balances['prices_eur']"
                 :dates="$balances['dates']"
-                color='green'
+                color='red'
                 label='ETH Price EUR'
             />
             <x-dashboard.chart
