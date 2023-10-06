@@ -16,6 +16,8 @@ class ViewDashboard extends Controller
         $tokens = $databaseService->getTokens();
         $balances = $databaseService->getHistoricalBalances();
 
-        return view('dashboard', compact('tokens', 'balances'));
+        $ethereumPrice = end($balances['prices']);
+
+        return view('dashboard', compact('tokens', 'balances', 'ethereumPrice'));
     }
 }

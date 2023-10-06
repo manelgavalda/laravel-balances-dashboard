@@ -39,7 +39,7 @@ class DatabaseService
     protected function executeTokens()
     {
         return $this->execute('balances', [
-            'select' => 'pool,price,balance,parent,created_at',
+            'select' => 'pool,price,price_eur,balance,parent,created_at',
             'limit' => 15,
             'order' => 'created_at.desc'
         ]);

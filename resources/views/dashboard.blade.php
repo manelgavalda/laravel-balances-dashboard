@@ -10,7 +10,7 @@
                 label='ETH Price EUR'
             />
             <x-dashboard.chart
-                total="${{ number_format(end($balances['prices']), 2, ',', '.') }}"
+                total="${{ number_format($ethereumPrice, 2, ',', '.') }}"
                 element="price_usd"
                 :data="$balances['prices']"
                 :dates="$balances['dates']"
@@ -26,6 +26,7 @@
                 :dates="$balances['dates']"
                 color='blue'
                 label='ETH Balance'
+                height="196"
             />
         </div>
         <div class="w-1/3">
@@ -67,10 +68,16 @@
                                 <div class="font-semibold text-right">Balance</div>
                             </th>
                             <th class="p-2">
-                                <div class="font-semibold text-right">Price</div>
+                                <div class="font-semibold text-right">USD Price</div>
+                            </th>
+                            <th class="p-2">
+                                <div class="font-semibold text-right">EUR Price</div>
                             </th>
                             <th class="p-2">
                                 <div class="font-semibold text-right">USD value</div>
+                            </th>
+                            <th class="p-2">
+                                <div class="font-semibold text-right">EUR value</div>
                             </th>
                             <th class="p-2">
                                 <div class="font-semibold text-right">ETH value</div>
@@ -98,10 +105,16 @@
                                     <div class="text-right text-emerald-500">${{ number_format($token->price, 2) }}</div>
                                 </td>
                                 <td class="p-2">
+                                    <div class="text-right text-emerald-500">{{ number_format($token->price_eur, 2) }}€</div>
+                                </td>
+                                <td class="p-2">
                                     <div class="text-right text-emerald-500">${{ number_format($token->price * $token->balance, 2) }}</div>
                                 </td>
                                 <td class="p-2">
-                                    {{-- <div class="text-right text-sky-500">{{ number_format(($token->price * $token->balance) / $ethereumPrice, 3) }}</div> --}}
+                                    <div class="text-right text-emerald-500">{{ number_format($token->price_eur * $token->balance, 2) }}€</div>
+                                </td>
+                                <td class="p-2">
+                                    <div class="text-right text-sky-500">{{ number_format(($token->price * $token->balance) / $ethereumPrice, 3) }}</div>
                                 </td>
                             </tr>
                             @foreach($token->rewards as $reward)
@@ -125,7 +138,7 @@
                                         <div class="text-right text-emerald-500">${{ number_format($reward->price * $reward->balance, 2) }}</div>
                                     </td>
                                     <td class="p-2">
-                                        {{-- <div class="text-right text-sky-500">{{ number_format(($reward->price * $reward->balance) / $ethereumPrice, 3) }}</div> --}}
+                                        <div class="text-right text-sky-500">{{ number_format(($reward->price * $reward->balance) / $ethereumPrice, 3) }}</div>
                                     </td>
                                 </tr>
                             @endforeach
