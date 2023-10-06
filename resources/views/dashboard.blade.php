@@ -26,7 +26,7 @@
                 :dates="$balances['dates']"
                 color='blue'
                 label='Total ETH'
-                height="193"
+                height="272"
             />
         </div>
         <div class="w-1/3">
