@@ -17,7 +17,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-600">
+        <div class="min-h-screen bg-gray-100 dark:bg-slate-800">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -30,7 +30,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="w-11/12 mx-auto py-6">
                 {{ $slot }}
             </main>
         </div>

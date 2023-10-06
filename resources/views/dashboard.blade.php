@@ -8,7 +8,7 @@
                 :dates="$balances['dates']"
                 color='red'
                 label='EUR Price'
-            />
+                />
             <x-dashboard.chart
                 total="${{ number_format(end($balances['prices']), 2, ',', '.') }}"
                 element="price_usd"
@@ -26,7 +26,7 @@
                 :dates="$balances['dates']"
                 color='blue'
                 label='Total ETH'
-                height="196"
+                height="201"
             />
         </div>
         <div class="w-1/3">
@@ -52,73 +52,84 @@
         <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Balances</h2>
         </header>
-        <div class="p-3">
-            <!-- Table -->
-            <div class="overflow-x-auto">
-                <table class="table-auto w-full dark:text-slate-300">
-                    <!-- Table header -->
-                    <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
-                        <tr>
-                            <th class="p-2">
-                                <div class="font-semibold text-left">Name</div>
-                            </th>
-                            <th class="p-2">
-                                <div class="font-semibold text-right">Balance</div>
-                            </th>
-                            <th class="p-2">
-                                <div class="font-semibold text-right">EUR Price</div>
-                            </th>
-                            <th class="p-2">
-                                <div class="font-semibold text-right">USD Price</div>
-                            </th>
-                            <th class="p-2">
-                                <div class="font-semibold text-right">Total ETH</div>
-                            </th>
-                            <th class="p-2">
-                                <div class="font-semibold text-right">Total EUR</div>
-                            </th>
-                            <th class="p-2">
-                                <div class="font-semibold text-right">Total USD</div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <!-- Table body -->
-                    <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                        <!-- Row -->
-                        @foreach($tokens as $token)
-                            <tr>
-                                <td class="p-2">
-                                    <div class="flex items-center">
-                                        <svg width="24px" height="24px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg">
-                                            <title>Ethereum icon</title>
-                                            <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
-                                        </svg>
-                                        <div class="text-slate-800 dark:text-slate-100 pl-1">{{ $token->pool }}</div>
-                                    </div>
-                                </td>
-                                <td class="p-2">
-                                    <div class="text-right text-yellow-300">{{ number_format($token->balance, 3) }}</div>
-                                </td>
-                                <td class="p-2">
-                                    <div class="text-right text-red-300">{{ number_format($token->price_eur, 2) }}€</div>
-                                </td>
-                                <td class="p-2">
-                                    <div class="text-right text-red-300">${{ number_format($token->price, 2) }}</div>
-                                </td>
-                                <td class="p-2">
-                                    <div class="text-right text-sky-300">{{ number_format(($token->price * $token->balance) / end($balances['prices']), 3) }}</div>
-                                </td>
-                                <td class="p-2">
-                                    <div class="text-right text-emerald-300">{{ number_format($token->price_eur * $token->balance, 2) }}€</div>
-                                </td>
-                                <td class="p-2">
-                                    <div class="text-right text-emerald-300">${{ number_format($token->price * $token->balance, 2) }}</div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <!-- Table -->
+        <table class="table-autodark:text-slate-300 mx-auto mt-2 w-full">
+            <!-- Table header -->
+            <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                <tr>
+                    <th class="p-2">
+                        <div class="font-semibold text-left">Name</div>
+                    </th>
+                    <th class="p-2">
+                        <div class="font-semibold text-right">Balance</div>
+                    </th>
+                    <th class="p-2">
+                        <div class="font-semibold text-right">EUR Price</div>
+                    </th>
+                    <th class="p-2">
+                        <div class="font-semibold text-right">USD Price</div>
+                    </th>
+                    <th class="p-2">
+                        <div class="font-semibold text-right">24h</div>
+                    </th>
+                    <th class="p-2">
+                        <div class="font-semibold text-right">Total EUR</div>
+                    </th>
+                    <th class="p-2">
+                        <div class="font-semibold text-right">Total USD</div>
+                    </th>
+                    <th class="p-2">
+                        <div class="font-semibold text-right">Total ETH</div>
+                    </th>
+                </tr>
+            </thead>
+            <!-- Table body -->
+            <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                <!-- Row -->
+                @foreach($tokens as $token)
+                    <tr>
+                        <td class="p-2 w-1/3">
+                            <div class="flex items-center">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg">
+                                    <title>Ethereum icon</title>
+                                    <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
+                                </svg>
+                                <div class="text-slate-800 dark:text-slate-100 pl-1">{{ $token->pool }}</div>
+                            </div>
+                        </td>
+                        <td class="p-2">
+                            <div class="text-right text-yellow-300">{{ number_format($token->balance, 3) }}</div>
+                        </td>
+                        <td class="p-2">
+                            <div class="text-right text-red-300">{{ number_format($token->price_eur, 2) }}€</div>
+                        </td>
+                        <td class="p-2">
+                            <div class="text-right text-red-300">
+                                ${{ number_format($token->price, 2) }}
+                            </div>
+                        </td>
+                        <td class="p-2">
+                            <div class="text-right">
+                                @php($change = 1)
+                                <span @class([
+                                    'text-xs',
+                                    'text-green-500' => $change >= 0,
+                                    'text-red-500' => $change < 0
+                                ])>{{ number_format($change, 1) }}%</span>
+                            </div>
+                        </td>
+                        <td class="p-2 w-1/12">
+                            <div class="text-right text-emerald-300">{{ number_format($token->price_eur * $token->balance, 2) }}€</div>
+                        </td>
+                        <td class="p-2">
+                            <div class="text-right text-emerald-300">${{ number_format($token->price * $token->balance, 2) }}</div>
+                        </td>
+                        <td class="p-2">
+                            <div class="text-right text-sky-300">{{ number_format(($token->price * $token->balance) / end($balances['prices']), 3) }}</div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </x-app-layout>
