@@ -46,12 +46,17 @@ test('you_can_get_the_tokens_from_supabase', function () {
 
     expect($tokens)->toHaveCount(15);
 
-    $token = $tokens[0];
+    $firstToken = $tokens->first();
 
-    expect($token)->toHaveProperties([
+    $totals = collect($tokens)->map(fn($token) => $token->price * $token->balance);
+
+    expect($firstToken->price * $firstToken->balance)->toBe($totals->max());
+    expect($tokens->last()->price * $tokens->last()->balance)->toBe($totals->min());
+
+    expect($firstToken)->toHaveProperties([
         'pool', 'price', 'balance', 'parent', 'created_at', 'rewards'
     ]);
-    expect($token->rewards)->toBeArray();
+    expect($firstToken->rewards)->toBeArray();
 
-    expect(Carbon::parse($token->created_at)->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
+    expect(Carbon::parse($firstToken->created_at)->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
 })->group('supabase');
