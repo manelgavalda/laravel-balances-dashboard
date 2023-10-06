@@ -106,7 +106,7 @@
                         </td>
                         <td class="p-2">
                             <div class="text-right">
-                                @php($change = ($token->price - $prevPrice = $tokens->last()[$i]->price) / $prevPrice * 100)
+                                @php($change = ($token->price - $prevPrice = $tokens->values()->get(1)[$i]->price) / $prevPrice * 100)
 
                                 <span @class([
                                     'text-green-500' => $change >= 0,
