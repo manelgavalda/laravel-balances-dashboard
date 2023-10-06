@@ -3,6 +3,7 @@
         <div class="w-1/3">
             <x-dashboard.chart
                 total="{{ number_format(end($balances['prices_eur']), 2, ',', '.') }}€"
+                prevTotal="{{ number_format((end($balances['prices_eur']) - $prev = prev($balances['prices_eur'])) / $prev * 100, 2) }}"
                 element="prices_eur"
                 :data="$balances['prices_eur']"
                 :dates="$balances['dates']"
@@ -11,6 +12,7 @@
             />
             <x-dashboard.chart
                 total="${{ number_format($ethereumPrice, 2, ',', '.') }}"
+                prevTotal="{{ number_format((end($balances['prices']) - $prev = prev($balances['prices'])) / $prev * 100, 2) }}"
                 element="price_usd"
                 :data="$balances['prices']"
                 :dates="$balances['dates']"
@@ -21,6 +23,7 @@
         <div class="w-1/3">
             <x-dashboard.chart
                 total="{{ number_format(end($balances['ethereum']), 2, ',', '.') }}"
+                prevTotal="{{ number_format((end($balances['ethereum']) - $prev = prev($balances['ethereum'])) / $prev * 100, 2) }}"
                 element="total_eth"
                 :data="$balances['ethereum']"
                 :dates="$balances['dates']"
@@ -32,6 +35,7 @@
         <div class="w-1/3">
             <x-dashboard.chart
                 total="{{ number_format(end($balances['totals_eur']), 2, ',', '.') }}€"
+                prevTotal="{{ number_format((end($balances['totals_eur']) - $prev = prev($balances['totals_eur'])) / $prev * 100, 2) }}"
                 element="total_eur"
                 :data="$balances['totals_eur']"
                 :dates="$balances['dates']"
@@ -40,6 +44,7 @@
             />
             <x-dashboard.chart
                 total="${{ number_format(end($balances['totals']), 2, ',', '.') }}"
+                prevTotal="{{ number_format((end($balances['totals']) - $prev = prev($balances['totals'])) / $prev * 100, 2) }}"
                 element="total_usd"
                 :data="$balances['totals']"
                 :dates="$balances['dates']"
