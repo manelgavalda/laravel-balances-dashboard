@@ -32,14 +32,15 @@ class DatabaseService
     public function getTokens()
     {
         return collect($this->executeTokens())
-            ->sortByDesc(fn ($token) => $token->price * $token->balance);
+            ->sortByDesc(fn ($token) => $token->price * $token->balance)
+            ->groupBy('created_at');
     }
 
     protected function executeTokens()
     {
         return $this->execute('balances', [
             'select' => 'pool,price,price_eur,balance,parent,created_at',
-            'limit' => 15,
+            'limit' => 15 * 2,
             'order' => 'created_at.desc'
         ]);
     }

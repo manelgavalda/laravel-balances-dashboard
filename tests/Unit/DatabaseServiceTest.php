@@ -53,12 +53,15 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
 test('you_can_get_the_tokens_from_supabase', function () {
     $tokens = $this->databaseService->getTokens();
 
-    expect($tokens)->toHaveCount(15);
-    expect($tokens->first())->toHaveProperties(['pool', 'price', 'price_eur', 'balance', 'parent', 'created_at']);
-    expect(Carbon::parse($tokens->first()->created_at)->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
+    expect($tokens)->toHaveCount(2);
+    expect($tokens->last())->toHaveCount(15);
+    expect($tokens->first())->toHaveCount(15);
+    expect($tokens->first()->first())->toHaveProperties(['pool', 'price', 'price_eur', 'balance', 'parent', 'created_at']);
+    expect(Carbon::parse($tokens->first()->first()->created_at)->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
+    expect(Carbon::parse($tokens->last()->last()->created_at)->isSameDay(Carbon::parse(prev($this->balances['dates']))))->toBeTrue();
 
-    $totals = collect($tokens)->map(fn($token) => $token->price * $token->balance);
+    $totals = collect($tokens->first())->map(fn($token) => $token->price * $token->balance);
 
-    expect($tokens->last()->price * $tokens->last()->balance)->toBe($totals->min());
-    expect($tokens->first()->price * $tokens->first()->balance)->toBe($totals->max());
+    expect($tokens->first()->last()->price * $tokens->first()->last()->balance)->toBe($totals->min());
+    expect($tokens->first()->first()->price * $tokens->first()->first()->balance)->toBe($totals->max());
 })->group('supabase');
