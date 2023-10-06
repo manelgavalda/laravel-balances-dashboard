@@ -17,13 +17,14 @@ class DatabaseService
     public function getHistoricalBalances()
     {
         $balances = collect($this->executeHistoricalBalances())
-            ->reverse();
+            ->reverse()
+            ->values();
 
         return [
-            'prices' => $balances->pluck('price'),
-            'ethereum' => $balances->pluck('balance'),
-            'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance),
-            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d'))
+            'prices' => $balances->pluck('price')->toArray(),
+            'ethereum' => $balances->pluck('balance')->toArray(),
+            'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance)->toArray(),
+            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d'))->toArray()
         ];
     }
 
@@ -31,7 +32,8 @@ class DatabaseService
     {
         return collect($this->executeTokens())
             ->each(fn ($token) => $token->rewards = [])
-            ->sortByDesc(fn ($token) => $token->price * $token->balance);
+            ->sortByDesc(fn ($token) => $token->price * $token->balance)
+            ->values()->toArray();
     }
 
     protected function executeTokens()
