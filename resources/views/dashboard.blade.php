@@ -117,31 +117,6 @@
                                     <div class="text-right text-emerald-500">${{ number_format($token->price * $token->balance, 2) }}</div>
                                 </td>
                             </tr>
-                            @foreach($token->rewards as $reward)
-                                <tr class="bg-gray-100">
-                                    <td class="p-2">
-                                        <div class="flex items-center">
-                                            <svg width="24px" height="24px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg">
-                                                <title>Ethereum icon</title>
-                                                <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
-                                            </svg>
-                                            <div class="text-slate-800 dark:text-slate-100 pl-1"> - {{ $reward->pool }}</div>
-                                        </div>
-                                    </td>
-                                    <td class="p-2">
-                                        <div class="text-right text-sky-500">{{ number_format($reward->balance, 3) }}</div>
-                                    </td>
-                                    <td class="p-2">
-                                        <div class="text-right text-emerald-500">${{ number_format($reward->price, 2) }}</div>
-                                    </td>
-                                    <td class="p-2">
-                                        <div class="text-right text-emerald-500">${{ number_format($reward->price * $reward->balance, 2) }}</div>
-                                    </td>
-                                    <td class="p-2">
-                                        <div class="text-right text-sky-500">{{ number_format(($reward->price * $reward->balance) / $ethereumPrice, 3) }}</div>
-                                    </td>
-                                </tr>
-                            @endforeach
                         @endforeach
                     </tbody>
                 </table>
