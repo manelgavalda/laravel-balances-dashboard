@@ -38,7 +38,7 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
     expect($dates->last())
         ->toStartWith($lastDate->shortMonthName)
         ->toEndWith($lastDate->day);
-    expect(Carbon::parse($dates[0])->lt($lastDate))->toBetrue();
+    expect(Carbon::parse($dates->first())->lt($lastDate))->toBetrue();
 })->group('supabase');
 
 test('you_can_get_the_tokens_from_supabase', function () {
