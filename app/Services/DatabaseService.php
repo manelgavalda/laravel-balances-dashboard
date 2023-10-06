@@ -17,8 +17,7 @@ class DatabaseService
     public function getHistoricalBalances()
     {
         $balances = collect($this->executeHistoricalBalances())
-            ->reverse()
-            ->values();
+            ->reverse()->values();
 
         return [
             'prices' => $balances->pluck('price')->toArray(),
