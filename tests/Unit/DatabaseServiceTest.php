@@ -17,6 +17,11 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
     expect($prices)->toHaveCount(28);
     expect(end($prices))->toBeNumeric();
 
+    $pricesEur = $this->balances['prices_eur'];
+
+    expect($pricesEur)->toHaveCount(28);
+    expect(end($pricesEur))->toBeNumeric();
+
     $ethereum = $this->balances['ethereum'];
 
     expect($ethereum)->toHaveCount(28);
@@ -27,6 +32,12 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
     expect($totals)->toHaveCount(28);
     expect(reset($totals))->toBe($totals[0]);
     expect(end($totals))->toBeNumeric()->toBe(end($ethereum) * end($prices));
+
+    $totalsEur = $this->balances['totals_eur'];
+
+    expect($totalsEur)->toHaveCount(28);
+    expect(reset($totalsEur))->toBe($totalsEur[0]);
+    expect(end($totalsEur))->toBeNumeric()->toBe(end($ethereum) * end($pricesEur));
 
     $dates = $this->balances['dates'];
 

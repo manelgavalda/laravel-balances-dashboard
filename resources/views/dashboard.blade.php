@@ -1,31 +1,51 @@
 <x-app-layout>
     <div class="flex">
-        <x-dashboard.chart
-            total="{{ number_format(end($balances['ethereum']), 2, ',', '.') }}"
-            element="total_eth"
-            :data="$balances['ethereum']"
-            :dates="$balances['dates']"
-            color='blue'
-            label='ETH Balance'
-        />
-
-        <x-dashboard.chart
-            total="${{ number_format(end($balances['prices']), 2, ',', '.') }}"
-            element="price_usd"
-            :data="$balances['prices']"
-            :dates="$balances['dates']"
-            color='red'
-            label='ETH Price'
-        />
-
-        <x-dashboard.chart
-            total="${{ number_format(end($balances['totals']), 2, ',', '.') }}"
-            element="total_usd"
-            :data="$balances['totals']"
-            :dates="$balances['dates']"
-            color='green'
-            label='Total USD'
-        />
+        <div class="w-1/3">
+            <x-dashboard.chart
+                total="{{ number_format(end($balances['prices_eur']), 2, ',', '.') }}€"
+                element="prices_eur"
+                :data="$balances['prices_eur']"
+                :dates="$balances['dates']"
+                color='green'
+                label='ETH Price EUR'
+            />
+            <x-dashboard.chart
+                total="${{ number_format(end($balances['prices']), 2, ',', '.') }}"
+                element="price_usd"
+                :data="$balances['prices']"
+                :dates="$balances['dates']"
+                color='red'
+                label='ETH Price USD'
+            />
+        </div>
+        <div class="w-1/3">
+            <x-dashboard.chart
+                total="{{ number_format(end($balances['ethereum']), 2, ',', '.') }}"
+                element="total_eth"
+                :data="$balances['ethereum']"
+                :dates="$balances['dates']"
+                color='blue'
+                label='ETH Balance'
+            />
+        </div>
+        <div class="w-1/3">
+            <x-dashboard.chart
+                total="{{ number_format(end($balances['totals_eur']), 2, ',', '.') }}€"
+                element="total_eur"
+                :data="$balances['totals_eur']"
+                :dates="$balances['dates']"
+                color='green'
+                label='Total EUR'
+            />
+            <x-dashboard.chart
+                total="${{ number_format(end($balances['totals']), 2, ',', '.') }}"
+                element="total_usd"
+                :data="$balances['totals']"
+                :dates="$balances['dates']"
+                color='green'
+                label='Total USD'
+            />
+        </div>
     </div>
 
     <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">

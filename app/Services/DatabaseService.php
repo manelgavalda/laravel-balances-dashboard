@@ -22,7 +22,9 @@ class DatabaseService
         return [
             'prices' => $balances->pluck('price')->toArray(),
             'ethereum' => $balances->pluck('balance')->toArray(),
+            'prices_eur' => $balances->pluck('price_eur')->toArray(),
             'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance)->toArray(),
+            'totals_eur' => $balances->map(fn ($balance) => $balance->price_eur * $balance->balance)->toArray(),
             'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d'))->toArray()
         ];
     }
@@ -46,7 +48,7 @@ class DatabaseService
     protected function executeHistoricalBalances()
     {
         return $this->execute('totals', [
-            'select' => 'price,balance,created_at',
+            'select' => 'price,price_eur,balance,created_at',
             'limit' => 28,
             'order' => 'created_at.desc'
         ]);
