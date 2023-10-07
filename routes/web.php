@@ -15,6 +15,13 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
+function vercel_asset($path)
+{
+    return config(
+        app()->environment('production') ? 'assets.url' : 'url'
+    ) . $path;
+}
+
 Route::get('/', ViewDashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
