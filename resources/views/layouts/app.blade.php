@@ -18,7 +18,7 @@
         <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-slate-800">
+        <div class="min-h-screen bg-gray-100 dark:bg-slate-700">
             @include('layouts.navigation')
 
             <!-- Page Heading -->

@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
-        <header class="px-5 py-2 border-b border-slate-100 dark:border-slate-700">
+        <header class="p-4 border-b border-slate-100 dark:border-slate-700">
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Balances</h2>
         </header>
         <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
