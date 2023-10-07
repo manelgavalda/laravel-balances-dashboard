@@ -2,45 +2,45 @@
     <div class="flex">
         <div class="w-1/3">
             <x-dashboard.chart
-                total="{{ number_format(end($balances['prices_eur']), 2, ',', '.') }}€"
+                label="EUR Price"
                 element="prices_eur"
+                :dates="$balances['dates']"
                 :data="$balances['prices_eur']"
-                :dates="$balances['dates']"
-                label='EUR Price'
-                />
+                :total="number_format(end($balances['prices_eur']), 2, ',', '.') . '€'"
+            />
             <x-dashboard.chart
-                total="${{ number_format(end($balances['prices']), 2, ',', '.') }}"
+                label="USD Price"
                 element="price_usd"
+                :dates="$balances['dates']"
                 :data="$balances['prices']"
-                :dates="$balances['dates']"
-                label='USD Price'
+                :total="'$' . number_format(end($balances['prices']), 2, ',', '.')"
             />
         </div>
         <div class="w-1/3">
             <x-dashboard.chart
-                total="{{ number_format(end($balances['ethereum']), 2, ',', '.') }}"
-                element="total_eth"
-                :data="$balances['ethereum']"
-                :dates="$balances['dates']"
-                label='Total ETH'
+                color="blue"
                 height="272"
-                color='blue'
+                label="Total ETH"
+                element="total_eth"
+                :dates="$balances['dates']"
+                :data="$balances['ethereum']"
+                :total="number_format(end($balances['ethereum']), 2, ',', '.')"
             />
         </div>
         <div class="w-1/3">
             <x-dashboard.chart
-                total="{{ number_format(end($balances['totals_eur']), 2, ',', '.') }}€"
+                label="Total EUR"
                 element="total_eur"
-                :data="$balances['totals_eur']"
                 :dates="$balances['dates']"
-                label='Total EUR'
+                :data="$balances['totals_eur']"
+                :total="number_format(end($balances['totals_eur']), 2, ',', '.') . '€'"
             />
             <x-dashboard.chart
-                total="${{ number_format(end($balances['totals']), 2, ',', '.') }}"
+                label="Total USD"
                 element="total_usd"
                 :data="$balances['totals']"
                 :dates="$balances['dates']"
-                label='Total USD'
+                :total="'$' . number_format(end($balances['totals']), 2, ',', '.')"
             />
         </div>
     </div>
@@ -48,9 +48,7 @@
         <header class="px-5 py-2 border-b border-slate-100 dark:border-slate-700">
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Balances</h2>
         </header>
-        <!-- Table -->
         <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
-            <!-- Table header -->
             <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm cursor-pointer">
                 <tr>
                     <th class="p-2">
@@ -82,15 +80,11 @@
                     </th>
                 </tr>
             </thead>
-            <!-- Table body -->
             <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                <!-- Row -->
                 @foreach($tokens->first() as $i => $token)
                     <tr>
                         <td class="p-2 w-1/4">
-                            <div class="flex items-center">
-                                <div class="text-slate-800 dark:text-slate-100 pl-3">{{ $token->pool }}</div>
-                            </div>
+                            <div class="text-slate-800 dark:text-slate-100 pl-3">{{ $token->pool }}</div>
                         </td>
                         <td class="p-2">
                             <div class="text-right text-yellow-300">{{ number_format($token->balance, 3) }}</div>
@@ -99,18 +93,15 @@
                             <div class="text-right text-red-300">{{ number_format($token->price_eur, 2) }}</div>
                         </td>
                         <td class="p-2">
-                            <div class="text-right text-red-300">
-                                ${{ number_format($token->price, 2) }}
-                            </div>
+                            <div class="text-right text-red-300">${{ number_format($token->price, 2) }}</div>
                         </td>
                         <td class="p-2">
                             <div class="text-right">
                                 @php($change = ($token->price - $prevPrice = $tokens->values()->get(1)[$i]->price) / $prevPrice * 100)
 
-                                <span @class([
-                                    'text-green-500' => $change >= 0,
-                                    'text-red-500' => $change < 0
-                                ])>{{ number_format($change, 1) }}%</span>
+                                <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
+                                    {{ number_format($change, 1) }}%
+                                </span>
                             </div>
                         </td>
                         <td class="p-2">
