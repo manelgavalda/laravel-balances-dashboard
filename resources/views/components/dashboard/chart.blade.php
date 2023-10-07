@@ -30,15 +30,13 @@
         type: 'line',
         data: {
             labels: @json($dates),
-            datasets: [{
-                label: '{{ $label }}',
-                data: @json($data)
-            }]
+            datasets: [{ data: @json($data) }]
         },
         options: {
             color: 'white',
             borderColor: color,
             backgroundColor: color,
+            plugins: { legend: { display: false }},
             scales: {
                 y: { ticks: { color: 'white' } },
                 x: { ticks: { color: 'white' } }
