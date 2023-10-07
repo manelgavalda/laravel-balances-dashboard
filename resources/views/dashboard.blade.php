@@ -112,7 +112,7 @@
                         <td class="p-2">
                             <div class="text-right text-sky-300">{{ number_format($token->total / end($balances['prices']), 3) }}</div>
                         </td>
-                        <td class="p-2 w-1/12">
+                        <td class="p-2 w-2/12">
                             <x-dashboard.simple-chart
                                 :element="$token->pool"
                                 :dates="$tokens->keys()->toArray()"

@@ -1,5 +1,5 @@
 <div>
-    <canvas id="{{ $element }}" height="35"></canvas>
+    <canvas id="{{ $element }}"  width="100%" height="20%"></canvas>
 </div>
 <script>
     var color = "{{ $data[0] < end($data) ? 'green' : 'red' }}"
