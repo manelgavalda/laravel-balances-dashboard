@@ -19,7 +19,6 @@
         <div class="w-1/3">
             <x-dashboard.chart
                 color="blue"
-                height="272"
                 label="Total ETH"
                 element="total_eth"
                 :dates="$balances['dates']"

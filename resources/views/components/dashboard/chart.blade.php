@@ -20,7 +20,7 @@
         </div>
     </div>
     <div>
-        <canvas id="{{ $element }}" height="{{ $height ?? 110 }}"></canvas>
+        <canvas id="{{ $element }}"></canvas>
     </div>
 </div>
 <script>
