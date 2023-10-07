@@ -10,10 +10,13 @@ test('login screen can be rendered', function () {
 });
 
 test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
+    User::factory()->create();
+
+    config()->set('credentials.email', 'admin@gmail.com');
+    config()->set('credentials.password', 'password');
 
     $response = $this->post('/login', [
-        'email' => $user->email,
+        'email' => 'admin@gmail.com',
         'password' => 'password',
     ]);
 

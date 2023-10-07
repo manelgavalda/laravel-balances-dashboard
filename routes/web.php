@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViewDashboard;
-use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,20 +13,15 @@ use App\Http\Controllers\ProfileController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-function vercel_asset($path)
-{
-    return config(
-        app()->environment('production') ? 'assets.url' : 'url'
-    ) . $path;
+if (!function_exists('vercel_asset'))   {
+    function vercel_asset($path)
+    {
+        return config(
+            app()->environment('production') ? 'assets.url' : 'url'
+        ) . $path;
+    }
 }
 
 Route::get('/', ViewDashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__.'/auth.php';
