@@ -50,32 +50,32 @@
         <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
             <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm cursor-pointer">
                 <tr>
-                    <th class="p-2">
-                        <div class="font-semibold text-left">Name</div>
+                    <th class="p-2 text-left pl-5">
+                        Name
                     </th>
-                    <th class="p-2">
-                        <div class="font-semibold text-right">Balance</div>
+                    <th class="p-2 text-right">
+                        Balance
                     </th>
-                    <th class="p-2">
-                        <div class="font-semibold text-right">EUR Price</div>
+                    <th class="p-2 text-right">
+                        EUR Price
                     </th>
-                    <th class="p-2">
-                        <div class="font-semibold text-right">USD Price</div>
+                    <th class="p-2 text-right">
+                        USD Price
                     </th>
-                    <th class="p-2">
-                        <div class="font-semibold text-right">24h</div>
+                    <th class="p-2 text-right">
+                        24h
                     </th>
-                    <th class="p-2">
-                        <div class="font-semibold text-right">Total EUR</div>
+                    <th class="p-2 text-right">
+                        Total EUR
                     </th>
-                    <th class="p-2">
-                        <div class="font-semibold text-right">Total USD</div>
+                    <th class="p-2 text-right">
+                        Total USD
                     </th>
-                    <th class="p-2">
-                        <div class="font-semibold text-right">Total ETH</div>
+                    <th class="p-2 text-right">
+                        Total ETH
                     </th>
-                    <th class="p-2">
-                        <div class="font-semibold text-center">Last days</div>
+                    <th class="p-2 text-center">
+                        Last days
                     </th>
                 </tr>
             </thead>
