@@ -15,8 +15,6 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-dd('hola');
-
 Route::get('/', ViewDashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
