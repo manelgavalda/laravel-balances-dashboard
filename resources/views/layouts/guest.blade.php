@@ -12,7 +12,10 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="preload" as="style" href="{{ vercel_asset('build/assets/app.css')}}">
+        <link rel="modulepreload" href="{{ vercel_asset('build/assets/app2.js') }}">
+        <link rel="stylesheet" href="{{ vercel_asset('build/assets/app.css')}}">
+        <script type="module" src="{{ vercel_asset('build/assets/app2.js') }}"></script>
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">

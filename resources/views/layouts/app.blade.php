@@ -12,7 +12,10 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="preload" as="style" href="{{ vercel_asset('build/assets/app.css')}}">
+        <link rel="modulepreload" href="{{ vercel_asset('build/assets/app2.js') }}">
+        <link rel="stylesheet" href="{{ vercel_asset('build/assets/app.css')}}">
+        <script type="module" src="{{ vercel_asset('build/assets/app2.js') }}"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
