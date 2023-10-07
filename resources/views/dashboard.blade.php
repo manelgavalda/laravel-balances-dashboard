@@ -80,7 +80,7 @@
                 </tr>
             </thead>
             <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                @foreach($tokens->first() as $i => $token)
+                @foreach($tokens->last() as $i => $token)
                     <tr>
                         <td class="p-2 w-1/4">
                             <div class="text-slate-800 dark:text-slate-100 pl-3">{{ $token->pool }}</div>
@@ -96,7 +96,7 @@
                         </td>
                         <td class="p-2">
                             <div class="text-right">
-                                @php($change = ($token->price - $prevPrice = $tokens->values()->get(1)[$i]->price) / $prevPrice * 100)
+                                @php($change = ($token->price - $prevPrice = $tokens->reverse()->values()->get(1)[$i]->price) / $prevPrice * 100)
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
                                     {{ number_format($change, 1) }}%

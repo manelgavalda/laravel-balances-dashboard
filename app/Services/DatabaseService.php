@@ -7,7 +7,7 @@ use PHPSupabase\Service;
 
 class DatabaseService
 {
-    const DAYS = 4;
+    const DAYS = 5;
     const NUMBER_OF_TOKENS = 15;
     const NUMBER_OF_BALANCES = 28;
 
@@ -37,7 +37,7 @@ class DatabaseService
     {
         return collect($this->executeTokens())
             ->sortByDesc(fn ($token) => $token->total = $token->price * $token->balance)
-            ->groupBy('created_at')->sortKeys()->reverse();
+            ->groupBy('created_at')->sortKeys();
     }
 
     protected function executeTokens()
