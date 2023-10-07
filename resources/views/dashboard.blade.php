@@ -76,7 +76,7 @@
                         <div class="font-semibold text-right">Total ETH</div>
                     </th>
                     <th class="p-2">
-                        <div class="font-semibold text-right">Last days</div>
+                        <div class="font-semibold text-center">Last days</div>
                     </th>
                 </tr>
             </thead>
