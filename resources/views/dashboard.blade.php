@@ -81,6 +81,9 @@
                     <th class="p-2">
                         <div class="font-semibold text-right">Total ETH</div>
                     </th>
+                    <th class="p-2">
+                        <div class="font-semibold text-right">Last days</div>
+                    </th>
                 </tr>
             </thead>
             <!-- Table body -->
@@ -122,6 +125,16 @@
                         </td>
                         <td class="p-2">
                             <div class="text-right text-sky-300">{{ number_format($token->total / end($balances['prices']), 3) }}</div>
+                        </td>
+                        <td class="p-2 w-1/12">
+                            @php($prices = $tokens->flatten()->where('pool', $token->pool)->pluck('price')->toArray())
+
+                            <x-dashboard.simple-chart
+                                :data="$prices"
+                                :element="$token->pool"
+                                :dates="$tokens->keys()->toArray()"
+                                :color="$prices[0] < end($prices) ? 'green' : 'red'"
+                            />
                         </td>
                     </tr>
                 @endforeach
