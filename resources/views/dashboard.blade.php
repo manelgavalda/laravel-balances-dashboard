@@ -6,7 +6,6 @@
                 element="prices_eur"
                 :data="$balances['prices_eur']"
                 :dates="$balances['dates']"
-                color='red'
                 label='EUR Price'
                 />
             <x-dashboard.chart
@@ -14,7 +13,6 @@
                 element="price_usd"
                 :data="$balances['prices']"
                 :dates="$balances['dates']"
-                color='red'
                 label='USD Price'
             />
         </div>
@@ -24,9 +22,9 @@
                 element="total_eth"
                 :data="$balances['ethereum']"
                 :dates="$balances['dates']"
-                color='blue'
                 label='Total ETH'
                 height="272"
+                color='blue'
             />
         </div>
         <div class="w-1/3">
@@ -35,7 +33,6 @@
                 element="total_eur"
                 :data="$balances['totals_eur']"
                 :dates="$balances['dates']"
-                color='green'
                 label='Total EUR'
             />
             <x-dashboard.chart
@@ -43,7 +40,6 @@
                 element="total_usd"
                 :data="$balances['totals']"
                 :dates="$balances['dates']"
-                color='green'
                 label='Total USD'
             />
         </div>
@@ -127,13 +123,10 @@
                             <div class="text-right text-sky-300">{{ number_format($token->total / end($balances['prices']), 3) }}</div>
                         </td>
                         <td class="p-2 w-1/12">
-                            @php($prices = $tokens->flatten()->where('pool', $token->pool)->pluck('price')->toArray())
-
                             <x-dashboard.simple-chart
-                                :data="$prices"
                                 :element="$token->pool"
                                 :dates="$tokens->keys()->toArray()"
-                                :color="$prices[0] < end($prices) ? 'green' : 'red'"
+                                :data="$tokens->flatten()->where('pool', $token->pool)->pluck('price')->toArray()"
                             />
                         </td>
                     </tr>

@@ -24,6 +24,8 @@
     </div>
 </div>
 <script>
+    var color = "{{ $color ?? ($data[0] < end($data) ? 'green' : 'red') }}"
+
     new Chart({{ $element }}, {
         type: 'line',
         data: {
@@ -34,9 +36,9 @@
             }]
         },
         options: {
-            backgroundColor: '{{ $color }}',
-            borderColor: '{{ $color }}',
             color: 'white',
+            borderColor: color,
+            backgroundColor: color,
             scales: {
                 y: { ticks: { color: 'white' } },
                 x: { ticks: { color: 'white' } }

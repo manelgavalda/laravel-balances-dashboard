@@ -2,6 +2,8 @@
     <canvas id="{{ $element }}" height="35"></canvas>
 </div>
 <script>
+    var color = "{{ $data[0] < end($data) ? 'green' : 'red' }}"
+
     new Chart(@json($element), {
         type: 'line',
         data: {
@@ -9,14 +11,12 @@
             datasets: [{ data: @json($data) }]
         },
         options: {
-            backgroundColor: '{{ $color }}',
-            borderColor: '{{ $color }}',
+            borderColor: color,
+            backgroundColor: color,
+            plugins: { legend: { display: false }},
             scales: {
                 y: { ticks: { display: false } },
                 x: { ticks: { display: false } }
-            },
-            plugins: {
-                legend: { display: false }
             }
         }
     })
