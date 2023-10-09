@@ -9,7 +9,7 @@ class DatabaseService
 {
     const DAYS = 7;
     const NUMBER_OF_TOKENS = 15;
-    const NUMBER_OF_BALANCES = 28;
+    const NUMBER_OF_BALANCES = 31;
 
     protected $service;
 
