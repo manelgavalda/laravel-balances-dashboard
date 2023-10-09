@@ -3,6 +3,8 @@
 use Carbon\Carbon;
 use App\Services\DatabaseService;
 
+uses()->group('feature');
+
 expect()->extend('toBeParsed', function () {
    expect(reset($this->value))->toBe($this->value[0]);
 
@@ -32,7 +34,7 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
 
     expect(Carbon::parse($dates[0])->lt($lastDate))->toBetrue();
     expect(end($dates))->toStartWith($lastDate->shortMonthName)->toEndWith($lastDate->day);
-})->group('supabase');
+});
 
 test('you_can_get_the_tokens_from_supabase', function () {
     $tokens = $this->databaseService->getTokens();
@@ -48,4 +50,4 @@ test('you_can_get_the_tokens_from_supabase', function () {
 
     expect($tokens->first()->last()->price * $tokens->first()->last()->balance)->toBe($totals->min());
     expect($tokens->first()->first()->price * $tokens->first()->first()->balance)->toBe($totals->max());
-})->group('supabase');
+});
