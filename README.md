@@ -1,4 +1,4 @@
-Dashboard for Token Monitoring with Laravel
+# Dashboard for Token Monitoring with Laravel
 
 **Live Demo**: [View Demo](https://laravel-balances-dashboard.vercel.app)
 
