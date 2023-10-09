@@ -10,7 +10,6 @@ expect()->extend('toBeParsed', function () {
 
 beforeEach(function () {
     $config = config('supabase');
-
     $this->databaseService = new DatabaseService($config['api_key'], $config['url']);
 
     $this->balances = $this->databaseService->getHistoricalBalances();
