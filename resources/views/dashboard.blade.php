@@ -77,6 +77,9 @@
                     <th class="p-2 text-right">
                         {{ $days }} days APY
                     </th>
+                    <th class="p-2 text-right">
+                        {{ $days }} days gain
+                    </th>
                     <th class="p-2 text-center">
                         Last {{ $days }} days
                     </th>
@@ -117,14 +120,20 @@
                         <td class="p-2 text-right text-sky-300">
                             {{ number_format($token->total / end($balances['prices']), 3) }}
                         </td>
-                        <td class="p-2 text-right text-emerald-300">
-                            @php
-                                $lastBalance = $tokens->last()->firstWhere('pool', $token->pool)->balance;
-                                $firstBalance = $tokens->first()->firstWhere('pool', $token->pool)->balance;
-                            @endphp
 
-                            @if($firstBalance != $lastBalance)
-                                {{ number_format(($lastBalance - $firstBalance) / $firstBalance * 100, 2) }}%
+                        @php
+                            $last= $tokens->last()->firstWhere('pool', $token->pool);
+                            $first= $tokens->first()->firstWhere('pool', $token->pool);
+                        @endphp
+
+                        <td class="p-2 text-right text-emerald-300">
+                            @if($first->balance != $last->balance)
+                                {{ number_format(($last->balance - $first->balance) / $first->balance * 100, 2) }}%
+                            @endif
+                        </td>
+                        <td class="p-2 text-right text-emerald-300">
+                            @if($first->balance != $last->balance)
+                                ${{ number_format($last->balance * $last->price - $first->balance * $first->price, 2) }}
                             @endif
                         </td>
                         <td class="p-2 w-2/12">
