@@ -74,8 +74,11 @@
                     <th class="p-2 text-right">
                         Total ETH
                     </th>
+                    <th class="p-2 text-right">
+                        {{ $days }} days APY
+                    </th>
                     <th class="p-2 text-center">
-                        Last days
+                        Last {{ $days }} days
                     </th>
                 </tr>
             </thead>
@@ -113,6 +116,16 @@
                         </td>
                         <td class="p-2 text-right text-sky-300">
                             {{ number_format($token->total / end($balances['prices']), 3) }}
+                        </td>
+                        <td class="p-2 text-right text-emerald-300">
+                            @php
+                                $lastBalance = $tokens->last()->firstWhere('pool', $token->pool)->balance;
+                                $firstBalance = $tokens->first()->firstWhere('pool', $token->pool)->balance;
+                            @endphp
+
+                            @if($firstBalance != $lastBalance)
+                                {{ number_format(($lastBalance - $firstBalance) / $firstBalance * 100, 2) }}%
+                            @endif
                         </td>
                         <td class="p-2 w-2/12">
                             <x-dashboard.simple-chart
