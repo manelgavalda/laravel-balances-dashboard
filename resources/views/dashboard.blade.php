@@ -82,35 +82,33 @@
             <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                 @foreach($tokens->last() as $i => $token)
                     <tr>
-                        <td class="p-2 w-1/4">
-                            <div class="text-slate-800 dark:text-slate-100 pl-3">{{ $token->pool }}</div>
+                        <td class="p-2 w-1/4 text-slate-800 dark:text-slate-100 pl-3">
+                            {{ $token->pool }}
                         </td>
-                        <td class="p-2">
-                            <div class="text-right text-yellow-300">{{ number_format($token->balance, 3) }}</div>
+                        <td class="p-2 text-right text-yellow-300">
+                            {{ number_format($token->balance, 3) }}
                         </td>
-                        <td class="p-2">
-                            <div class="text-right text-red-300">{{ number_format($token->price_eur, 2) }}</div>
+                        <td class="p-2 text-right text-red-300">
+                            {{ number_format($token->price_eur, 2) }}
                         </td>
-                        <td class="p-2">
-                            <div class="text-right text-red-300">${{ number_format($token->price, 2) }}</div>
+                        <td class="p-2 text-right text-red-300">
+                            ${{ number_format($token->price, 2) }}
                         </td>
-                        <td class="p-2">
-                            <div class="text-right">
-                                @php($change = ($token->price - $prevPrice = $tokens->reverse()->values()->get(1)[$i]->price) / $prevPrice * 100)
+                        <td class="p-2 text-right">
+                            @php($change = ($token->price - $prevPrice = $tokens->reverse()->values()->get(1)[$i]->price) / $prevPrice * 100)
 
-                                <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
-                                    {{ number_format($change, 1) }}%
-                                </span>
-                            </div>
+                            <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
+                                {{ number_format($change, 1) }}%
+                            </span>
                         </td>
-                        <td class="p-2">
-                            <div class="text-right text-emerald-300">{{ number_format($token->price_eur * $token->balance, 2) }}</div>
+                        <td class="p-2 text-right text-emerald-300">
+                            {{ number_format($token->price_eur * $token->balance, 2) }}
                         </td>
-                        <td class="p-2">
-                            <div class="text-right text-emerald-300">${{ number_format($token->total, 2) }}</div>
+                        <td class="p-2 text-right text-emerald-300">
+                            ${{ number_format($token->total, 2) }}
                         </td>
-                        <td class="p-2">
-                            <div class="text-right text-sky-300">{{ number_format($token->total / end($balances['prices']), 3) }}</div>
+                        <td class="p-2 text-right text-sky-300">
+                            {{ number_format($token->total / end($balances['prices']), 3) }}
                         </td>
                         <td class="p-2 w-2/12">
                             <x-dashboard.simple-chart
