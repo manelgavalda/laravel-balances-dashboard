@@ -3,6 +3,11 @@
 use Carbon\Carbon;
 use App\Services\DatabaseService;
 
+expect()->extend('toBeParsed', function () {
+   expect(reset($this->value))->toBe($this->value[0]);
+   $this->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
+});
+
 beforeEach(function () {
     $config = config('supabase');
 
