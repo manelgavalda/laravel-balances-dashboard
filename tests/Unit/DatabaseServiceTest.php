@@ -5,44 +5,28 @@ use App\Services\DatabaseService;
 
 expect()->extend('toBeParsed', function () {
    expect(reset($this->value))->toBe($this->value[0]);
+
    $this->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
 });
 
 beforeEach(function () {
     $config = config('supabase');
+
     $this->databaseService = new DatabaseService($config['api_key'], $config['url']);
 
     $this->balances = $this->databaseService->getHistoricalBalances();
 });
 
 test('you_can_get_the_historical_balances_from_supabase', function () {
-    $prices = $this->balances['prices'];
-
-    expect($prices)->toBeParsed();
-
-    $pricesEur = $this->balances['prices_eur'];
-
-    expect($pricesEur)->toBeParsed();
-
-    $ethereum = $this->balances['ethereum'];
-
-    expect($ethereum)->toBeParsed();
-
-    $totals = $this->balances['totals'];
-
-    expect($totals)->toBeParsed();
+    expect($dates = $this->balances['dates'])->toBeParsed();
+    expect($totals = $this->balances['totals'])->toBeParsed();
+    expect($prices = $this->balances['prices'])->toBeParsed();
+    expect($ethereum = $this->balances['ethereum'])->toBeParsed();
+    expect($pricesEur = $this->balances['prices_eur'])->toBeParsed();
+    expect($totalsEur = $this->balances['totals_eur'])->toBeParsed();
 
     expect(end($totals))->toBe(end($ethereum) * end($prices));
-
-    $totalsEur = $this->balances['totals_eur'];
-
-    expect($totalsEur)->toBeParsed();
-
     expect(end($totalsEur))->toBe(end($ethereum) * end($pricesEur));
-
-    $dates = $this->balances['dates'];
-
-    expect($dates)->toBeParsed();
 
     $lastDate = Carbon::createFromFormat('M d', end($dates));
 
