@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use App\Services\DatabaseService;
 
-uses()->group('feature');
+uses()->group('supabase');
 
 expect()->extend('toBeParsed', function () {
    expect(reset($this->value))->toBe($this->value[0]);
