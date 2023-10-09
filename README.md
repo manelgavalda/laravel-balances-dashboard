@@ -1,66 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Dashboard for Token Monitoring with Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Live Demo**: [View Demo](https://laravel-balances-dashboard.vercel.app)
 
-## About Laravel
+<img src="https://raw.githubusercontent.com/manelgavalda/laravel-balances-dashboard/main/public/images/dashboard.png">
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This GitHub repository hosts a dashboard built using the Laravel framework. The primary purpose of this dashboard is to monitor tokens stored in a Supabase database. It leverages the power of Chart.js to visually represent data and utilizes Ether.js and the CoinGecko API for token data retrieval and integration. The application has undergone rigorous testing with Pest and is efficiently hosted on Vercel for seamless deployment.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- **Token Monitoring**: Gain insights into tokens stored within a Supabase database.
+- **Data Visualization**: Utilize Chart.js to create visually appealing and informative charts.
+- **Data Integration**: Fetch token data effortlessly using Ether.js and the CoinGecko API.
+- **Robust Testing**: Rigorously tested using Pest to ensure reliability.
+- **Effortless Deployment**: Seamlessly hosted on Vercel for a hassle-free deployment process.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Usage
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+To deploy and utilize this dashboard, follow the steps below:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the Repository**: Clone this repository to your local environment using the following command:
 
-## Laravel Sponsors
+   ```bash
+   git clone https://github.com/manelgavalda/laravel-balances-dashboard.git
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. **Install Dependencies**: Navigate to the project directory and install the required dependencies:
 
-### Premium Partners
+   ```bash
+   composer install
+   npm install
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+3. **Configuration**: Configure your Supabase credentials in the respective configuration files. It's important to note that the CoinGecko API and Ether.js are utilized in the service responsible for saving data to the Supabase database, which is not a part of this repository. Ensure that the service handling data storage is correctly configured with the necessary CoinGecko API and Ether.js credentials for seamless data integration.
 
-## Contributing
+4. **Database Setup**: Set up your Supabase database and ensure that it is properly configured in the Laravel application.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. **Testing**: Run the Pest test suite to verify the functionality of the application:
 
-## Code of Conduct
+   ```bash
+   php artisan test
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. **Deployment**: Deploy the application to Vercel or your preferred hosting platform.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- [Vercel - The platform for hosting the dashboard](https://vercel.com).
+- [Supabase - The database platform for storing token data](https://supabase.com).
+- [Laravel - The PHP framework that powers this application](https://laravel.com).
+- [Pest - The testing framework used for quality assurance](https://pestphp.com).
+- [Chart.js - The JavaScript library used for data visualization](https://chartjs.org).
+- [Ether.js - The JavaScript library for Ethereum interactions](https://ethers.org).
+- [CoinGecko - The API for fetching token-related information](https://www.coingecko.com/en/api).
+
+## Contact
+
+For inquiries or support, please contact [Manel Gavalda](mailto:manelgavalda1@gmail.com).
+
+---
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+This README is part of the [Laravel Balances Dashboard](https://github.com/manelgavalda/laravel-balances-dashboard) project.
