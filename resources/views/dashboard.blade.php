@@ -95,10 +95,14 @@
                             ${{ number_format($token->price, 2) }}
                         </td>
                         <td class="p-2 text-right">
-                            @php($change = ($token->price - $prevPrice = $tokens->reverse()->values()->get(1)[$i]->price) / $prevPrice * 100)
+                            @php
+                                $prevPrice = $tokens->reverse()->values()->get(1)->firstWhere('pool', $token->pool)->price;
+
+                                $change = ($token->price - $prevPrice) / $prevPrice * 100;
+                            @endphp
 
                             <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
-                                {{ number_format($change, 1) }}%
+                                {{ number_format($change, 2) }}%
                             </span>
                         </td>
                         <td class="p-2 text-right text-emerald-300">
