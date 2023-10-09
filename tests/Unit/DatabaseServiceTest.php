@@ -14,28 +14,28 @@ beforeEach(function () {
 test('you_can_get_the_historical_balances_from_supabase', function () {
     $prices = $this->balances['prices'];
 
-    expect($prices)->toHaveCount(28);
+    expect($prices)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
     expect(end($prices))->toBeNumeric();
 
     $pricesEur = $this->balances['prices_eur'];
 
-    expect($pricesEur)->toHaveCount(28);
+    expect($pricesEur)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
     expect(end($pricesEur))->toBeNumeric();
 
     $ethereum = $this->balances['ethereum'];
 
-    expect($ethereum)->toHaveCount(28);
+    expect($ethereum)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
     expect(end($ethereum))->toBeNumeric();
 
     $totals = $this->balances['totals'];
 
-    expect($totals)->toHaveCount(28);
+    expect($totals)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
     expect(reset($totals))->toBe($totals[0]);
     expect(end($totals))->toBeNumeric()->toBe(end($ethereum) * end($prices));
 
     $totalsEur = $this->balances['totals_eur'];
 
-    expect($totalsEur)->toHaveCount(28);
+    expect($totalsEur)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
     expect(reset($totalsEur))->toBe($totalsEur[0]);
     expect(end($totalsEur))->toBeNumeric()->toBe(end($ethereum) * end($pricesEur));
 
