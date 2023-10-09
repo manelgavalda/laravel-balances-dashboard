@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\DatabaseService;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -28,8 +29,9 @@ uses(TestCase::class, RefreshDatabase::class)->in('Feature');
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
+expect()->extend('toBeParsed', function () {
+   expect(reset($this->value))->toBe($this->value[0]);
+   $this->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
 });
 
 /*

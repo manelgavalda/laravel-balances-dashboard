@@ -14,35 +14,31 @@ beforeEach(function () {
 test('you_can_get_the_historical_balances_from_supabase', function () {
     $prices = $this->balances['prices'];
 
-    expect($prices)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
-    expect(end($prices))->toBeNumeric();
+    expect($prices)->toBeParsed();
 
     $pricesEur = $this->balances['prices_eur'];
 
-    expect($pricesEur)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
-    expect(end($pricesEur))->toBeNumeric();
+    expect($pricesEur)->toBeParsed();
 
     $ethereum = $this->balances['ethereum'];
 
-    expect($ethereum)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
-    expect(end($ethereum))->toBeNumeric();
+    expect($ethereum)->toBeParsed();
 
     $totals = $this->balances['totals'];
 
-    expect($totals)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
-    expect(reset($totals))->toBe($totals[0]);
-    expect(end($totals))->toBeNumeric()->toBe(end($ethereum) * end($prices));
+    expect($totals)->toBeParsed();
+
+    expect(end($totals))->toBe(end($ethereum) * end($prices));
 
     $totalsEur = $this->balances['totals_eur'];
 
-    expect($totalsEur)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
-    expect(reset($totalsEur))->toBe($totalsEur[0]);
-    expect(end($totalsEur))->toBeNumeric()->toBe(end($ethereum) * end($pricesEur));
+    expect($totalsEur)->toBeParsed();
+
+    expect(end($totalsEur))->toBe(end($ethereum) * end($pricesEur));
 
     $dates = $this->balances['dates'];
 
-    expect(reset($dates))->toBe($dates[0]);
-    expect($dates)->toHaveCount(DatabaseService::NUMBER_OF_BALANCES);
+    expect($dates)->toBeParsed();
 
     $lastDate = Carbon::createFromFormat('M d', end($dates));
 
