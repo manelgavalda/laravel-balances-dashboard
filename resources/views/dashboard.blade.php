@@ -153,12 +153,12 @@
 
                         <td class="p-2 text-right text-emerald-300">
                             @if($first && $last && $first->balance != $last->balance)
-                                {{ number_format(($first->balance - $last->balance) / $last->balance * 100, 2) }}%
+                                {{ number_format(($first->balance - $last->balance) / $first->balance * 100, 2) }}%
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
                             @if($first && $last && $first->balance != $last->balance)
-                                ${{ number_format(($first->balance - $last->balance) * $last->price, 2) }}
+                                ${{ number_format(($first->balance - $last->balance) * $first->price, 2) }}
                             @endif
                         </td>
 
