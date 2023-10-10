@@ -137,12 +137,20 @@
 
                         <td class="p-2 text-right text-emerald-300">
                             @if($weeklyFirst->balance != $weeklyLast->balance)
-                                {{ number_format(($weeklyFirst->balance - $weeklyLast->balance) / $weeklyFirst->balance * 100, 2) }}%
+                                @php $change = ($weeklyFirst->balance - $weeklyLast->balance) / $weeklyFirst->balance * 100 @endphp
+
+                                <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
+                                    {{ number_format(($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price, 2) }}%
+                                </span>
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
                             @if($weeklyFirst->balance != $weeklyLast->balance)
-                                ${{ number_format(($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price, 2) }}
+                                @php $change = ($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price @endphp
+
+                                <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
+                                    ${{ number_format(($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price, 2) }}
+                                </span>
                             @endif
                         </td>
 
@@ -153,12 +161,20 @@
 
                         <td class="p-2 text-right text-emerald-300">
                             @if($first && $last && $first->balance != $last->balance)
-                                {{ number_format(($first->balance - $last->balance) / $first->balance * 100, 2) }}%
+                                @php($change = ($first->balance - $last->balance) / $first->balance * 100)
+
+                                <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
+                                    {{ number_format($change, 2) }}%
+                                </span>
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
                             @if($first && $last && $first->balance != $last->balance)
-                                ${{ number_format(($first->balance - $last->balance) * $first->price, 2) }}
+                                @php($change = ($first->balance - $last->balance) * $first->price)
+
+                                <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
+                                    ${{ number_format($change, 2) }}
+                                </span>
                             @endif
                         </td>
 
