@@ -142,6 +142,8 @@
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
                                     {{ number_format($change, 2) }}%
                                 </span>
+                            @else
+                                -
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
@@ -151,6 +153,8 @@
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
                                     ${{ number_format($change, 2) }}
                                 </span>
+                            @else
+                                -
                             @endif
                         </td>
 
@@ -166,6 +170,8 @@
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
                                     {{ number_format($change, 2) }}%
                                 </span>
+                            @else
+                                -
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
@@ -175,6 +181,8 @@
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
                                     ${{ number_format($change, 2) }}
                                 </span>
+                            @else
+                                -
                             @endif
                         </td>
 
