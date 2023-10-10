@@ -2,7 +2,7 @@
     <canvas id="{{ $element }}"  width="100%" height="13%"></canvas>
 </div>
 <script>
-    var color = "{{ $data[0] < end($data) ? 'green' : 'red' }}"
+    var color = "{{ $data[0] <= end($data) ? 'green' : 'red' }}"
 
     new Chart(@json($element), {
         type: 'line',

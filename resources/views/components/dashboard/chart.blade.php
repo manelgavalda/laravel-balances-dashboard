@@ -9,9 +9,9 @@
                 @php($change = (end($data) - $prevTotal = prev($data)) / $prevTotal * 100)
 
                 <div @class([
-                    'text-sm font-semibold text-white px-1.5 rounded-full',
+                    'bg-red-700' => $change < 0,
                     'bg-green-700' => $change >= 0,
-                    'bg-red-700' => $change < 0
+                    'text-sm font-semibold text-white px-1.5 rounded-full'
                 ])>{{ number_format($change, 2) }}%</div>
             </div>
             <div id="dashboard-card-08-legend" class="grow ml-2 mb-1">
