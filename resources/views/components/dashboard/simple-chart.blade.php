@@ -11,8 +11,12 @@
             datasets: [{ data: @json($data) }]
         },
         options: {
+            elements: {
+                point:{
+                    radius: 0
+                }
+            },
             borderColor: color,
-            backgroundColor: color,
             plugins: { legend: { display: false }},
             scales: {
                 y: { ticks: { display: false } },
