@@ -140,7 +140,7 @@
                                 @php $change = ($weeklyFirst->balance - $weeklyLast->balance) / $weeklyFirst->balance * 100 @endphp
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
-                                    {{ number_format(($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price, 2) }}%
+                                    {{ number_format($change, 2) }}%
                                 </span>
                             @endif
                         </td>
@@ -149,7 +149,7 @@
                                 @php $change = ($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price @endphp
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
-                                    ${{ number_format(($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price, 2) }}
+                                    ${{ number_format($change, 2) }}
                                 </span>
                             @endif
                         </td>
