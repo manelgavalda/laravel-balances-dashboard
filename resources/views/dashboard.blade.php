@@ -137,12 +137,12 @@
 
                         <td class="p-2 text-right text-emerald-300">
                             @if($weeklyFirst->balance != $weeklyLast->balance)
-                                {{ number_format(($weeklyFirst->balance - $weeklyLast->balance) / $weeklyLast->balance * 100, 2) }}%
+                                {{ number_format(($weeklyFirst->balance - $weeklyLast->balance) / $weeklyFirst->balance * 100, 2) }}%
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
                             @if($weeklyFirst->balance != $weeklyLast->balance)
-                                ${{ number_format(($weeklyFirst->balance - $weeklyLast->balance) * $weeklyLast->price, 2) }}
+                                ${{ number_format(($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price, 2) }}
                             @endif
                         </td>
 
