@@ -97,7 +97,7 @@
             <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                 @foreach($tokens->first() as $token)
                     <tr>
-                        <td class="p-2 w-2/12 text-slate-800 dark:text-slate-100 pl-3">
+                        <td class="p-2 w-1/4 text-slate-800 dark:text-slate-100 pl-3">
                             {{ $token->pool }}
                         </td>
                         <td class="p-2 text-right text-yellow-300">
