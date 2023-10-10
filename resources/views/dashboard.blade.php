@@ -75,10 +75,10 @@
                         Total ETH
                     </th>
                     <th class="p-2 text-right">
-                        {{ $days }} D APY
+                        7 D APY
                     </th>
                     <th class="p-2 text-right">
-                        {{ $days }} D gain
+                        7 D gain
                     </th>
                     <th class="p-2 text-right">
                         30 D APY

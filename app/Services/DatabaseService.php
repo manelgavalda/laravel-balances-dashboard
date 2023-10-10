@@ -7,7 +7,6 @@ use PHPSupabase\Service;
 
 class DatabaseService
 {
-    const DAYS = 7;
     const NUMBER_OF_TOKENS = 15;
     const NUMBER_OF_BALANCES = 31;
 

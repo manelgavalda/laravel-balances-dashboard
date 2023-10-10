@@ -11,7 +11,6 @@ class ViewDashboard extends Controller
         $databaseService = new DatabaseService($supabaseConfig['api_key'], $supabaseConfig['url']);
 
         return view('dashboard', [
-            'days' => DatabaseService::DAYS,
             'tokens' => $databaseService->getTokens(),
             'balances' => $databaseService->getHistoricalBalances()
         ]);
