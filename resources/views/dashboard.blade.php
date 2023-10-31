@@ -164,7 +164,7 @@
                         @endphp
 
                         <td class="p-2 text-right text-emerald-300">
-                            @if($first && $last && $first->balance != $last->balance)
+                            @if($first?->balance && $last?->balance && $first->balance != $last->balance)
                                 @php($change = ($first->balance - $last->balance) / $first->balance * 100)
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
@@ -175,7 +175,7 @@
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
-                            @if($first && $last && $first->balance != $last->balance)
+                            @if($first?->balance && $last?->balance && $first->balance != $last->balance)
                                 @php($change = ($first->balance - $last->balance) * $first->price)
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
