@@ -18,6 +18,7 @@ class ViewDashboard extends Controller
             'balance' => $wiseService->getBalance(),
             'tokens' => $databaseService->getTokens(),
             'balances' => $databaseService->getHistoricalBalances(),
+            'transactions' => $wiseService->getLatestTransactions()
         ]);
     }
 }
