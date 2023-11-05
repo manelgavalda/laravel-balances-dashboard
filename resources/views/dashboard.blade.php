@@ -207,4 +207,27 @@
             </tbody>
         </table>
     </div>
+    <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
+        <header class="p-4 border-b border-slate-100 dark:border-slate-700">
+            <h2 class="font-semibold text-slate-800 dark:text-slate-100">Wise balance: {{ $balance }} EUR</h2>
+        </header>
+        <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
+            <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm cursor-pointer">
+                <tr>
+                    <th class="p-2 text-left pl-5">
+                        Name
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                @foreach($tokens->first() as $token)
+                    <tr>
+                        <td class="p-2 w-1/4 text-slate-800 dark:text-slate-100 pl-3">
+                            {{ $token->pool }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </x-app-layout>
