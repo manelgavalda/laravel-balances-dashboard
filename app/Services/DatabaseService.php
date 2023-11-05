@@ -19,8 +19,9 @@ class DatabaseService
 
     public function getHistoricalBalances()
     {
-        $balances = collect($this->executeHistoricalBalances())
-            ->reverse()->values();
+        $balances = collect(
+            $this->executeHistoricalBalances()
+        )->reverse()->values();
 
         return [
             'prices' => $balances->pluck('price')->toArray(),
@@ -34,8 +35,9 @@ class DatabaseService
 
     public function getTokens()
     {
-        return collect($this->executeTokens())
-            ->groupBy('created_at')->take(30);
+        return collect(
+            $this->executeTokens()
+        )->groupBy('created_at')->take(30);
     }
 
     protected function executeTokens()
