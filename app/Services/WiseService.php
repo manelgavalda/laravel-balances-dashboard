@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class WiseService
@@ -22,7 +23,11 @@ class WiseService
     {
         return collect(
             $this->getResult('activities', 1)->activities
-        );
+        )->map(function ($activity) {
+            $activity->createdOn = Carbon::parse($activity->createdOn)->diffForHumans();
+
+            return $activity;
+        });
     }
 
     protected function getResult($uri, $version)
