@@ -13,9 +13,20 @@ class WiseService
 
     public function getBalance()
     {
-        return Http::withToken($this->apiToken)->get(
-            "https://api.transferwise.com/v4/profiles/{$this->profileId}/balances",
-            ['types' => 'STANDARD']
-        )->object()[0]->amount->value;
+        return $this->getResult(
+            "balances?types=STANDARD", 4
+        )[0]->amount->value;
+    }
+
+    public function getLatestTransactions()
+    {
+        return collect(
+            $this->getResult('activities', 1)->activities
+        );
+    }
+
+    protected function getResult($uri, $version)
+    {
+        return Http::withToken($this->apiToken)->get("https://api.transferwise.com/v{$version}/profiles/{$this->profileId}/{$uri}")->object();
     }
 }

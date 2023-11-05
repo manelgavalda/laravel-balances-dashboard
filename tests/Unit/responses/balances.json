@@ -1,0 +1,31 @@
+[
+   {
+      "id":1,
+      "currency":"EUR",
+      "amount":{
+         "value":1000.00,
+         "currency":"EUR"
+      },
+      "reservedAmount":{
+         "value":0.00,
+         "currency":"EUR"
+      },
+      "cashAmount":{
+         "value":1000.00,
+         "currency":"EUR"
+      },
+      "totalWorth":{
+         "value":1000.00,
+         "currency":"EUR"
+      },
+      "type":"STANDARD",
+      "name":null,
+      "icon":null,
+      "investmentState":"NOT_INVESTED",
+      "creationTime":"2023-01-01T00:00:00.000Z",
+      "modificationTime":"2023-01-01T00:00:00.000Z",
+      "visible":true,
+      "primary":true,
+      "groupId":null
+   }
+]

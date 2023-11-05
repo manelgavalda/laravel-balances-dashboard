@@ -1,0 +1,155 @@
+{
+   "cursor":"1",
+   "activities":[
+      {
+         "id":"1",
+         "type":"CARD_PAYMENT",
+         "resource":{
+            "type":"CARD_TRANSACTION",
+            "id":"1"
+         },
+         "title":"<strong>Test Transaction</strong>",
+         "description":"test transaction description",
+         "primaryAmount":"12 USD",
+         "secondaryAmount":"10 EUR",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"2",
+         "type":"CASH_WITHDRAWAL",
+         "resource":{
+            "type":"CARD_TRANSACTION",
+            "id":"2"
+         },
+         "title":"<strong>Test Withdrawal</strong>",
+         "description":"test withdrawal description",
+         "primaryAmount":"300 USD",
+         "secondaryAmount":"250 EUR",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"3",
+         "type":"TRANSFER",
+         "resource":{
+            "type":"TRANSFER",
+            "id":"3"
+         },
+         "title":"<strong>Test transfer</strong>",
+         "description":"",
+         "primaryAmount":"<positive>+ 1,000.55 EUR</positive>",
+         "secondaryAmount":"",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"4",
+         "type":"BALANCE_CASHBACK",
+         "resource":{
+            "type":"BALANCE_CASHBACK",
+            "id":"4"
+         },
+         "title":"<strong>Balance cashback</strong>",
+         "description":"",
+         "primaryAmount":"<positive>+ 0.55 EUR</positive>",
+         "secondaryAmount":"",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"5",
+         "type":"CARD_PAYMENT",
+         "resource":{
+            "type":"CARD_TRANSACTION",
+            "id":"5"
+         },
+         "title":"<strong>Test Transaction</strong>",
+         "description":"test transaction description",
+         "primaryAmount":"12 USD",
+         "secondaryAmount":"10 EUR",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"6",
+         "type":"CARD_PAYMENT",
+         "resource":{
+            "type":"CARD_TRANSACTION",
+            "id":"6"
+         },
+         "title":"<strong>Test Transaction</strong>",
+         "description":"test transaction description",
+         "primaryAmount":"12 USD",
+         "secondaryAmount":"10 EUR",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"7",
+         "type":"CARD_PAYMENT",
+         "resource":{
+            "type":"CARD_TRANSACTION",
+            "id":"7"
+         },
+         "title":"<strong>Test Transaction</strong>",
+         "description":"test transaction description",
+         "primaryAmount":"13 USD",
+         "secondaryAmount":"11 EUR",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"8",
+         "type":"CARD_PAYMENT",
+         "resource":{
+            "type":"CARD_TRANSACTION",
+            "id":"8"
+         },
+         "title":"<strong>Declined Transaction</strong>",
+         "description":"Declined",
+         "primaryAmount":"11 USD",
+         "secondaryAmount":"",
+         "status":"CANCELLED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"9",
+         "type":"CARD_PAYMENT",
+         "resource":{
+            "type":"CARD_TRANSACTION",
+            "id":"9"
+         },
+         "title":"<strong>Test Transaction</strong>",
+         "description":"",
+         "primaryAmount":"33 USD",
+         "secondaryAmount":"30 EUR",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      },
+      {
+         "id":"10",
+         "type":"CARD_PAYMENT",
+         "resource":{
+            "type":"CARD_TRANSACTION",
+            "id":"10"
+         },
+         "title":"<strong>Test Transaction</strong>",
+         "description":"",
+         "primaryAmount":"35 USD",
+         "secondaryAmount":"32 EUR",
+         "status":"COMPLETED",
+         "createdOn":"2023-01-01T00:00:00.000Z",
+         "updatedOn":"2023-01-01T00:00:00.000Z"
+      }
+   ]
+}
