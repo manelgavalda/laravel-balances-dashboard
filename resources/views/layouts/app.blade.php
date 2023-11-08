@@ -15,10 +15,13 @@
         <link rel="preload" as="style" href="{{ vercel_asset('build/assets/app.css')}}">
         <link rel="modulepreload" href="{{ vercel_asset('build/assets/app2.js') }}">
         <link rel="stylesheet" href="{{ vercel_asset('build/assets/app.css')}}">
-        <script type="module" src="{{ vercel_asset('build/assets/app2.js') }}"></script>
+        @livewireStyles
 
+        <script type="module" src="{{ vercel_asset('build/assets/app2.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+        @livewireScripts
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-slate-700">
