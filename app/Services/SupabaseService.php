@@ -14,13 +14,13 @@ class SupabaseService
 
     public function getTokens()
     {
-        return $this->getResult('balances?select=pool,price,price_eur,balance,parent,created_at&limit=450&order=created_at.desc')
+        return $this->getResult('balances?select=pool,price,price_eur,balance,parent,created_at&limit=450')
             ->groupBy('created_at')->take(30);
     }
 
     public function getHistoricalBalances()
     {
-        $balances = $this->getResult('totals?select=price,price_eur,balance,created_at&limit=31&order=created_at.desc')
+        $balances = $this->getResult('totals?select=price,price_eur,balance,created_at&limit=31')
             ->reverse()->values();
 
         return [
@@ -35,6 +35,6 @@ class SupabaseService
 
     protected function getResult($uri)
     {
-        return collect(Http::withHeaders(['apikey' => $this->apiKey])->get("{$this->url}/rest/v1/{$uri}")->object());
+        return collect(Http::withHeaders(['apikey' => $this->apiKey])->get("{$this->url}/rest/v1/{$uri}&order=created_at.desc")->object());
     }
 }
