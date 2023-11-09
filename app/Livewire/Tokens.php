@@ -30,5 +30,8 @@ class Tokens extends Component
         $this->tokens->prepend(
             collect($tokens)->sortBy(fn ($token) => $token->price * $token->balance)
         );
+
+        $this->balances['totals'][] = collect($tokens)->sum(fn ($token) => $token->price * $token->balance);
+        $this->balances['totals_eur'][] = collect($tokens)->sum(fn ($token) => $token->price_eur * $token->balance);
     }
 }
