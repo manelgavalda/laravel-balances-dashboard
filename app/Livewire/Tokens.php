@@ -12,7 +12,9 @@ class Tokens extends Component
 
     public function mount()
     {
-        $this->tokens = (new SupabaseService(config('supabase.api_key'), config('supabase.url')))->getTokens();
-        $this->balances = (new SupabaseService(config('supabase.api_key'), config('supabase.url')))->getHistoricalBalances();
+        $supabaseService = (new SupabaseService(config('supabase.api_key'), config('supabase.url')));
+
+        $this->tokens = $supabaseService->getTokens();
+        $this->balances = $supabaseService->getHistoricalBalances();
     }
 }

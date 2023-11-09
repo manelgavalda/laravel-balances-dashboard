@@ -1,50 +1,48 @@
 <div>
-    @if($balances)
-        <div class="flex">
-            <div class="w-1/3">
-                <x-dashboard.chart
-                    label="EUR Price"
-                    element="prices_eur"
-                    :dates="$balances['dates']"
-                    :data="$balances['prices_eur']"
-                    :total="number_format(end($balances['prices_eur']), 2, ',', '.') . '€'"
-                />
-                <x-dashboard.chart
-                    label="USD Price"
-                    element="price_usd"
-                    :dates="$balances['dates']"
-                    :data="$balances['prices']"
-                    :total="'$' . number_format(end($balances['prices']), 2, ',', '.')"
-                />
-            </div>
-            <div class="w-1/3">
-                <x-dashboard.chart
-                    color="blue"
-                    label="Total ETH"
-                    element="total_eth"
-                    :dates="$balances['dates']"
-                    :data="$balances['ethereum']"
-                    :total="number_format(end($balances['ethereum']), 2, ',', '.')"
-                />
-            </div>
-            <div class="w-1/3">
-                <x-dashboard.chart
-                    label="Total EUR"
-                    element="total_eur"
-                    :dates="$balances['dates']"
-                    :data="$balances['totals_eur']"
-                    :total="number_format(end($balances['totals_eur']), 2, ',', '.') . '€'"
-                />
-                <x-dashboard.chart
-                    label="Total USD"
-                    element="total_usd"
-                    :data="$balances['totals']"
-                    :dates="$balances['dates']"
-                    :total="'$' . number_format(end($balances['totals']), 2, ',', '.')"
-                />
-            </div>
+    <div class="flex">
+        <div class="w-1/3">
+            <x-dashboard.chart
+                label="EUR Price"
+                element="prices_eur"
+                :dates="$balances['dates']"
+                :data="$balances['prices_eur']"
+                :total="number_format(end($balances['prices_eur']), 2, ',', '.') . '€'"
+            />
+            <x-dashboard.chart
+                label="USD Price"
+                element="price_usd"
+                :dates="$balances['dates']"
+                :data="$balances['prices']"
+                :total="'$' . number_format(end($balances['prices']), 2, ',', '.')"
+            />
         </div>
-    @endif
+        <div class="w-1/3">
+            <x-dashboard.chart
+                color="blue"
+                label="Total ETH"
+                element="total_eth"
+                :dates="$balances['dates']"
+                :data="$balances['ethereum']"
+                :total="number_format(end($balances['ethereum']), 2, ',', '.')"
+            />
+        </div>
+        <div class="w-1/3">
+            <x-dashboard.chart
+                label="Total EUR"
+                element="total_eur"
+                :dates="$balances['dates']"
+                :data="$balances['totals_eur']"
+                :total="number_format(end($balances['totals_eur']), 2, ',', '.') . '€'"
+            />
+            <x-dashboard.chart
+                label="Total USD"
+                element="total_usd"
+                :data="$balances['totals']"
+                :dates="$balances['dates']"
+                :total="'$' . number_format(end($balances['totals']), 2, ',', '.')"
+            />
+        </div>
+    </div>
     <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
         <header class="p-4 border-b border-slate-100 dark:border-slate-700">
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Balances</h2>
@@ -101,7 +99,7 @@
             </thead>
             <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                 @foreach($tokens->first() as $token)
-                    <tr :wire:key="$token->pool">
+                    <tr wire:key="{{ $token->pool }}">
                         <td class="p-2 w-1/4 text-slate-800 dark:text-slate-100 pl-3">
                             {{ $token->pool }}
                         </td>
@@ -135,31 +133,31 @@
                             {{ number_format($token->price * $token->balance / end($balances['prices']), 3) }}
                         </td>
                         <td class="p-2 text-right text-emerald-300" wire:ignore>
-                            {{-- @php --}}
-                            {{--     $weeklyLast = $tokens->take(7)->last()->firstWhere('pool', $token->pool); --}}
-                            {{--     $weeklyFirst = $tokens->take(7)->first()->firstWhere('pool', $token->pool); --}}
-                            {{-- @endphp --}}
+                            @php
+                                $weeklyLast = $tokens->take(7)->last()->firstWhere('pool', $token->pool);
+                                $weeklyFirst = $tokens->take(7)->first()->firstWhere('pool', $token->pool);
+                            @endphp
 
-                            {{-- @if($weeklyFirst->balance != $weeklyLast->balance) --}}
-                            {{--     @php $change = ($weeklyFirst->balance - $weeklyLast->balance) / $weeklyFirst->balance * 100 @endphp --}}
+                            @if($weeklyFirst->balance != $weeklyLast->balance)
+                                @php $change = ($weeklyFirst->balance - $weeklyLast->balance) / $weeklyFirst->balance * 100 @endphp
 
-                            {{--     <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])> --}}
-                            {{--         {{ number_format($change, 2) }}% --}}
-                            {{--     </span> --}}
-                            {{-- @else --}}
-                            {{--     - --}}
-                            {{-- @endif --}}
+                                <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
+                                    {{ number_format($change, 2) }}%
+                                </span>
+                            @else
+                                -
+                            @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300" wire:ignore>
-                            {{-- @if($weeklyFirst->balance != $weeklyLast->balance) --}}
-                            {{--     @php $change = ($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price @endphp --}}
+                            @if($weeklyFirst->balance != $weeklyLast->balance)
+                                @php $change = ($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price @endphp
 
-                            {{--     <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])> --}}
-                            {{--         ${{ number_format($change, 2) }} --}}
-                            {{--     </span> --}}
-                            {{-- @else --}}
-                            {{--     - --}}
-                            {{-- @endif --}}
+                                <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
+                                    ${{ number_format($change, 2) }}
+                                </span>
+                            @else
+                                -
+                            @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
                             @php
@@ -209,4 +207,3 @@
         </table>
     </div>
 </div>
-
