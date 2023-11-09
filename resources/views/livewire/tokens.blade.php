@@ -46,8 +46,44 @@
     <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
         <header class="p-4 border-b border-slate-100 dark:border-slate-700">
             <h2 class="font-semibold text-slate-800 dark:text-slate-100">Balances</h2>
-            <button wire:click="refreshTokens">
-                Refresh Tokens
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center" wire:click="reloadTokens" wire:loading.attr="disabled" wire:loading.class="bg-gray-400">
+                <svg wire:loading width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                    <g fill="none" fill-rule="evenodd" stroke-width="2">
+                    <circle cx="22" cy="22" r="1">
+                    <animate attributeName="r"
+                             begin="0s" dur="1.8s"
+                                        values="1; 20"
+                                        calcMode="spline"
+                                        keyTimes="0; 1"
+                                        keySplines="0.165, 0.84, 0.44, 1"
+                                        repeatCount="indefinite" />
+                    <animate attributeName="stroke-opacity"
+                             begin="0s" dur="1.8s"
+                                        values="1; 0"
+                                        calcMode="spline"
+                                        keyTimes="0; 1"
+                                        keySplines="0.3, 0.61, 0.355, 1"
+                                        repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="22" cy="22" r="1">
+                    <animate attributeName="r"
+                             begin="-0.9s" dur="1.8s"
+                                           values="1; 20"
+                                           calcMode="spline"
+                                           keyTimes="0; 1"
+                                           keySplines="0.165, 0.84, 0.44, 1"
+                                           repeatCount="indefinite" />
+                    <animate attributeName="stroke-opacity"
+                             begin="-0.9s" dur="1.8s"
+                                           values="1; 0"
+                                           calcMode="spline"
+                                           keyTimes="0; 1"
+                                           keySplines="0.3, 0.61, 0.355, 1"
+                                           repeatCount="indefinite" />
+                    </circle>
+                    </g>
+                </svg>
+                <span>Refresh</span>
             </button>
         </header>
         <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
