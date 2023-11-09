@@ -27,5 +27,6 @@ it('exists_on_the_page', function() {
 
 it('tokens_are_correctly_set', function () {
     Livewire::test(Tokens::class)
-        ->assertViewHas('tokens');
+        ->assertViewHas('tokens')
+        ->assertDispatched('tokens-loaded');
 });
