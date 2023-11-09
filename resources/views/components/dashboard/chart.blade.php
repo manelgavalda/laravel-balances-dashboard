@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div>
+    <div wire:ignore>
         <canvas id="{{ $element }}" height="120%"></canvas>
     </div>
 </div>
