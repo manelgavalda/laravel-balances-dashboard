@@ -2,7 +2,7 @@
 
 use Carbon\Carbon;
 use App\Services\SupabaseService;
-use Illuminate\Support\Facades\File;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 
 uses()->group('supabase');
@@ -14,16 +14,16 @@ expect()->extend('toBeParsed', function () {
 });
 
 beforeEach(function () {
-    $config = config('supabase');
+    $this->databaseService = new SupabaseService('fake-api-key', 'https://fake-url.supabase.co');
 
-    $this->databaseService = new SupabaseService($config['api_key'], $config['url']);
-
-    Http::fake(["https://nwhfcbwwhkaeylyynngp.supabase.co/rest/v1/totals?select=price,price_eur,balance,created_at&limit=31&order=created_at.desc" => Http::response(
-        File::get(base_path() . "/tests/Unit/responses/totals.json")
-    )]);
+    fakeRequest('https://fake-url.supabase.co/rest/v1/totals?select=price,price_eur,balance,created_at&limit=31&order=created_at.desc', 'totals');
 
     $this->balances = $this->databaseService->getHistoricalBalances();
 });
+
+afterEach(fn () => Http::assertSent(fn (Request $request) =>
+    $request->hasHeader('apikey', 'fake-api-key')
+));
 
 test('you_can_get_the_historical_balances_from_supabase', function () {
     expect($dates = $this->balances['dates'])->toBeParsed();
@@ -43,9 +43,7 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
 });
 
 test('you_can_get_the_tokens_from_supabase', function () {
-    Http::fake(["https://nwhfcbwwhkaeylyynngp.supabase.co/rest/v1/balances?select=pool,price,price_eur,balance,parent,created_at&limit=450&order=created_at.desc" => Http::response(
-        File::get(base_path() . "/tests/Unit/responses/tokens.json")
-    )]);
+    fakeRequest('https://fake-url.supabase.co/rest/v1/balances?select=pool,price,price_eur,balance,parent,created_at&limit=450&order=created_at.desc', 'tokens');
 
     $tokens = $this->databaseService->getTokens();
 
