@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'api_url' => env('TOKENS_API_URL'),
+    'api_url' => env('TOKENS_API_URL')
 ];
