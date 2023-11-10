@@ -55,11 +55,11 @@ it('refreshes_the_tokens_when_the_event_is_called', function () {
             $tokens->get(0) == $newTokens &&
             $tokens->get(1) == $oldTokens->get(1)
         )->assertSet('balances', fn ($balances) =>
-            end($oldBalances['prices']) == $balances['prices'][count($balances['prices']) - 2]
-            && end($balances['prices']) == $result->ethereumPrice->usd
-            && end($balances['prices_eur']) == $result->ethereumPrice->eur
-            && end($balances['totals']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance)
-            && round(end($balances['totals_eur']), 9) == round(collect($newTokens)->sum(fn ($token) => $token->price_eur * $token->balance), 9)
-            && end($balances['ethereum']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance / $result->ethereumPrice->usd)
+            end($oldBalances['prices']) == $balances['prices'][count($balances['prices']) - 2] &&
+            end($balances['prices']) == $result->ethereumPrice->usd &&
+            end($balances['prices_eur']) == $result->ethereumPrice->eur &&
+            end($balances['totals']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance) &&
+            round(end($balances['totals_eur']), 9) == round(collect($newTokens)->sum(fn ($token) => $token->price_eur * $token->balance), 9) &&
+            end($balances['ethereum']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance / $result->ethereumPrice->usd)
         );
 });
