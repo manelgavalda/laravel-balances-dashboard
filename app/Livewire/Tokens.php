@@ -29,6 +29,8 @@ class Tokens extends Component
 
         $tokens = $result->balances;
 
+        $this->tokens->shift();
+
         $this->tokens->prepend(
             collect($tokens)->sortBy(fn ($token) => $token->price * $token->balance)
         );

@@ -4,6 +4,7 @@ use App\Models\User;
 use Livewire\Livewire;
 use App\Livewire\Tokens;
 use App\Services\SupabaseService;
+use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
     config([
@@ -39,20 +40,28 @@ it('refreshes_the_tokens_when_the_event_is_called', function () {
 
     fakeRequest('https://fake-tokens-url.com', 'new_tokens');
 
-    Livewire::test(Tokens::class)
-        ->assertViewHasAll(tokenAndBalances(30, 31))
-        ->dispatch('tokens-loaded')
-        ->assertViewHasAll(tokenAndBalances(31, 32));
-});
+    $result = Http::get(config('tokens.api_url'))->object();
 
-function tokenAndBalances($tokensCount, $balancesCount)
-{
-    return [
-        'tokens' => fn ($tokens) => count($tokens) == $tokensCount,
-        'balances' => fn ($balances) => count($balances['prices']) == $balancesCount
-            && count($balances['totals']) == $balancesCount
-            && count($balances['ethereum']) == $balancesCount
-            && count($balances['prices_eur']) == $balancesCount
-            && count($balances['totals_eur']) == $balancesCount
-    ];
-}
+    $newTokens = $result->balances;
+
+    $supabaseService = new SupabaseService('fake-api-key', 'https://fake-url.supabase.co');
+
+    $oldTokens = $supabaseService->getTokens();
+    $oldBalances = $supabaseService->getHistoricalBalances();
+
+    Livewire::test(Tokens::class)
+        ->dispatch('tokens-loaded')
+        ->assertSet('tokens', fn ($tokens) =>
+            count($tokens) == count($oldTokens)
+            && $newTokens[0] == $tokens->first()->get(0)
+            && $oldTokens->get(0) != $tokens->get(0)
+            && $oldTokens->get(1) == $tokens->get(1)
+        )->assertSet('balances', fn ($balances) =>
+            end($oldBalances['prices']) == $balances['prices'][count($balances['prices']) - 2]
+            && end($balances['prices']) == $result->ethereumPrice->usd
+            && end($balances['prices_eur']) == $result->ethereumPrice->eur
+            && end($balances['totals']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance)
+            && end($balances['totals_eur']) == collect($newTokens)->sum(fn ($token) => $token->price_eur * $token->balance)
+            && end($balances['ethereum']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance / $result->ethereumPrice->usd)
+        );
+});
