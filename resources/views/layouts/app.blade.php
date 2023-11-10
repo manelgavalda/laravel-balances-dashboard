@@ -15,6 +15,7 @@
         <link rel="preload" as="style" href="{{ vercel_asset('build/assets/app.css')}}">
         <link rel="modulepreload" href="{{ vercel_asset('build/assets/app2.js') }}">
         <link rel="stylesheet" href="{{ vercel_asset('build/assets/app.css')}}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         @livewireStyles
 
         <script type="module" src="{{ vercel_asset('build/assets/app2.js') }}"></script>
