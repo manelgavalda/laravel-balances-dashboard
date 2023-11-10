@@ -15,13 +15,13 @@ afterEach(fn () => Http::assertSent(fn (Request $request) =>
     $request->hasHeader('Authorization', 'Bearer fake_api_token')
 ));
 
-test('you_can_get_your_balance', function () {
+it('retrieves_the_total_balance', function () {
     fakeRequest('https://api.transferwise.com/v4/profiles/fake_profile_id/balances?types=STANDARD', 'balances');
 
     expect($this->wiseService->getBalance())->toBe(1000.0);
 });
 
-test('you_can_get_your_latest_transactions', function () {
+it('retrieves_the_latest_transactions', function () {
     Carbon::setTestNow('2023-01-02');
 
     fakeRequest('https://api.transferwise.com/v1/profiles/fake_profile_id/activities', 'latest_transactions');

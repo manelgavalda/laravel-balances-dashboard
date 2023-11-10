@@ -25,7 +25,7 @@ afterEach(fn () => Http::assertSent(fn (Request $request) =>
     $request->hasHeader('apikey', 'fake-api-key')
 ));
 
-test('you_can_get_the_historical_balances_from_supabase', function () {
+it('retrieves_the_historical_balances', function () {
     expect($dates = $this->balances['dates'])->toBeParsed();
     expect($totals = $this->balances['totals'])->toBeParsed();
     expect($prices = $this->balances['prices'])->toBeParsed();
@@ -42,7 +42,7 @@ test('you_can_get_the_historical_balances_from_supabase', function () {
     expect(end($dates))->toStartWith($lastDate->shortMonthName)->toEndWith($lastDate->day);
 });
 
-test('you_can_get_the_tokens_from_supabase', function () {
+it('retrieves_the_tokens', function () {
     fakeRequest('https://fake-url.supabase.co/rest/v1/balances?select=pool,price,price_eur,balance,parent,created_at&limit=450&order=created_at.desc', 'tokens');
 
     $tokens = $this->databaseService->getTokens();
