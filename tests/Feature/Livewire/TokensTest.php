@@ -34,7 +34,7 @@ it('dispatches_an_event_when_tokens_are_loaded', function () {
         ->assertSet('balances', $supabaseService->getHistoricalBalances());
 });
 
-it('tokens_are_refreshed_when_the_event_is_called', function () {
+it('refreshes_the_tokens_when_the_event_is_called', function () {
     config(['tokens.api_url' => 'https://fake-tokens-url.com']);
 
     fakeRequest('https://fake-tokens-url.com', 'new_tokens');
