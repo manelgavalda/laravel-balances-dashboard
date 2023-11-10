@@ -1,0 +1,101 @@
+{
+   "balances":[
+      {
+         "pool":"Token 6",
+         "price":2074.88,
+         "price_eur":1942.25,
+         "balance":0.004078315527207583
+      },
+      {
+         "pool":"Token 9",
+         "price":1.13,
+         "price_eur":1.062,
+         "balance":7000
+      },
+      {
+         "pool":"Token 2",
+         "price":2074.88,
+         "price_eur":1942.25,
+         "balance":0.002382175250036868
+      },
+      {
+         "pool":"Token 1",
+         "price":1.65,
+         "price_eur":1.55,
+         "balance":103.3593082948141
+      },
+      {
+         "pool":"Token 11",
+         "price":2.24,
+         "price_eur":2.1,
+         "balance":245.37090418591836
+      },
+      {
+         "pool":"Token 4",
+         "price":1994980.3255706767,
+         "price_eur":1867455.3340406618,
+         "balance":0
+      },
+      {
+         "pool":"Token 5",
+         "price":2074.88,
+         "price_eur":1942.25,
+         "balance":0.05213835262402924
+      },
+      {
+         "pool":"Token 14",
+         "price":0.999868,
+         "price_eur":0.935953,
+         "balance":129.513934
+      },
+      {
+         "pool":"Token 13",
+         "price":2074.88,
+         "price_eur":1942.25,
+         "balance":10.72073036
+      },
+      {
+         "pool":"Token 7",
+         "price":6.8,
+         "price_eur":6.37,
+         "balance":34.36476725975825,
+         "parent":"Token 15"
+      },
+      {
+         "pool":"Token 8",
+         "price":0.571653,
+         "price_eur":0.535111,
+         "balance":374.85899681599767,
+         "parent":"Token 15"
+      },
+      {
+         "pool":"Token 3",
+         "price":3.7,
+         "price_eur":3.47,
+         "balance":7.437910160047613,
+         "parent":"Token 15"
+      },
+      {
+         "pool":"Token 15",
+         "price":2074.88,
+         "price_eur":1942.25,
+         "balance":17.351891141359467
+      },
+      {
+         "pool":"Token 10",
+         "price":0.556324,
+         "price_eur":0.520762,
+         "balance":460.0607141184403
+      },
+      {
+         "pool":"Token 12",
+         "price":3.7,
+         "price_eur":3.47,
+         "balance":127.80157438718044
+      }
+   ],
+   "ethereumPrice":{
+      "usd":2074.88,
+      "eur":1942.25
+   }
+}
