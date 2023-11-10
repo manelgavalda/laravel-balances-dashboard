@@ -40,30 +40,20 @@ it('refreshes_the_tokens_when_the_event_is_called', function () {
     fakeRequest('https://fake-tokens-url.com', 'new_tokens');
 
     Livewire::test(Tokens::class)
-        ->assertViewHas('tokens', function ($tokens) {
-            expect(count($tokens))->toBe(30);
-
-            return true;
-        })->assertViewHas('balances', function ($balances) {
-            expect(count($balances['prices']))->toBe(31);
-            expect(count($balances['totals']))->toBe(31);
-            expect(count($balances['ethereum']))->toBe(31);
-            expect(count($balances['prices_eur']))->toBe(31);
-            expect(count($balances['totals_eur']))->toBe(31);
-
-            return true;
-        })->dispatch('tokens-loaded')
-        ->assertViewHas('tokens', function ($tokens) {
-            expect(count($tokens))->toBe(31);
-
-            return true;
-        })->assertViewHas('balances', function ($balances) {
-            expect(count($balances['prices']))->toBe(32);
-            expect(count($balances['totals']))->toBe(32);
-            expect(count($balances['ethereum']))->toBe(32);
-            expect(count($balances['prices_eur']))->toBe(32);
-            expect(count($balances['totals_eur']))->toBe(32);
-
-            return true;
-        });
+        ->assertViewHasAll([
+            'tokens' => fn ($tokens) => count($tokens) == 30,
+            'balances' => fn ($balances) => count($balances['prices']) == 31
+                && count($balances['totals']) == 31
+                && count($balances['ethereum']) == 31
+                && count($balances['prices_eur']) == 31
+                && count($balances['totals_eur']) == 31
+        ])->dispatch('tokens-loaded')
+        ->assertViewHasAll([
+            'tokens' => fn ($tokens) => count($tokens) == 31,
+            'balances' => fn ($balances) => count($balances['prices']) == 32
+                && count($balances['totals']) == 32
+                && count($balances['ethereum']) == 32
+                && count($balances['prices_eur']) == 32
+                && count($balances['totals_eur']) == 32
+        ]);
 });
