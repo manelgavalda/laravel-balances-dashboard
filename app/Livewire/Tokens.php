@@ -32,7 +32,7 @@ class Tokens extends Component
         $this->tokens->shift();
 
         $this->tokens->prepend(
-            collect($tokens)->sortBy(fn ($token) => $token->price * $token->balance)
+            collect($tokens)->sortBy(fn ($token) => $token->price * $token->balance)->values()
         );
 
         $this->balances['prices'][] = $result->ethereumPrice->usd;

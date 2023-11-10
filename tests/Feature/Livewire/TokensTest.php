@@ -42,7 +42,7 @@ it('refreshes_the_tokens_when_the_event_is_called', function () {
 
     $result = Http::get(config('tokens.api_url'))->object();
 
-    $newTokens = $result->balances;
+    $newTokens = collect($result->balances)->sortBy(fn ($token) => $token->price * $token->balance)->values();
 
     $supabaseService = new SupabaseService('fake-api-key', 'https://fake-url.supabase.co');
 
@@ -52,16 +52,14 @@ it('refreshes_the_tokens_when_the_event_is_called', function () {
     Livewire::test(Tokens::class)
         ->dispatch('tokens-loaded')
         ->assertSet('tokens', fn ($tokens) =>
-            count($tokens) == count($oldTokens)
-            && $newTokens[0] == $tokens->first()->get(0)
-            && $oldTokens->get(0) != $tokens->get(0)
-            && $oldTokens->get(1) == $tokens->get(1)
+            $tokens->get(0) == $newTokens &&
+            $tokens->get(1) == $oldTokens->get(1)
         )->assertSet('balances', fn ($balances) =>
             end($oldBalances['prices']) == $balances['prices'][count($balances['prices']) - 2]
             && end($balances['prices']) == $result->ethereumPrice->usd
             && end($balances['prices_eur']) == $result->ethereumPrice->eur
             && end($balances['totals']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance)
-            && end($balances['totals_eur']) == collect($newTokens)->sum(fn ($token) => $token->price_eur * $token->balance)
+            && round(end($balances['totals_eur']), 9) == round(collect($newTokens)->sum(fn ($token) => $token->price_eur * $token->balance), 9)
             && end($balances['ethereum']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance / $result->ethereumPrice->usd)
         );
 });
