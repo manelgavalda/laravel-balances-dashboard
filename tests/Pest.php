@@ -47,6 +47,6 @@ expect()->extend('toBeOne', function () {
 
 function fakeRequest($url, $file) {
     Http::fake([$url => Http::response(
-        File::get(base_path() . "/tests/Unit/responses/{$file}.json")
+        File::get(base_path() . "/tests/responses/{$file}.json")
     )]);
 }
