@@ -40,20 +40,19 @@ it('refreshes_the_tokens_when_the_event_is_called', function () {
     fakeRequest('https://fake-tokens-url.com', 'new_tokens');
 
     Livewire::test(Tokens::class)
-        ->assertViewHasAll([
-            'tokens' => fn ($tokens) => count($tokens) == 30,
-            'balances' => fn ($balances) => count($balances['prices']) == 31
-                && count($balances['totals']) == 31
-                && count($balances['ethereum']) == 31
-                && count($balances['prices_eur']) == 31
-                && count($balances['totals_eur']) == 31
-        ])->dispatch('tokens-loaded')
-        ->assertViewHasAll([
-            'tokens' => fn ($tokens) => count($tokens) == 31,
-            'balances' => fn ($balances) => count($balances['prices']) == 32
-                && count($balances['totals']) == 32
-                && count($balances['ethereum']) == 32
-                && count($balances['prices_eur']) == 32
-                && count($balances['totals_eur']) == 32
-        ]);
+        ->assertViewHasAll(tokenAndBalances(30, 31))
+        ->dispatch('tokens-loaded')
+        ->assertViewHasAll(tokenAndBalances(31, 32));
 });
+
+function tokenAndBalances($tokensCount, $balancesCount)
+{
+    return [
+        'tokens' => fn ($tokens) => count($tokens) == $tokensCount,
+        'balances' => fn ($balances) => count($balances['prices']) == $balancesCount
+            && count($balances['totals']) == $balancesCount
+            && count($balances['ethereum']) == $balancesCount
+            && count($balances['prices_eur']) == $balancesCount
+            && count($balances['totals_eur']) == $balancesCount
+    ];
+}
