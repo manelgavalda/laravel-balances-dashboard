@@ -44,8 +44,7 @@ it('tokens_are_refreshed_when_the_event_is_called', function () {
             expect(count($tokens))->toBe(30);
 
             return true;
-        })
-        ->assertViewHas('balances', function ($balances) {
+        })->assertViewHas('balances', function ($balances) {
             expect(count($balances['prices']))->toBe(31);
             expect(count($balances['totals']))->toBe(31);
             expect(count($balances['ethereum']))->toBe(31);
@@ -53,14 +52,12 @@ it('tokens_are_refreshed_when_the_event_is_called', function () {
             expect(count($balances['totals_eur']))->toBe(31);
 
             return true;
-        })
-        ->dispatch('tokens-loaded')
+        })->dispatch('tokens-loaded')
         ->assertViewHas('tokens', function ($tokens) {
             expect(count($tokens))->toBe(31);
 
             return true;
-        })
-        ->assertViewHas('balances', function ($balances) {
+        })->assertViewHas('balances', function ($balances) {
             expect(count($balances['prices']))->toBe(32);
             expect(count($balances['totals']))->toBe(32);
             expect(count($balances['ethereum']))->toBe(32);
