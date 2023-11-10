@@ -25,7 +25,7 @@ class Tokens extends Component
     #[On('tokens-loaded')]
     public function reloadTokens()
     {
-        $result = Http::get("https://nuxt-test-tau-eosin.vercel.app/api/balances?token=M9yrAdZIxvwQM2Lq9OxCixzh!QSpL=sqYF!ocTnw9OS6VRITwooEiCrSuc!-CVVd")->object();
+        $result = Http::get(config('tokens.api_url'))->object();
 
         $tokens = $result->balances;
 
