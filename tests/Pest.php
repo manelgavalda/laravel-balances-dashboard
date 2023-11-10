@@ -1,8 +1,8 @@
 <?php
 
+use Tests\TestCase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /*
