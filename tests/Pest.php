@@ -1,6 +1,8 @@
 <?php
 
 use Tests\TestCase;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /*
@@ -43,7 +45,8 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
-    // ..
+function fakeRequest($url, $file) {
+    Http::fake([$url => Http::response(
+        File::get(base_path() . "/tests/Unit/responses/{$file}.json")
+    )]);
 }

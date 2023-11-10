@@ -5,27 +5,6 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <div x-data="{
-                        ethereumPrice: {
-                            usd: 0,
-                            eur: 0
-                        },
-                        async retrievePrices() {
-                            const refreshPrice = async () => this.ethereumPrice = (await (await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd,eur')).json()).ethereum
-
-                            refreshPrice()
-                            setInterval(refreshPrice, 30000);
-                        }
-                    }" x-init="retrievePrices" class="mr-2 text-sm text-white">
-                        <div class="flex justify-between">
-                            <p x-text="ethereumPrice.eur.toFixed(2)"></p>
-                            &nbsp;<p>EUR</p>
-                        </div>
-                        <div class="flex justify-between">
-                            <p x-text="ethereumPrice.usd.toFixed(2)"></p>
-                            &nbsp;<p>USD</p>
-                        </div>
-                    </div>
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
