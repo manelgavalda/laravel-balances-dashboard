@@ -2,9 +2,8 @@
 
 use App\Models\User;
 use Livewire\Livewire;
+use Carbon\CarbonPeriod;
 use App\Livewire\Tokens;
-use App\Services\SupabaseService;
-use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
     config([
@@ -26,40 +25,37 @@ it('exists_on_the_page', function() {
     $this->get('/')->assertSeeLivewire(Tokens::class);
 });
 
-it('dispatches_an_event_when_tokens_are_loaded', function () {
-    $supabaseService = new SupabaseService('fake-api-key', 'https://fake-url.supabase.co');
-
-    Livewire::test(Tokens::class)
-        ->assertDispatched('tokens-loaded')
-        ->assertSet('tokens', $supabaseService->getTokens())
-        ->assertSet('balances', $supabaseService->getHistoricalBalances());
-});
-
 it('refreshes_the_tokens_when_the_event_is_called', function () {
+    $dates = collect(
+        CarbonPeriod::create('Oct 09', 'Nov 08')
+    )->map->format('M d')->toArray();
+
     config(['tokens.api_url' => 'https://fake-tokens-url.com']);
 
     fakeRequest('https://fake-tokens-url.com', 'new_tokens');
 
-    $result = Http::get(config('tokens.api_url'))->object();
-
-    $newTokens = collect($result->balances)->sortBy(fn ($token) => $token->price * $token->balance)->values();
-
-    $supabaseService = new SupabaseService('fake-api-key', 'https://fake-url.supabase.co');
-
-    $oldTokens = $supabaseService->getTokens();
-    $oldBalances = $supabaseService->getHistoricalBalances();
-
     Livewire::test(Tokens::class)
-        ->dispatch('tokens-loaded')
-        ->assertSet('tokens', fn ($tokens) =>
-            $tokens->get(0) == $newTokens &&
-            $tokens->get(1) == $oldTokens->get(1)
-        )->assertSet('balances', fn ($balances) =>
-            end($oldBalances['prices']) == $balances['prices'][count($balances['prices']) - 2] &&
-            end($balances['prices']) == $result->ethereumPrice->usd &&
-            end($balances['prices_eur']) == $result->ethereumPrice->eur &&
-            end($balances['totals']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance) &&
-            round(end($balances['totals_eur']), 9) == round(collect($newTokens)->sum(fn ($token) => $token->price_eur * $token->balance), 9) &&
-            end($balances['ethereum']) == collect($newTokens)->sum(fn ($token) => $token->price * $token->balance / $result->ethereumPrice->usd)
-        );
+        ->assertSet('tokens',  fn ($tokens) => $tokens->first()->first() == (object) [
+            'pool' => 'Token 4',
+            'price' => 2000000,
+            'price_eur' => 1800000,
+            'balance' => 0,
+            "parent" => null,
+            "created_at" => "2023-11-08T00:00:00.000000+00:00"
+        ])->assertSet('balances', fn ($balances) =>
+            $balances['dates'] == $dates && end($balances['prices']) == 1884.82
+        )->assertDispatched('tokens-loaded')
+         ->dispatch('tokens-loaded')
+         ->assertSet('tokens', fn ($tokens) => $tokens->first()->first() == (object) [
+             'pool' => 'Token 4',
+             'price' => 1000000,
+             'price_eur' => 900000,
+             'balance' => 0
+         ] && count($tokens) == 30)->assertSet('balances', fn ($balances) =>
+            end($balances['prices']) == 2074.88 &&
+            end($balances['prices_eur']) == 1942.25 &&
+            round(end($balances['totals']), 7) == 1150032.9456886 &&
+            round(end($balances['totals_eur']), 7) == 1076552.8135102 &&
+            round(end($balances['ethereum']), 7) == 554.2647988
+         );
 });

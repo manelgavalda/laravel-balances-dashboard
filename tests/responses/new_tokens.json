@@ -32,15 +32,15 @@
       },
       {
          "pool":"Token 4",
-         "price":1994980.3255706767,
-         "price_eur":1867455.3340406618,
+         "price":1000000,
+         "price_eur":900000,
          "balance":0
       },
       {
          "pool":"Token 5",
          "price":2074.88,
          "price_eur":1942.25,
-         "balance":0.05213835262402924
+         "balance":521.3835262402924
       },
       {
          "pool":"Token 14",
