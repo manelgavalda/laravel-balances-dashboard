@@ -27,12 +27,10 @@ class Tokens extends Component
     {
         $result = Http::get(config('tokens.api_url'))->object();
 
-        $tokens = collect($result->balances);
-
         $this->tokens->shift();
 
         $this->tokens->prepend(
-            $tokens->sortBy(fn ($token) => $token->price * $token->balance)
+            $tokens = collect($result->balances)->sortBy(fn ($token) => $token->price * $token->balance)
         );
 
         $this->balances['prices'][] = $result->ethereumPrice->usd;
