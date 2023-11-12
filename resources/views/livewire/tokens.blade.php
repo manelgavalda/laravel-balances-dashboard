@@ -138,7 +138,7 @@
                                 $weeklyFirst = $tokens->take(7)->first()->firstWhere('pool', $token->pool);
                             @endphp
 
-                            @if($weeklyFirst->balance != $weeklyLast->balance)
+                            @if(round($weeklyFirst->balance, 2) != round($weeklyLast->balance, 2))
                                 @php $change = ($weeklyFirst->balance - $weeklyLast->balance) / $weeklyFirst->balance * 100 @endphp
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
@@ -149,7 +149,7 @@
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300" wire:ignore>
-                            @if($weeklyFirst->balance != $weeklyLast->balance)
+                            @if(round($weeklyFirst->balance, 2) != round($weeklyLast->balance, 2))
                                 @php $change = ($weeklyFirst->balance - $weeklyLast->balance) * $weeklyFirst->price @endphp
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
@@ -164,7 +164,7 @@
                                 $last = $tokens->last()->firstWhere('pool', $token->pool);
                                 $first = $tokens->first()->firstWhere('pool', $token->pool);
                             @endphp
-                            @if($first?->balance && $last?->balance && $first->balance != $last->balance)
+                            @if($first?->balance && $last?->balance && round($first->balance, 2) != round($last->balance, 2))
                                 @php($change = ($first->balance - $last->balance) / $first->balance * 100)
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
@@ -175,7 +175,7 @@
                             @endif
                         </td>
                         <td class="p-2 text-right text-emerald-300">
-                            @if($first?->balance && $last?->balance && $first->balance != $last->balance)
+                            @if($first?->balance && $last?->balance && round($first->balance, 2) != round($last->balance, 2))
                                 @php($change = ($first->balance - $last->balance) * $first->price)
 
                                 <span @class(['text-green-500' => $change >= 0, 'text-red-500' => $change < 0])>
