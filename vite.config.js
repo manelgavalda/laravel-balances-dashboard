@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import vue from "@vitejs/plugin-vue";
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
@@ -10,6 +11,14 @@ export default defineConfig({
             ],
             refresh: true,
         }),
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        })
     ],
     build: {
         rollupOptions: {

@@ -15,7 +15,7 @@ class SupabaseService
     public function getTokens()
     {
         return $this->getResult('balances?select=pool,price,price_eur,balance,parent,created_at&limit=450')
-            ->sortBy(fn ($token) => $token->price * $token->balance)->groupBy('created_at')->take(30);
+            ->sortBy('pool')->groupBy('created_at')->take(30);
     }
 
     public function getHistoricalBalances()

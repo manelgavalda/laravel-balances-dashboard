@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\SupabaseService;
+use Inertia\Inertia;
+use App\Services\WiseService;
+
+class Dashboard extends Controller
+{
+    public function __invoke() {
+        $wiseService = new WiseService(config('wise.api_token'), config('wise.profile_id'));
+        $supabaseService = (new SupabaseService(config('supabase.api_key'), config('supabase.url')));
+
+        return Inertia::render('Dashboard', [
+            'balance' => $wiseService->getBalance(),
+            'tokens' => $supabaseService->getTokens()->toArray(),
+            'balances' => $supabaseService->getHistoricalBalances(),
+            'transactions' => $wiseService->getLatestTransactions(),
+        ]);
+    }
+}

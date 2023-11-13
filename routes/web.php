@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ViewDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,6 @@ if (!function_exists('vercel_asset'))   {
     }
 }
 
-Route::get('/', ViewDashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
