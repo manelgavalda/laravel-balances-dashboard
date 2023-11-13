@@ -14,7 +14,7 @@ class Dashboard extends Controller
 
         return Inertia::render('Dashboard', [
             'balance' => $wiseService->getBalance(),
-            'tokens' => $supabaseService->getTokens()->toArray(),
+            'tokens' => $supabaseService->getTokens(),
             'balances' => $supabaseService->getHistoricalBalances(),
             'transactions' => $wiseService->getLatestTransactions(),
         ]);

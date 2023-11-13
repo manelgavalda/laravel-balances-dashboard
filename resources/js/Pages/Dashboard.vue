@@ -67,7 +67,7 @@
           <td class="p-2 text-right text-red-300">
             ${{ parseFloat(token.price).toFixed(2) }}
           </td>
-          <td class="p-2 text-right">
+          <td class="p-2 text-right text-white">
             <span :class="{
               'text-red-500': getDailyChange(index, token.price) < 0,
               'text-green-500': getDailyChange(index, token.price) > 0
@@ -119,9 +119,9 @@
               }"
               :options="{
                 elements: {
-                    point:{
-                        radius: 0
-                    }
+                  point:{
+                    radius: 0
+                  }
                 },
                 plugins: { legend: { display: false }},
                 scales: {
@@ -144,9 +144,9 @@
               }"
               :options="{
                 elements: {
-                    point:{
-                        radius: 0
-                    }
+                  point:{
+                    radius: 0
+                  }
                 },
                 plugins: { legend: { display: false }},
                 scales: {
@@ -260,10 +260,10 @@
         return (this.first[index].balance - this.monthlyLast[index].balance) * this.first[index].price
       },
       getBalanceHistory(pool) {
-          return Object.values(this.tokens).flat().filter(token => token.pool == pool).reverse().map(token => token.balance)
+        return Object.values(this.tokens).flat().filter(token => token.pool == pool).reverse().map(token => token.balance)
       },
       getPriceHistory(pool) {
-          return Object.values(this.tokens).flat().filter(token => token.pool == pool).reverse().map(token => token.balance * token.price)
+        return Object.values(this.tokens).flat().filter(token => token.pool == pool).reverse().map(token => token.balance * token.price)
       }
     }
   }
