@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\SupabaseService;
 use Inertia\Inertia;
 use App\Services\WiseService;
+use App\Services\SupabaseService;
 
 class Dashboard extends Controller
 {
