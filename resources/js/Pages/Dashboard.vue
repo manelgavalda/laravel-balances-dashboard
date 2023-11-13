@@ -2,9 +2,9 @@
   <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
     <header class="p-4 border-b border-slate-100 dark:border-slate-700 inline-flex">
       <h2 class="font-semibold text-slate-800 dark:text-slate-100 mr-2">Balances</h2>
-      <!-- <button class="bg-gray-500 hover:bg-gray-700 font-bold py-2 px-4 rounded inline-flex items-center h-6" wire:loading.attr="disabled" wire:loading.class="bg-gray-700" x-on:click="$wire.call('reloadTokens')"> -->
-      <!--     <i class="fa fa-refresh" style="font-size:15px" wire:loading.class="animate-spin"></i> -->
-      <!-- </button> -->
+      <button class="bg-gray-500 hover:bg-gray-700 font-bold py-2 px-4 rounded inline-flex items-center h-6" :disabled="loading" :class="{ 'bg-gray-700': loading }" @click="refreshTokens" >
+        <i class="fa fa-refresh" style="font-size:15px" :class="{ 'animate-spin': loading }"></i>
+      </button>
     </header>
     <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
       <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm cursor-pointer">
@@ -54,7 +54,7 @@
         </tr>
       </thead>
       <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-        <tr v-for="(token, index) in Object.values(tokens)[0]">
+        <tr v-for="(token, index) in tokens[0]">
           <td class="p-2 text-slate-800 dark:text-slate-100 pl-3 w-1/3">
             {{ token.pool }}
           </td>
@@ -117,18 +117,7 @@
                   data: getBalanceHistory(token.pool),
                 }]
               }"
-              :options="{
-                elements: {
-                  point:{
-                    radius: 0
-                  }
-                },
-                plugins: { legend: { display: false }},
-                scales: {
-                  y: { ticks: { display: false } },
-                  x: { ticks: { display: false } }
-                }
-              }"
+              :options="chartOptions"
             />
           </td>
           <td class="p-2 w-2/12">
@@ -142,18 +131,7 @@
                   data: getPriceHistory(token.pool)
                 }]
               }"
-              :options="{
-                elements: {
-                  point:{
-                    radius: 0
-                  }
-                },
-                plugins: { legend: { display: false }},
-                scales: {
-                  y: { ticks: { display: false } },
-                  x: { ticks: { display: false } }
-                }
-              }"
+              :options="chartOptions"
             />
           </td>
         </tr>
@@ -231,39 +209,63 @@
     },
     data() {
       return {
-        weeklyLast: []
+        loading: false,
+        chartOptions: {
+          elements: {
+            point:{
+              radius: 0
+            }
+          },
+          plugins: { legend: { display: false }},
+          scales: {
+            y: { ticks: { display: false } },
+            x: { ticks: { display: false } }
+          }
+        }
       }
     },
     created() {
-      const tokens = Object.values(this.tokens)
+      this.refreshTokens()
 
-      this.first = tokens[0]
-      this.monthlyLast = tokens.splice(-1)[0]
-      this.weeklyLast = tokens.splice(0, 7).splice(-1)[0]
+      this.monthlyLast = this.tokens.splice(-1)[0]
+      this.weeklyLast = this.tokens.splice(0, 7).splice(-1)[0]
     },
     methods: {
       getDailyChange(index) {
         const prevPrice = Object.values(this.tokens)[1][index].price
 
-        return (this.first[index].price - prevPrice) / prevPrice * 100
+        return (this.tokens[0][index].price - prevPrice) / prevPrice * 100
       },
       getWeeklyApy(index) {
-        return ((this.first[index].balance - this.weeklyLast[index].balance) / this.first[index].balance) * 100
+        return ((this.tokens[0][index].balance - this.weeklyLast[index].balance) / this.tokens[0][index].balance) * 100
       },
       getWeeklyGain(index) {
-        return (this.first[index].balance - this.weeklyLast[index].balance) * this.first[index].price
+        return (this.tokens[0][index].balance - this.weeklyLast[index].balance) * this.tokens[0][index].price
       },
       getMonthlyApy(index) {
-        return ((this.first[index].balance - this.monthlyLast[index].balance) / this.first[index].balance) * 100
+        return ((this.tokens[0][index].balance - this.monthlyLast[index].balance) / this.tokens[0][index].balance) * 100
       },
       getMonthlyGain(index) {
-        return (this.first[index].balance - this.monthlyLast[index].balance) * this.first[index].price
+        return (this.tokens[0][index].balance - this.monthlyLast[index].balance) * this.tokens[0][index].price
       },
       getBalanceHistory(pool) {
-        return Object.values(this.tokens).flat().filter(token => token.pool == pool).reverse().map(token => token.balance)
+        return this.tokens.flat().filter(token => token.pool == pool).reverse().map(token => token.balance)
       },
       getPriceHistory(pool) {
-        return Object.values(this.tokens).flat().filter(token => token.pool == pool).reverse().map(token => token.balance * token.price)
+        return this.tokens.flat().filter(token => token.pool == pool).reverse().map(token => token.balance * token.price)
+      },
+      refreshTokens() {
+        this.loading = true
+
+        axios.get('api/get-tokens').then(({data}) => data.forEach(newToken => {
+          const token = this.tokens[0].find(token => token.pool == newToken.pool)
+
+          token.price = newToken.price
+          token.balance = newToken.balance
+          token.price_eur = newToken.price_eur
+
+          this.loading = false
+        }))
       }
     }
   }
