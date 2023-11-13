@@ -118,6 +118,11 @@
                 }]
               }"
               :options="{
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
                 plugins: { legend: { display: false }},
                 scales: {
                   y: { ticks: { display: false } },
@@ -138,6 +143,11 @@
                 }]
               }"
               :options="{
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
                 plugins: { legend: { display: false }},
                 scales: {
                   y: { ticks: { display: false } },
