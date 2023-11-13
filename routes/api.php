@@ -20,7 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/get-tokens', function () {
-    $result = Http::get(config('tokens.api_url'))->object();
-
-    return $result->balances;
+    return Http::get(config('tokens.api_url'))->object();
 });

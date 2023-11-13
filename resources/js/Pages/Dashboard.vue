@@ -1,4 +1,43 @@
 <template>
+    <div class="flex">
+        <div class="w-1/3">
+          <balances-chart
+            label="EUR Price"
+            :dates="newBalances.dates"
+            :data="newBalances.prices_eur"
+            :total="newBalances.prices_eur.at(-1) + '€'"
+          />
+          <balances-chart
+            label="USD Price"
+            :dates="newBalances.dates"
+            :data="newBalances.prices"
+            :total="'$' + newBalances.prices.at(-1)"
+          />
+        </div>
+        <div class="w-1/3">
+          <balances-chart
+            color="blue"
+            label="Total ETH"
+            :dates="newBalances.dates"
+            :data="newBalances.ethereum"
+            :total="(newBalances.ethereum.at(-1)).toFixed(2)"
+          />
+        </div>
+        <div class="w-1/3">
+          <balances-chart
+            label="Total EUR"
+            :dates="newBalances.dates"
+            :data="newBalances.totals_eur"
+            :total="(newBalances.totals_eur.at(-1)).toFixed(2) + '€'"
+          />
+          <balances-chart
+            label="Total USD"
+            :dates="newBalances.dates"
+            :data="newBalances.totals"
+            :total="'$' + (newBalances.totals.at(-1)).toFixed(2)"
+          />
+        </div>
+    </div>
   <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
     <header class="p-4 border-b border-slate-100 dark:border-slate-700 inline-flex">
       <h2 class="font-semibold text-slate-800 dark:text-slate-100 mr-2">Balances</h2>
@@ -193,13 +232,14 @@
 
 <script>
   import { Line } from 'vue-chartjs'
+  import BalancesChart  from '../components/Chart.vue'
   import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
 
   ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
   export default {
     components: {
-      Line
+      Line, BalancesChart
     },
     props: {
       balance: Number,
@@ -226,6 +266,8 @@
     },
     created() {
       this.refreshTokens()
+
+      this.newBalances = this.balances
 
       this.monthlyLast = this.tokens.splice(-1)[0]
       this.weeklyLast = this.tokens.splice(0, 7).splice(-1)[0]
@@ -257,12 +299,18 @@
       refreshTokens() {
         this.loading = true
 
-        axios.get('api/get-tokens').then(({data}) => data.forEach(newToken => {
+        axios.get('api/get-tokens').then(({data}) => data.balances.forEach(newToken => {
           const token = this.tokens[0].find(token => token.pool == newToken.pool)
 
           token.price = newToken.price
           token.balance = newToken.balance
           token.price_eur = newToken.price_eur
+
+          // this.newBalances.prices.push(data.ethereumPrice.usd)
+          // this.newBalances.prices_eur.push(data.ethereumPrice.eur)
+          // this.balances.totals[] = $tokens->sum(fn ($token) => $token->price * $token->balance);
+          // this.balances.totals_eur[] = $tokens->sum(fn ($token) => $token->price_eur * $token->balance);
+          // this.balances.ethereum[] = $tokens->sum(fn ($token) => $token->price * $token->balance / $result->ethereumPrice->usd);
 
           this.loading = false
         }))
