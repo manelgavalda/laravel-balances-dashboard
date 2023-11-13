@@ -83,28 +83,28 @@
             {{ parseFloat(token.price * token.balance / balances.prices.slice(-1)).toFixed(3) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
-            <span v-if="getWeeklyApy(index)" :class="{
+            <span v-if="getWeeklyApy(index) != 0" :class="{
               'text-red-500': getWeeklyApy(index) < 0,
               'text-green-500': getWeeklyApy(index) > 0
-            }">{{ parseFloat(getWeeklyApy(index)).toFixed(2) }}%</span>
+              }">{{ getWeeklyApy(index) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
-            <span v-if="getWeeklyGain(index)" :class="{
+            <span v-if="getWeeklyGain(index) != 0" :class="{
               'text-red-500': getWeeklyGain(index) < 0,
               'text-green-500': getWeeklyGain(index) > 0
-            }">${{ parseFloat(getWeeklyGain(index)).toFixed(2) }}</span>
+            }">${{ getWeeklyGain(index) }}</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
-            <span v-if="getMonthlyApy(index)" :class="{
+            <span v-if="getMonthlyApy(index) != 0" :class="{
               'text-red-500': getMonthlyApy(index) < 0,
               'text-green-500': getMonthlyApy(index) > 0
-            }">{{ parseFloat(getMonthlyApy(index)).toFixed(2) }}%</span>
+            }">{{ getMonthlyApy(index) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
-            <span v-if="getMonthlyGain(index)" :class="{
+            <span v-if="getMonthlyGain(index) != 0" :class="{
               'text-red-500': getMonthlyGain(index) < 0,
               'text-green-500': getMonthlyGain(index) > 0
-            }">${{ parseFloat(getMonthlyGain(index)).toFixed(2) }}</span>
+            }">${{ getMonthlyGain(index) }}</span>
           </td>
           <td class="p-2 w-2/12">
             <Line
@@ -237,16 +237,16 @@
         return (this.tokens[0][index].price - prevPrice) / prevPrice * 100
       },
       getWeeklyApy(index) {
-        return ((this.tokens[0][index].balance - this.weeklyLast[index].balance) / this.tokens[0][index].balance) * 100
+        return (((this.tokens[0][index].balance - this.weeklyLast[index].balance) / this.tokens[0][index].balance) * 100 || 0).toFixed(2)
       },
       getWeeklyGain(index) {
-        return (this.tokens[0][index].balance - this.weeklyLast[index].balance) * this.tokens[0][index].price
+        return ((this.tokens[0][index].balance - this.weeklyLast[index].balance) * this.tokens[0][index].price).toFixed(2)
       },
       getMonthlyApy(index) {
-        return ((this.tokens[0][index].balance - this.monthlyLast[index].balance) / this.tokens[0][index].balance) * 100
+        return (((this.tokens[0][index].balance - this.monthlyLast[index].balance) / this.tokens[0][index].balance) * 100 || 0).toFixed(2)
       },
       getMonthlyGain(index) {
-        return (this.tokens[0][index].balance - this.monthlyLast[index].balance) * this.tokens[0][index].price
+        return ((this.tokens[0][index].balance - this.monthlyLast[index].balance) * this.tokens[0][index].price).toFixed(2)
       },
       getBalanceHistory(pool) {
         return this.tokens.flat().filter(token => token.pool == pool).reverse().map(token => token.balance)
