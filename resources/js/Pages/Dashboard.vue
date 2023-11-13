@@ -189,20 +189,20 @@
           </thead>
           <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
             <tr v-for="transaction in transactions">
-              <td class="p-2 w-1/4 text-slate-800 dark:text-slate-100 pl-3">
-                {{ transaction.title }}
-              </td>
+              <td class="p-2 w-1/4 text-slate-800 dark:text-slate-100 pl-3"
+                v-html="transaction.title"
+              ></td>
               <td class="p-2 text-slate-800 dark:text-slate-100">
                 {{ transaction.type }}
               </td>
               <td class="p-2 text-slate-800 dark:text-slate-100">
                 {{ transaction.status }}
               </td>
+              <td class="p-2 text-slate-800 dark:text-slate-100"
+                v-html="transaction.primaryAmount"
+              ></td>
               <td class="p-2 text-slate-800 dark:text-slate-100">
-                {{ transaction.primaryAmount }}
-              </td>
-              <td class="p-2 text-slate-800 dark:text-slate-100">
-                {{ transaction.secondayAmount }}
+                {{ transaction.secondaryAmount }}
               </td>
               <td class="p-2 text-slate-800 dark:text-slate-100">
                 {{ transaction.createdOn }}
