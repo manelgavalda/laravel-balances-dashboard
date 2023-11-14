@@ -284,17 +284,17 @@
           this.totalPricesEur = data.ethereumPrice.eur.toFixed(2)
           this.totalPricesUsd = data.ethereumPrice.usd.toFixed(2)
 
-          this.totalUsd = data.balances.reduce((accumulator, token) => {
-            return accumulator + token.price * token.balance
-          }, 0).toFixed(2)
+          this.totalUsd = data.balances.reduce((accumulator, token) =>
+            accumulator + token.price * token.balance
+          , 0).toFixed(2)
 
-          this.totalEur = data.balances.reduce((accumulator, token) => {
-            return accumulator + token.price_eur * token.balance
-          }, 0).toFixed(2)
+          this.totalEur = data.balances.reduce((accumulator, token) =>
+            accumulator + token.price_eur * token.balance
+          , 0).toFixed(2)
 
-          this.totalEth = data.balances.reduce((accumulator, token) => {
-            return accumulator + (token.price * token.balance / this.totalPricesUsd)
-          }, 0).toFixed(2)
+          this.totalEth = data.balances.reduce((accumulator, token) =>
+            accumulator + (token.price * token.balance / this.totalPricesUsd)
+          , 0).toFixed(2)
 
           this.loading = false
         })
