@@ -252,16 +252,24 @@
         return (this.tokens[0][index].price - prevPrice) / prevPrice * 100
       },
       getWeeklyApy(index) {
-        return (((this.tokens[0][index].balance - this.weeklyLast[index].balance) / this.tokens[0][index].balance) * 100 || 0).toFixed(2)
+        const balance = this.tokens[0][index].balance
+
+        return (((balance - this.weeklyLast[index].balance) / balance) * 100 || 0).toFixed(2)
       },
       getWeeklyGain(index) {
-        return ((this.tokens[0][index].balance - this.weeklyLast[index].balance) * this.tokens[0][index].price).toFixed(2)
+        const token = this.tokens[0][index]
+
+        return ((token.balance - this.weeklyLast[index].balance) * token.price).toFixed(2)
       },
       getMonthlyApy(index) {
-        return (((this.tokens[0][index].balance - this.monthlyLast[index].balance) / this.tokens[0][index].balance) * 100 || 0).toFixed(2)
+        const balance = this.tokens[0][index].balance
+
+        return (((balance - this.monthlyLast[index].balance) / balance) * 100 || 0).toFixed(2)
       },
       getMonthlyGain(index) {
-        return ((this.tokens[0][index].balance - this.monthlyLast[index].balance) * this.tokens[0][index].price).toFixed(2)
+        const token = this.tokens[0][index]
+
+        return ((token.balance - this.monthlyLast[index].balance) * token.price).toFixed(2)
       },
       getBalanceHistory(pool) {
         return this.tokens.flat().filter(token => token.pool == pool).reverse().map(token => token.balance)
