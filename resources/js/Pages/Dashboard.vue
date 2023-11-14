@@ -3,38 +3,38 @@
         <div class="w-1/3">
           <balances-chart
             label="EUR Price"
-            :dates="newBalances.dates"
-            :data="newBalances.prices_eur"
-            :total="newBalances.prices_eur.at(-1) + '€'"
+            :dates="balances.dates"
+            :data="balances.prices_eur"
+            :total="totalPricesEur + '€'"
           />
           <balances-chart
             label="USD Price"
-            :dates="newBalances.dates"
-            :data="newBalances.prices"
-            :total="'$' + newBalances.prices.at(-1)"
+            :dates="balances.dates"
+            :data="balances.prices"
+            :total="'$' + totalPricesUsd"
           />
         </div>
         <div class="w-1/3">
           <balances-chart
             color="blue"
             label="Total ETH"
-            :dates="newBalances.dates"
-            :data="newBalances.ethereum"
-            :total="(newBalances.ethereum.at(-1)).toFixed(2)"
+            :dates="balances.dates"
+            :data="balances.ethereum"
+            :total="totalEth"
           />
         </div>
         <div class="w-1/3">
           <balances-chart
             label="Total EUR"
-            :dates="newBalances.dates"
-            :data="newBalances.totals_eur"
-            :total="(newBalances.totals_eur.at(-1)).toFixed(2) + '€'"
+            :dates="balances.dates"
+            :data="balances.totals_eur"
+            :total="totalEur + '€'"
           />
           <balances-chart
             label="Total USD"
-            :dates="newBalances.dates"
-            :data="newBalances.totals"
-            :total="'$' + (newBalances.totals.at(-1)).toFixed(2)"
+            :dates="balances.dates"
+            :data="balances.totals"
+            :total="totalUsd + '€'"
           />
         </div>
     </div>
@@ -261,16 +261,21 @@
             y: { ticks: { display: false } },
             x: { ticks: { display: false } }
           }
-        }
+        },
+        pricesEur: []
       }
     },
     created() {
       this.refreshTokens()
 
-      this.newBalances = this.balances
-
       this.monthlyLast = this.tokens.splice(-1)[0]
       this.weeklyLast = this.tokens.splice(0, 7).splice(-1)[0]
+
+      this.totalUsd = this.balances.totals.at(-1).toFixed(2)
+      this.totalEth = this.balances.ethereum.at(-1).toFixed(2)
+      this.totalEur = this.balances.totals_eur.at(-1).toFixed(2)
+      this.totalPricesUsd = this.balances.prices.at(-1).toFixed(2)
+      this.totalPricesEur = this.balances.prices_eur.at(-1).toFixed(2)
     },
     methods: {
       getDailyChange(index) {
@@ -299,21 +304,32 @@
       refreshTokens() {
         this.loading = true
 
-        axios.get('api/get-tokens').then(({data}) => data.balances.forEach(newToken => {
-          const token = this.tokens[0].find(token => token.pool == newToken.pool)
+        axios.get('api/get-tokens').then(({data}) => {
+          data.balances.forEach(newToken => {
+            const token = this.tokens[0].find(token => token.pool == newToken.pool)
 
-          token.price = newToken.price
-          token.balance = newToken.balance
-          token.price_eur = newToken.price_eur
+            token.price = newToken.price
+            token.balance = newToken.balance
+            token.price_eur = newToken.price_eur
+          })
 
-          // this.newBalances.prices.push(data.ethereumPrice.usd)
-          // this.newBalances.prices_eur.push(data.ethereumPrice.eur)
-          // this.balances.totals[] = $tokens->sum(fn ($token) => $token->price * $token->balance);
-          // this.balances.totals_eur[] = $tokens->sum(fn ($token) => $token->price_eur * $token->balance);
-          // this.balances.ethereum[] = $tokens->sum(fn ($token) => $token->price * $token->balance / $result->ethereumPrice->usd);
+          this.totalPricesEur = data.ethereumPrice.eur.toFixed(2)
+          this.totalPricesUsd = data.ethereumPrice.usd.toFixed(2)
+
+          this.totalUsd = data.balances.reduce((accumulator, token) => {
+            return accumulator + token.price * token.balance
+          }, 0).toFixed(2)
+
+          this.totalEur = data.balances.reduce((accumulator, token) => {
+            return accumulator + token.price_eur * token.balance
+          }, 0).toFixed(2)
+
+          this.totalEth = data.balances.reduce((accumulator, token) => {
+            return accumulator + (token.price * token.balance / this.totalPricesUsd)
+          }, 0).toFixed(2)
 
           this.loading = false
-        }))
+        })
       }
     }
   }
