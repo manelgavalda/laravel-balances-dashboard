@@ -28,7 +28,6 @@
                 color: 'white',
                 borderColor: color || (getChange() > 0 ? 'green' : 'red'),
                 backgroundColor: color || (getChange() > 0 ? 'green' : 'red'),
-
                 elements: {
                   point: {
                     radius: 2
