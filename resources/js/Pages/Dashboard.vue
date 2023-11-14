@@ -247,7 +247,7 @@
     },
     methods: {
       getDailyChange(index) {
-        const prevPrice = Object.values(this.tokens)[1][index].price
+        const prevPrice = this.tokens[1][index].price
 
         return (this.tokens[0][index].price - prevPrice) / prevPrice * 100
       },
