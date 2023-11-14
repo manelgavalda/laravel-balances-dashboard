@@ -10,11 +10,7 @@
       }]
     }"
     :options="{
-      elements: {
-        point: {
-          radius: 0
-        }
-      },
+      elements: { point: { radius: 0 } },
       plugins: { legend: { display: false } },
       scales: {
         y: { ticks: { display: false } },

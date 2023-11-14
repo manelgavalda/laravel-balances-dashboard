@@ -26,14 +26,10 @@
               }"
               :options="{
                 color: 'white',
+                elements: { point: { radius: 2 } },
+                plugins: { legend: { display: false } },
                 borderColor: color || (getChange() > 0 ? 'green' : 'red'),
                 backgroundColor: color || (getChange() > 0 ? 'green' : 'red'),
-                elements: {
-                  point: {
-                    radius: 2
-                  }
-                },
-                plugins: { legend: { display: false } },
                 scales: {
                   y: { ticks: { color: 'white' } },
                   x: { ticks: { color: 'white' } }
