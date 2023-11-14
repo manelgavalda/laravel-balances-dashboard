@@ -28,7 +28,7 @@
                 color: 'white',
                 borderColor: color || 'green',
                 backgroundColor: color || 'green',
-                plugins: { legend: { display: false }},
+                plugins: { legend: { display: false } },
                 scales: {
                   y: { ticks: { color: 'white' } },
                   x: { ticks: { color: 'white' } }
@@ -46,11 +46,11 @@
 
     export default {
       props: {
+        data: Array,
+        dates: Array,
         color: String,
         label: String,
-        total: String,
-        dates: Array,
-        data: Array
+        total: String
       },
       components: {
         Line

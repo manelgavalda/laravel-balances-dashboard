@@ -1,43 +1,43 @@
 <template>
-    <div class="flex">
-        <div class="w-1/3">
-          <balances-chart
-            label="EUR Price"
-            :dates="balances.dates"
-            :data="balances.prices_eur"
-            :total="totalPricesEur + '€'"
-          />
-          <balances-chart
-            label="USD Price"
-            :dates="balances.dates"
-            :data="balances.prices"
-            :total="'$' + totalPricesUsd"
-          />
-        </div>
-        <div class="w-1/3">
-          <balances-chart
-            color="blue"
-            label="Total ETH"
-            :dates="balances.dates"
-            :data="balances.ethereum"
-            :total="totalEth"
-          />
-        </div>
-        <div class="w-1/3">
-          <balances-chart
-            label="Total EUR"
-            :dates="balances.dates"
-            :data="balances.totals_eur"
-            :total="totalEur + '€'"
-          />
-          <balances-chart
-            label="Total USD"
-            :dates="balances.dates"
-            :data="balances.totals"
-            :total="totalUsd + '€'"
-          />
-        </div>
+  <div class="flex">
+    <div class="w-1/3">
+      <balances-chart
+        label="EUR Price"
+        :dates="balances.dates"
+        :data="balances.prices_eur"
+        :total="totalPricesEur + '€'"
+      />
+      <balances-chart
+        label="USD Price"
+        :dates="balances.dates"
+        :data="balances.prices"
+        :total="'$' + totalPricesUsd"
+      />
     </div>
+    <div class="w-1/3">
+      <balances-chart
+        color="blue"
+        label="Total ETH"
+        :dates="balances.dates"
+        :data="balances.ethereum"
+        :total="totalEth"
+      />
+    </div>
+    <div class="w-1/3">
+      <balances-chart
+        label="Total EUR"
+        :dates="balances.dates"
+        :data="balances.totals_eur"
+        :total="totalEur + '€'"
+      />
+      <balances-chart
+        label="Total USD"
+        :dates="balances.dates"
+        :data="balances.totals"
+        :total="totalUsd + '€'"
+      />
+    </div>
+  </div>
   <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
     <header class="p-4 border-b border-slate-100 dark:border-slate-700 inline-flex">
       <h2 class="font-semibold text-slate-800 dark:text-slate-100 mr-2">Balances</h2>
@@ -125,7 +125,7 @@
             <span v-if="getWeeklyApy(index) != 0" :class="{
               'text-red-500': getWeeklyApy(index) < 0,
               'text-green-500': getWeeklyApy(index) > 0
-              }">{{ getWeeklyApy(index) }}%</span>
+            }">{{ getWeeklyApy(index) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyGain(index) != 0" :class="{
@@ -146,31 +146,15 @@
             }">${{ getMonthlyGain(index) }}</span>
           </td>
           <td class="p-2 w-2/12">
-            <Line
-              height="30"
-              :data="{
-                labels: Object.keys(tokens),
-                datasets: [{
-                  borderColor: 'green',
-                  backgroundColor: 'green',
-                  data: getBalanceHistory(token.pool),
-                }]
-              }"
-              :options="chartOptions"
+            <token-chart
+              :labels="Object.keys(tokens)"
+              :data="getBalanceHistory(token.pool)"
             />
           </td>
           <td class="p-2 w-2/12">
-            <Line
-              height="30"
-              :data="{
-                labels: Object.keys(tokens),
-                datasets: [{
-                  borderColor: 'green',
-                  backgroundColor: 'green',
-                  data: getPriceHistory(token.pool)
-                }]
-              }"
-              :options="chartOptions"
+            <token-chart
+              :labels="Object.keys(tokens)"
+              :data="getPriceHistory(token.pool)"
             />
           </td>
         </tr>
@@ -178,91 +162,75 @@
     </table>
   </div>
   <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
-      <header class="p-4 border-b border-slate-100 dark:border-slate-700">
-          <h2 class="font-semibold text-slate-800 dark:text-slate-100">Wise balance: <p class="font-normal">{{ balance }} EUR</p></h2>
-      </header>
-      <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
-          <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm cursor-pointer">
-              <tr>
-                  <th class="p-2 text-left pl-5">
-                      Title
-                  </th>
-                  <th class="p-2 text-left pl-5">
-                      Type
-                  </th>
-                  <th class="p-2 text-left pl-5">
-                      Status
-                  </th>
-                  <th class="p-2 text-left pl-5">
-                      Primary Amount
-                  </th>
-                  <th class="p-2 text-left pl-5">
-                      Secondary Amount
-                  </th>
-                  <th class="p-2 text-left pl-5">
-                      Created On
-                  </th>
-              </tr>
-          </thead>
-          <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-            <tr v-for="transaction in transactions">
-              <td class="p-2 w-1/4 text-slate-800 dark:text-slate-100 pl-3"
-                v-html="transaction.title"
-              ></td>
-              <td class="p-2 text-slate-800 dark:text-slate-100">
-                {{ transaction.type }}
-              </td>
-              <td class="p-2 text-slate-800 dark:text-slate-100">
-                {{ transaction.status }}
-              </td>
-              <td class="p-2 text-slate-800 dark:text-slate-100"
-                v-html="transaction.primaryAmount"
-              ></td>
-              <td class="p-2 text-slate-800 dark:text-slate-100">
-                {{ transaction.secondaryAmount }}
-              </td>
-              <td class="p-2 text-slate-800 dark:text-slate-100">
-                {{ transaction.createdOn }}
-              </td>
-            </tr>
-          </tbody>
-      </table>
+    <header class="p-4 border-b border-slate-100 dark:border-slate-700">
+      <h2 class="font-semibold text-slate-800 dark:text-slate-100">Wise balance: <p class="font-normal">{{ balance }} EUR</p></h2>
+    </header>
+    <table class="table-autodark:text-slate-300 mx-auto w-full sortable">
+      <thead class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm cursor-pointer">
+        <tr>
+          <th class="p-2 text-left pl-5">
+            Title
+          </th>
+          <th class="p-2 text-left pl-5">
+            Type
+          </th>
+          <th class="p-2 text-left pl-5">
+            Status
+          </th>
+          <th class="p-2 text-left pl-5">
+            Primary Amount
+          </th>
+          <th class="p-2 text-left pl-5">
+            Secondary Amount
+          </th>
+          <th class="p-2 text-left pl-5">
+            Created On
+          </th>
+        </tr>
+      </thead>
+      <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+        <tr v-for="transaction in transactions">
+          <td class="p-2 w-1/4 text-slate-800 dark:text-slate-100 pl-3"
+            v-html="transaction.title"
+          ></td>
+          <td class="p-2 text-slate-800 dark:text-slate-100">
+            {{ transaction.type }}
+          </td>
+          <td class="p-2 text-slate-800 dark:text-slate-100">
+            {{ transaction.status }}
+          </td>
+          <td class="p-2 text-slate-800 dark:text-slate-100"
+            v-html="transaction.primaryAmount"
+          ></td>
+          <td class="p-2 text-slate-800 dark:text-slate-100">
+            {{ transaction.secondaryAmount }}
+          </td>
+          <td class="p-2 text-slate-800 dark:text-slate-100">
+            {{ transaction.createdOn }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
-
 <script>
-  import { Line } from 'vue-chartjs'
-  import BalancesChart  from '../components/Chart.vue'
-  import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
-
-  ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+  import TokenChart  from '../components/Dashboard/TokenChart.vue'
+  import BalancesChart  from '../components/Dashboard/BalancesChart.vue'
 
   export default {
     components: {
-      Line, BalancesChart
+      TokenChart,
+      BalancesChart
     },
     props: {
-      balance: Number,
       tokens: Object,
+      balance: Number,
       balances: Object,
       transactions: Array,
     },
     data() {
       return {
         loading: false,
-        chartOptions: {
-          elements: {
-            point:{
-              radius: 0
-            }
-          },
-          plugins: { legend: { display: false }},
-          scales: {
-            y: { ticks: { display: false } },
-            x: { ticks: { display: false } }
-          }
-        },
-        pricesEur: []
       }
     },
     created() {
