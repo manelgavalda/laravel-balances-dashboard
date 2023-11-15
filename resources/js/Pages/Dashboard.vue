@@ -294,6 +294,7 @@
           this.totalUsd = 0
           this.totalEur = 0
           this.totalEth = 0
+
           this.totalPricesEur = data.ethereumPrice.eur
           this.totalPricesUsd = data.ethereumPrice.usd
 
