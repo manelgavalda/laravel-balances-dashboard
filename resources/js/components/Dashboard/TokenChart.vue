@@ -34,7 +34,7 @@
       labels: Array
     },
     created() {
-      this.chartColor = (this.getChange() >= 0 ? 'green' : 'red')
+      this.chartColor = this.getChange() >= 0 ? 'green' : 'red'
     },
     methods: {
       getChange() {
