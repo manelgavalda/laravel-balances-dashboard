@@ -98,52 +98,52 @@
             {{ token.pool }}
           </td>
           <td class="p-2 text-right text-yellow-300">
-            {{ parseFloat(token.balance).toFixed(2) }}
+            {{ currencyFormat(token.balance) }}
           </td>
           <td class="p-2 text-right text-red-300">
-            {{ parseFloat(token.price_eur).toFixed(2) }}
+            {{ currencyFormat(token.price_eur) }}
           </td>
           <td class="p-2 text-right text-red-300">
-            ${{ parseFloat(token.price).toFixed(2) }}
+            ${{ currencyFormat(token.price) }}
           </td>
           <td class="p-2 text-right text-white">
             <span :class="{
               'text-red-500': getDailyChange(index, token.price) < 0,
               'text-green-500': getDailyChange(index, token.price) > 0
-            }">{{ parseFloat(getDailyChange(index, token.price)).toFixed(2) }}%</span>
+            }">{{ currencyFormat(getDailyChange(index, token.price)) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
-            {{ parseFloat(token.price_eur * token.balance).toFixed(2) }}
+            {{ currencyFormat(token.price_eur * token.balance) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
-            ${{ parseFloat(token.price * token.balance).toFixed(2) }}
+            ${{ currencyFormat(token.price * token.balance) }}
           </td>
           <td class="p-2 text-right text-sky-300">
-            {{ parseFloat(token.price * token.balance / balances.prices.slice(-1)).toFixed(3) }}
+            {{ currencyFormat(token.price * token.balance / balances.prices.slice(-1)) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyApy(index) != 0" :class="{
               'text-red-500': getWeeklyApy(index) < 0,
               'text-green-500': getWeeklyApy(index) > 0
-            }">{{ getWeeklyApy(index) }}%</span>
+            }">{{ currencyFormat(getWeeklyApy(index)) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyGain(index) != 0" :class="{
               'text-red-500': getWeeklyGain(index) < 0,
               'text-green-500': getWeeklyGain(index) > 0
-            }">${{ getWeeklyGain(index) }}</span>
+            }">${{ currencyFormat(getWeeklyGain(index)) }}</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getMonthlyApy(index) != 0" :class="{
               'text-red-500': getMonthlyApy(index) < 0,
               'text-green-500': getMonthlyApy(index) > 0
-            }">{{ getMonthlyApy(index) }}%</span>
+            }">{{ currencyFormat(getMonthlyApy(index)) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getMonthlyGain(index) != 0" :class="{
               'text-red-500': getMonthlyGain(index) < 0,
               'text-green-500': getMonthlyGain(index) > 0
-            }">${{ getMonthlyGain(index) }}</span>
+            }">${{ currencyFormat(getMonthlyGain(index)) }}</span>
           </td>
           <td class="p-2 w-2/12">
             <token-chart
@@ -311,7 +311,7 @@
         })
       },
       currencyFormat(number) {
-        return new Intl.NumberFormat().format(number.toFixed(2))
+        return new Intl.NumberFormat().format(number)
       }
     }
   }
