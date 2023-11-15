@@ -5,8 +5,8 @@
       labels,
       datasets: [{
         data,
-        borderColor: 'green',
-        backgroundColor: 'green'
+        borderColor: chartColor,
+        backgroundColor: chartColor
       }]
     }"
     :options="{
@@ -33,5 +33,13 @@
       data: Array,
       labels: Array
     },
+    created() {
+      this.chartColor = (this.getChange() >= 0 ? 'green' : 'red')
+    },
+    methods: {
+      getChange() {
+        return ((this.data.at(-1) - this.data.at(-2)) / this.data.at(-2) * 100 || 0).toFixed(2)
+      }
+    }
   }
 </script>

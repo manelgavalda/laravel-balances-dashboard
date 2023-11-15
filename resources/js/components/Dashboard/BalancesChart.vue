@@ -26,10 +26,10 @@
               }"
               :options="{
                 color: 'white',
+                borderColor: chartColor,
+                backgroundColor: chartColor,
                 elements: { point: { radius: 2 } },
                 plugins: { legend: { display: false } },
-                borderColor: color || (getChange() > 0 ? 'green' : 'red'),
-                backgroundColor: color || (getChange() > 0 ? 'green' : 'red'),
                 scales: {
                   y: { ticks: { color: 'white' } },
                   x: { ticks: { color: 'white' } }
@@ -55,6 +55,9 @@
       },
       components: {
         Line
+      },
+      created() {
+        this.chartColor = this.color || (this.getChange() > 0 ? 'green' : 'red')
       },
       methods: {
         getChange() {
