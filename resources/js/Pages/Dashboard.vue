@@ -236,13 +236,13 @@
     created() {
       this.refreshTokens()
 
-      this.weeklyLast = this.tokens.splice(0, 7).at(-1)
-
       this.totalUsd = this.balances.totals.at(-1)
       this.totalEth = this.balances.ethereum.at(-1)
       this.totalEur = this.balances.totals_eur.at(-1)
       this.totalPricesUsd = this.balances.prices.at(-1)
       this.totalPricesEur = this.balances.prices_eur.at(-1)
+
+      this.weeklyLast = this.tokens.splice(0, 7).at(-1)
     },
     methods: {
       getDailyChange(index) {
