@@ -5,13 +5,13 @@
         label="EUR Price"
         :dates="balances.dates"
         :data="balances.prices_eur"
-        :total="totals.pricesEur.toFixed(2) + '€'"
+        :total="currencyFormat(totals.pricesEur) + '€'"
       />
       <balances-chart
         label="USD Price"
         :dates="balances.dates"
         :data="balances.prices"
-        :total="'$' + totals.pricesUsd.toFixed(2)"
+        :total="'$' + currencyFormat(totals.pricesUsd)"
       />
     </div>
     <div class="w-1/3">
@@ -28,13 +28,13 @@
         label="Total EUR"
         :dates="balances.dates"
         :data="balances.totals_eur"
-        :total="totals.eur.toFixed(2) + '€'"
+        :total="currencyFormat(totals.eur) + '€'"
       />
       <balances-chart
         label="Total USD"
         :dates="balances.dates"
         :data="balances.totals"
-        :total="totals.usd.toFixed(2) + '€'"
+        :total="currencyFormat(totals.usd) + '€'"
       />
     </div>
   </div>
@@ -309,6 +309,9 @@
 
           this.loading = false
         })
+      },
+      currencyFormat(number) {
+        return new Intl.NumberFormat().format(number.toFixed(2))
       }
     }
   }
