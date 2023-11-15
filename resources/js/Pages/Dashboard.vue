@@ -236,8 +236,7 @@
     created() {
       this.refreshTokens()
 
-      this.monthlyLast = this.tokens.splice(-1)[0]
-      this.weeklyLast = this.tokens.splice(0, 7).splice(-1)[0]
+      this.weeklyLast = this.tokens.splice(0, 7).at(-1)
 
       this.totalUsd = this.balances.totals.at(-1)
       this.totalEth = this.balances.ethereum.at(-1)
@@ -264,12 +263,12 @@
       getMonthlyApy(index) {
         const balance = this.tokens[0][index].balance
 
-        return (((balance - this.monthlyLast[index].balance) / balance) * 100 || 0).toFixed(2)
+        return (((balance - this.tokens.at(-1)[index].balance) / balance) * 100 || 0).toFixed(2)
       },
       getMonthlyGain(index) {
         const token = this.tokens[0][index]
 
-        return ((token.balance - this.monthlyLast[index].balance) * token.price).toFixed(2)
+        return ((token.balance - this.tokens.at(-1)[index].balance) * token.price).toFixed(2)
       },
       getTokensHistory(pool) {
         return this.tokens.flat().filter(token => token.pool == pool).reverse()
