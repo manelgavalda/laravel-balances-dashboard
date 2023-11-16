@@ -28,13 +28,13 @@
         label="Total EUR"
         :dates="balances.dates"
         :data="balances.totals_eur"
-        :total="currencyFormat(totals.eur) + '€'"
+        :total="currencyFormat(totals.eur.toFixed(2)) + '€'"
       />
       <balances-chart
         label="Total USD"
         :dates="balances.dates"
         :data="balances.totals"
-        :total="currencyFormat(totals.usd) + '€'"
+        :total="currencyFormat(totals.usd.toFixed(2)) + '€'"
       />
     </div>
   </div>
@@ -98,13 +98,13 @@
             {{ token.pool }}
           </td>
           <td class="p-2 text-right text-yellow-300">
-            {{ currencyFormat(token.balance) }}
+            {{ currencyFormat(token.balance.toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-red-300">
-            {{ currencyFormat(token.price_eur) }}
+            {{ currencyFormat(token.price_eur.toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-red-300">
-            ${{ currencyFormat(token.price) }}
+            ${{ currencyFormat(token.price.toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-white">
             <span :class="{
@@ -113,10 +113,10 @@
             }">{{ currencyFormat(getDailyChange(index, token.price)) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
-            {{ currencyFormat(token.price_eur * token.balance) }}
+            {{ currencyFormat((token.price_eur * token.balance).toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
-            ${{ currencyFormat(token.price * token.balance) }}
+            ${{ currencyFormat((token.price * token.balance).toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-sky-300">
             {{ currencyFormat(token.price * token.balance / balances.prices.slice(-1)) }}
@@ -250,7 +250,7 @@
       getDailyChange(index) {
         const prevPrice = this.tokens[1][index].price
 
-        return (this.tokens[0][index].price - prevPrice) / prevPrice * 100
+        return ((this.tokens[0][index].price - prevPrice) / prevPrice * 100).toFixed(2)
       },
       getWeeklyApy(index) {
         const balance = this.tokens[0][index].balance
