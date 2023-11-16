@@ -24,4 +24,8 @@ if (!function_exists('vercel_asset'))   {
 
 Route::get('/', Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/get-tokens', function () {
+    return Http::get(config('tokens.api_url'))->object();
+});
+
 require __DIR__.'/auth.php';

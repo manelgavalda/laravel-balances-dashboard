@@ -284,7 +284,7 @@
       refreshTokens() {
         this.loading = true
 
-        axios.get('api/get-tokens').then(({data}) => {
+        axios.get('get-tokens').then(({data}) => {
           data.balances.forEach(newToken => {
             const token = this.tokens[0].find(token => token.pool == newToken.pool)
 
