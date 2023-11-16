@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +23,9 @@ if (!function_exists('vercel_asset'))   {
     }
 }
 
-Route::get('/', Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/get-tokens', function () {
-    return Http::get(config('tokens.api_url'))->object();
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('/', Dashboard::class)->name('dashboard');
+    Route::get('/get-tokens', fn ()  => Http::get(config('tokens.api_url'))->object());
 });
 
 require __DIR__.'/auth.php';
