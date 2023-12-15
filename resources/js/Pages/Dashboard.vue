@@ -34,7 +34,7 @@
         label="Total USD"
         :dates="balances.dates"
         :data="balances.totals"
-        :total="currencyFormat(totals.usd.toFixed(2)) + '€'"
+        :total="'$' + currencyFormat(totals.usd.toFixed(2))"
       />
     </div>
   </div>
