@@ -11,13 +11,18 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        <link rel="preload" as="style" href="{{ vercel_asset('build/assets/app.css')}}">
-        <link rel="modulepreload" href="{{ vercel_asset('build/assets/app2.js') }}">
-        <link rel="stylesheet" href="{{ vercel_asset('build/assets/app.css')}}">
+        @if (app()->environment() === 'production')
+            <link rel="preload" as="style" href="{{ vercel_asset('build/assets/app.css')}}">
+            <link rel="modulepreload" href="{{ vercel_asset('build/assets/app2.js') }}">
+            <link rel="stylesheet" href="{{ vercel_asset('build/assets/app.css')}}">
+
+            <script type="module" src="{{ vercel_asset('build/assets/app2.js') }}"></script>
+        @else
+            @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @endif
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <script type="module" src="{{ vercel_asset('build/assets/app2.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
         @inertiaHead
