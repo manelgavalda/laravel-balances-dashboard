@@ -223,7 +223,7 @@
       BalancesChart
     },
     props: {
-      tokens: Object,
+      tokens: Array,
       balance: Number,
       balances: Object,
       transactions: Array,
@@ -234,7 +234,7 @@
       }
     },
     created() {
-      this.refreshTokens()
+      // this.refreshTokens()
 
       this.totals = {
         usd: this.balances.totals.at(-1),
@@ -244,7 +244,7 @@
         pricesEur: this.balances.prices_eur.at(-1)
       }
 
-      this.weeklyLast = this.tokens.splice(0, 7).at(-1)
+      this.weeklyLast = this.tokens.slice(0, 7).at(-1)
     },
     methods: {
       getDailyChange(index) {
