@@ -119,7 +119,7 @@
             ${{ currencyFormat((token.price * token.balance).toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-sky-300">
-            {{ currencyFormat(token.price * token.balance / balances.prices.slice(-1)) }}
+            {{ currencyFormat((token.price * token.balance) / totals.pricesUsd) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyApy(index) != 0" :class="{
