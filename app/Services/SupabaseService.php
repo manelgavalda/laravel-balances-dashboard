@@ -3,25 +3,31 @@
 namespace App\Services;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Http;
+use App\Models\Total;
+use App\Models\Balance;
 
 class SupabaseService
 {
-    function __construct(
-        protected $apiKey,
-        protected $url
-    ) {}
-
     public function getTokens()
     {
-        return $this->getResult('balances?select=pool,price,price_eur,balance,parent,created_at&limit=450')
-            ->sortBy('pool')->groupBy('created_at')->take(30);
+        return Balance::orderByDesc('created_at')->limit(450)->get()->map(function ($balance) {
+            $balance->price = floatval($balance->price);
+            $balance->balance = floatval($balance->balance);
+            $balance->price_eur = floatval($balance->price_eur);
+
+            return $balance;
+        })->sortBy('pool')->groupBy('created_at')->take(30);
     }
 
     public function getHistoricalBalances()
     {
-        $balances = $this->getResult('totals?select=price,price_eur,balance,created_at&limit=31')
-            ->reverse()->values();
+        $balances = Total::orderByDesc('created_at')->limit(31)->get()->map(function ($total) {
+            $total->price = floatval($total->price);
+            $total->balance = floatval($total->balance);
+            $total->price_eur = floatval($total->price_eur);
+
+            return $total;
+        })->reverse()->values();
 
         return [
             'prices' => $balances->pluck('price')->toArray(),
@@ -29,12 +35,7 @@ class SupabaseService
             'prices_eur' => $balances->pluck('price_eur')->toArray(),
             'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance)->toArray(),
             'totals_eur' => $balances->map(fn ($balance) => $balance->price_eur * $balance->balance)->toArray(),
-            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d'))->toArray()
+            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d Y'))->toArray()
         ];
-    }
-
-    protected function getResult($uri)
-    {
-        return collect(Http::withHeaders(['apikey' => $this->apiKey])->get("{$this->url}/rest/v1/{$uri}&order=created_at.desc")->object());
     }
 }
