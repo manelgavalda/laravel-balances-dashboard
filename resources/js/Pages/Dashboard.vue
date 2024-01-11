@@ -2,22 +2,17 @@
   <div class="flex">
     <div class="w-1/3">
       <balances-chart
-        label="EUR Price"
-        :dates="balances.dates"
-        :data="balances.prices_eur"
-        :total="currencyFormat(totals.pricesEur) + '€'"
-      />
-      <balances-chart
-        label="USD Price"
+        label="ETH Price"
         :dates="balances.dates"
         :data="balances.prices"
         :total="'$' + currencyFormat(totals.pricesUsd)"
+        :subtotal="`(${currencyFormat(totals.pricesEur)} €)`"
       />
     </div>
     <div class="w-1/3">
       <balances-chart
         color="blue"
-        label="Total ETH"
+        label="ETH"
         :dates="balances.dates"
         :data="balances.ethereum"
         :total="totals.eth.toFixed(3)"
@@ -25,16 +20,11 @@
     </div>
     <div class="w-1/3">
       <balances-chart
-        label="Total EUR"
-        :dates="balances.dates"
-        :data="balances.totals_eur"
-        :total="currencyFormat(totals.eur.toFixed(2)) + '€'"
-      />
-      <balances-chart
-        label="Total USD"
+        label="Total"
         :dates="balances.dates"
         :data="balances.totals"
         :total="'$' + currencyFormat(totals.usd.toFixed(2))"
+        :subtotal="`(${currencyFormat(totals.eur.toFixed(2))} €)`"
       />
     </div>
   </div>

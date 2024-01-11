@@ -4,9 +4,12 @@
       <h2 class="font-semibold text-slate-800 dark:text-slate-100">{{ label }}</h2>
     </header>
     <div class="px-5 py-3">
-      <div class="flex flex-wrap justify-between items-end">
-        <div class="flex items-start">
-          <div class="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">{{ total }}</div>
+      <div class="flex flex-wrap justify-between items-end ">
+        <div class="flex items-start ">
+          <div class="text-right mr-2 text-slate-800 dark:text-slate-100">
+            <div class="text-3xl font-bold">{{ total }}</div>
+            <div class="text-xl font-semibold h-1">{{ subtotal }}</div>
+          </div>
           <div class="text-sm font-semibold text-white px-1.5 rounded-full" :class="{
             'bg-red-700': getChange() < 0,
             'bg-green-700': getChange() >= 0
@@ -48,7 +51,8 @@
       dates: Array,
       color: String,
       label: String,
-      total: String
+      total: String,
+      subtotal: String
     },
     components: {
       Line
