@@ -16,7 +16,7 @@ class SupabaseService
             $balance->price_eur = floatval($balance->price_eur);
 
             return $balance;
-        })->sortBy('pool')->groupBy('created_at')->take(30);
+        })->groupBy('created_at')->take(30)->map->keyBy('pool')->values()->toArray();
     }
 
     public function getHistoricalBalances()
