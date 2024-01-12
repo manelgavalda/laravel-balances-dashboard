@@ -5,9 +5,6 @@ use App\Models\Total;
 use App\Models\Balance;
 use App\Services\SupabaseService;
 use Illuminate\Support\Facades\File;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-
-uses(DatabaseMigrations::class)->group('supabase');
 
 expect()->extend('toBeParsed', function () {
    expect(reset($this->value))->toBe($this->value[0]);
