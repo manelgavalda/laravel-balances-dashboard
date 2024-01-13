@@ -4,12 +4,6 @@ use Carbon\Carbon;
 use App\Services\SupabaseService;
 use Illuminate\Support\Facades\File;
 
-expect()->extend('toBeParsed', function () {
-   expect(reset($this->value))->toBe($this->value[0]);
-
-   $this->toHaveCount(31);
-});
-
 function createEntries($type) {
     $file = str()->plural($type);
     $class = app()->make('App\Models\\' . str()->ucfirst($type));
@@ -27,17 +21,16 @@ beforeEach(function () {
 });
 
 it('retrieves_the_historical_balances', function () {
-    expect($dates = $this->balances['dates'])->toBeParsed();
-    expect($totals = $this->balances['totals'])->toBeParsed();
-    expect($prices = $this->balances['prices'])->toBeParsed();
-    expect($ethereum = $this->balances['ethereum'])->toBeParsed();
-    expect($pricesEur = $this->balances['prices_eur'])->toBeParsed();
-    expect($totalsEur = $this->balances['totals_eur'])->toBeParsed();
-
-    expect(end($totals))->toBe(end($ethereum) * end($prices));
-    expect(end($totalsEur))->toBe(end($ethereum) * end($pricesEur));
+    $dates = $this->balances['dates'];
 
     expect(end($dates))->toBe('Nov 08 2024');
+    expect(end($this->balances['prices']))->toBe(2000.0);
+    expect(end($this->balances['bitcoin']))->toBe(20000.0);
+    expect(end($this->balances['ethereum']))->toBe(2000.0);
+    expect(end($this->balances['totals']))->toBe(4000000.0);
+    expect(end($this->balances['prices_eur']))->toBe(1900.0);
+    expect(end($this->balances['totals_eur']))->toBe(3800000.0);
+
     expect(Carbon::parse($dates[0])->lt(Carbon::createFromFormat('M d Y', end($dates))))->toBetrue();
 });
 

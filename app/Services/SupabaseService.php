@@ -22,6 +22,7 @@ class SupabaseService
         return [
             'prices' => $balances->pluck('price')->toArray(),
             'ethereum' => $balances->pluck('balance')->toArray(),
+            'bitcoin' => $balances->pluck('btc_price')->toArray(),
             'prices_eur' => $balances->pluck('price_eur')->toArray(),
             'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance)->toArray(),
             'totals_eur' => $balances->map(fn ($balance) => $balance->price_eur * $balance->balance)->toArray(),
