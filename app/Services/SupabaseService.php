@@ -20,15 +20,15 @@ class SupabaseService
            ->reverse()->values();
 
         return [
-            'prices' => $balances->pluck('price')->toArray(),
-            'ethereum' => $balances->pluck('balance')->toArray(),
-            'btc_prices' => $balances->pluck('btc_price')->toArray(),
-            'prices_eur' => $balances->pluck('price_eur')->toArray(),
-            'btc_prices_eur' => $balances->pluck('btc_price_eur')->toArray(),
-            'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance)->toArray(),
-            'totals_eur' => $balances->map(fn ($balance) => $balance->price_eur * $balance->balance)->toArray(),
-            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d Y'))->toArray(),
-            'bitcoin' => $balances->map(fn ($balance) => $balance->btc_price ? (($balance->price * $balance->balance) / $balance->btc_price) : null)->toArray()
+            'prices' => $balances->pluck('price')->toArray(), // eth_price
+            'ethereum' => $balances->pluck('balance')->toArray(), // total_usd / eth_price
+            'btc_prices' => $balances->pluck('btc_price')->toArray(), // btc_price
+            'prices_eur' => $balances->pluck('price_eur')->toArray(), // eth_price * eur_usd
+            'btc_prices_eur' => $balances->pluck('btc_price_eur')->toArray(), // btc_price * eur_usd
+            'totals' => $balances->map(fn ($balance) => $balance->price * $balance->balance)->toArray(), // total_usd
+            'totals_eur' => $balances->map(fn ($balance) => $balance->price_eur * $balance->balance)->toArray(), // total_usd * eur_usd
+            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d Y'))->toArray(), // created_at
+            'bitcoin' => $balances->map(fn ($balance) => $balance->btc_price ? (($balance->price * $balance->balance) / $balance->btc_price) : null)->toArray() // total_usd / btc_price
         ];
     }
 }
