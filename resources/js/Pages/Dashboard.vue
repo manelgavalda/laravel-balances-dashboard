@@ -224,8 +224,6 @@
       }
     },
     created() {
-      // this.refreshTokens()
-
       this.totals = {
         usd: this.balances.totals.at(-1),
         eth: this.balances.ethereum.at(-1),
@@ -233,8 +231,6 @@
         pricesUsd: this.balances.prices.at(-1),
         pricesEur: this.balances.prices_eur.at(-1)
       }
-
-      this.weeklyLast = this.tokens.slice(0, 7).at(-1)
     },
     methods: {
       getDailyChange(index) {
@@ -245,12 +241,12 @@
       getWeeklyApy(index) {
         const balance = this.tokens[0][index].balance
 
-        return (((balance - (this.weeklyLast[index] || 0).balance) / balance) * 100 || 0).toFixed(2)
+        return (((balance - (this.tokens[6][index] || 0).balance) / balance) * 100 || 0).toFixed(2)
       },
       getWeeklyGain(index) {
         const token = this.tokens[0][index]
 
-        return ((token.balance - (this.weeklyLast[index] || 0).balance) * token.price).toFixed(2)
+        return ((token.balance - (this.tokens[6][index] || 0).balance) * token.price).toFixed(2)
       },
       getMonthlyApy(index) {
         const balance = this.tokens[0][index].balance
