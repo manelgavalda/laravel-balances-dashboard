@@ -49,16 +49,14 @@ it('retrieves_the_tokens', function () {
     expect($weeklyTokens[0])->toHaveCount(3);
     expect($weeklyTokens[6])->toHaveCount(15);
 
-    expect($tokens[0]['Token 3'])->toHaveKeys([
-        'id',
-        'pool',
-        'price',
-        'parent',
-        'balance',
-        'price_eur',
-        'created_at',
-        'updated_at'
-    ]);
+    expect($tokens[0]['Token 3'])
+        ->id->toBe(1)
+        ->pool->toBe('Token 3')
+        ->price->toBe(5.0)
+        ->parent->toBeNull()
+        ->balance->toBe(10.0)
+        ->price_eur->toBe(4.0)
+        ->created_at->toBe('2024-11-08T00:00:00.000000Z');
 
     expect(Carbon::parse($tokens[0]['Token 3']['created_at'])->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
     expect(Carbon::parse($tokens[1]['Token 3']['created_at'])->isSameDay(Carbon::parse(prev($this->balances['dates']))))->toBeTrue();

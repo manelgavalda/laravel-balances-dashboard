@@ -10,24 +10,14 @@ class SupabaseService
 {
     public function getTokens()
     {
-        return Balance::orderByDesc('created_at')->limit(450)->get()->map(function ($balance) {
-            $balance->price = floatval($balance->price);
-            $balance->balance = floatval($balance->balance);
-            $balance->price_eur = floatval($balance->price_eur);
-
-            return $balance;
-        })->groupBy('created_at')->take(30)->map->keyBy('pool')->values()->toArray();
+        return Balance::orderByDesc('created_at')->limit(450)->get()
+            ->groupBy('created_at')->take(30)->map->keyBy('pool')->values()->toArray();
     }
 
     public function getHistoricalBalances()
     {
-        $balances = Total::orderByDesc('created_at')->limit(31)->get()->map(function ($total) {
-            $total->price = floatval($total->price);
-            $total->balance = floatval($total->balance);
-            $total->price_eur = floatval($total->price_eur);
-
-            return $total;
-        })->reverse()->values();
+        $balances = Total::orderByDesc('created_at')->limit(31)->get()
+           ->reverse()->values();
 
         return [
             'prices' => $balances->pluck('price')->toArray(),
