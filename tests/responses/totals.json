@@ -4,6 +4,7 @@
       "price_eur": 1900,
       "balance": 2000,
       "btc_price": 20000,
+      "btc_price_eur": 19000,
       "created_at": "2024-11-08T00:00:00.000000+00:00"
    },
    {

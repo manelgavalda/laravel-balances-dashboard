@@ -16,6 +16,7 @@
         :dates="balances.dates"
         :data="balances.ethereum"
         :total="totals.eth.toFixed(3)"
+        :subtotal="`(${totals.btc.toFixed(3)} BTC)`"
       />
     </div>
     <div class="w-1/3">
@@ -226,6 +227,7 @@
     created() {
       this.totals = {
         usd: this.balances.totals.at(-1),
+        btc: this.balances.bitcoin.at(-1),
         eth: this.balances.ethereum.at(-1),
         eur: this.balances.totals_eur.at(-1),
         pricesUsd: this.balances.prices.at(-1),
@@ -282,15 +284,18 @@
           this.totals = {
             usd: 0,
             eth: 0,
+            btc: 0,
             eur: 0,
             pricesEur: data.ethereumPrice.eur,
-            pricesUsd: data.ethereumPrice.usd
+            pricesUsd: data.ethereumPrice.usd,
+            btcPricesUsd: data.bitcoinPrice.usd
           }
 
           data.balances.forEach(token => {
             this.totals.usd += token.price * token.balance
             this.totals.eur += token.price_eur * token.balance
             this.totals.eth += token.price * token.balance / this.totals.pricesUsd
+            this.totals.btc += token.price * token.balance / this.totals.btcPricesUsd
           })
 
           this.loading = false

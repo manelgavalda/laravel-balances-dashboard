@@ -25,11 +25,13 @@ it('retrieves_the_historical_balances', function () {
 
     expect(end($dates))->toBe('Nov 08 2024');
     expect(end($this->balances['prices']))->toBe(2000.0);
-    expect(end($this->balances['bitcoin']))->toBe(20000.0);
+    expect(end($this->balances['bitcoin']))->toBe(200.0);
     expect(end($this->balances['ethereum']))->toBe(2000.0);
     expect(end($this->balances['totals']))->toBe(4000000.0);
     expect(end($this->balances['prices_eur']))->toBe(1900.0);
+    expect(end($this->balances['btc_prices']))->toBe(20000.0);
     expect(end($this->balances['totals_eur']))->toBe(3800000.0);
+    expect(end($this->balances['btc_prices_eur']))->toBe(19000.0);
 
     expect(Carbon::parse($dates[0])->lt(Carbon::createFromFormat('M d Y', end($dates))))->toBetrue();
 });

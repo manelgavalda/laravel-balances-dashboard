@@ -11,7 +11,8 @@ class Total extends Model
     protected $casts = [
         'price' => 'float',
         'balance' => 'float',
+        'price_eur' => 'float',
         'btc_price' => 'float',
-        'price_eur' => 'float'
+        'btc_price_eur' => 'float'
     ];
 }

@@ -8,7 +8,7 @@
         <div class="flex items-start ">
           <div class="text-right mr-2 text-slate-800 dark:text-slate-100">
             <div class="text-3xl font-bold">{{ total }}</div>
-            <div class="text-xl font-semibold h-1">{{ subtotal }}</div>
+            <div class="text-lg font-semibold h-2">{{ subtotal }}</div>
           </div>
           <div class="text-sm font-semibold text-white px-1.5 rounded-full" :class="{
             'bg-red-700': getChange() < 0,
