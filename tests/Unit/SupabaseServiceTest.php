@@ -43,11 +43,8 @@ it('retrieves_the_tokens', function () {
     $tokens = $this->databaseService->getTokens();
 
     expect($tokens)->toHaveCount(30);
-
-    $weeklyTokens = array_slice($tokens, 0, 7);
-
-    expect($weeklyTokens[0])->toHaveCount(3);
-    expect($weeklyTokens[6])->toHaveCount(15);
+    expect($tokens[0])->toHaveCount(3);
+    expect($tokens[6])->toHaveCount(15);
 
     expect($tokens[0]['Token 3'])
         ->id->toBe(1)
