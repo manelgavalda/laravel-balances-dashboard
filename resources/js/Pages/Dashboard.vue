@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div class="w-1/3">
+    <div class="w-1/2">
       <balances-chart
         label="ETH Price"
         :dates="balances.dates"
@@ -8,8 +8,15 @@
         :total="'$' + currencyFormat(totals.pricesUsd)"
         :subtotal="`(${currencyFormat(totals.pricesEur)} €)`"
       />
+      <balances-chart
+        label="BTC Price"
+        :dates="balances.dates"
+        :data="balances.btc_prices"
+        :total="'$' + currencyFormat(totals.btcPricesUsd)"
+        :subtotal="`(${currencyFormat(totals.btcPricesEur)} €)`"
+      />
     </div>
-    <div class="w-1/3">
+    <div class="w-1/2">
       <balances-chart
         color="blue"
         label="ETH"
@@ -18,8 +25,6 @@
         :total="totals.eth.toFixed(3)"
         :subtotal="`(${totals.btc.toFixed(3)} BTC)`"
       />
-    </div>
-    <div class="w-1/3">
       <balances-chart
         label="Total"
         :dates="balances.dates"
@@ -231,7 +236,9 @@
         eth: this.balances.ethereum.at(-1),
         eur: this.balances.totals_eur.at(-1),
         pricesUsd: this.balances.prices.at(-1),
-        pricesEur: this.balances.prices_eur.at(-1)
+        pricesEur: this.balances.prices_eur.at(-1),
+        btcPricesUsd: this.balances.btc_prices.at(-1),
+        btcPricesEur: this.balances.btc_prices_eur.at(-1)
       }
     },
     methods: {
@@ -288,7 +295,8 @@
             eur: 0,
             pricesEur: data.ethereumPrice.eur,
             pricesUsd: data.ethereumPrice.usd,
-            btcPricesUsd: data.bitcoinPrice.usd
+            btcPricesUsd: data.bitcoinPrice.usd,
+            btcPricesEur: data.bitcoinPrice.eur
           }
 
           data.balances.forEach(token => {

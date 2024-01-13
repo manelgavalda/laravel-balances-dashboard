@@ -19,7 +19,8 @@
     </div>
     <div>
       <Line
-        height="100"
+        height="150"
+        width="875"
         :data="{
           labels: dates,
           datasets: [{ data }]
