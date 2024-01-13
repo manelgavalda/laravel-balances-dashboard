@@ -4,13 +4,13 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Total;
-use App\Models\Balance;
+use App\Models\Token;
 
 class SupabaseService
 {
     public function getTokens()
     {
-        return Balance::orderByDesc('created_at')->limit(450)->get()
+        return Token::orderByDesc('created_at')->limit(450)->get()
             ->groupBy('created_at')->take(30)->map->keyBy('pool')->values()->toArray();
     }
 

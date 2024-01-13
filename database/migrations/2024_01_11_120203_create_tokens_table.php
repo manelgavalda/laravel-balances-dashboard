@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('balances', function (Blueprint $table) {
+        Schema::create('tokens', function (Blueprint $table) {
             $table->id();
             $table->string('pool');
-            $table->string('balance');
             $table->string('price');
+            $table->string('balance');
             $table->string('price_eur');
             $table->string('parent')->nullable();
             $table->timestamps();

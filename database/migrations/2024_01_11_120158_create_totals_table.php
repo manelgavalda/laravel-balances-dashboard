@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('totals', function (Blueprint $table) {
             $table->id();
-            $table->string('balance');
             $table->string('price');
+            $table->string('balance');
             $table->string('price_eur');
             $table->timestamps();
         });

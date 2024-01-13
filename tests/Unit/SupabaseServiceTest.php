@@ -1,8 +1,6 @@
 <?php
 
 use Carbon\Carbon;
-use App\Models\Total;
-use App\Models\Balance;
 use App\Services\SupabaseService;
 use Illuminate\Support\Facades\File;
 
@@ -12,11 +10,18 @@ expect()->extend('toBeParsed', function () {
    $this->toHaveCount(31);
 });
 
-beforeEach(function () {
-    $this->databaseService = new SupabaseService;
+function createEntries($type) {
+    $file = str()->plural($type);
+    $class = app()->make('App\Models\\' . str()->ucfirst($type));
 
-    collect(json_decode(File::get(base_path() . "/tests/responses/totals.json")))
-        ->each(fn($total) => Total::create(json_decode(json_encode($total), true)));
+    collect(json_decode(File::get(base_path() . "/tests/responses/{$file}.json")))
+        ->each(fn($entry) => $class::create(json_decode(json_encode($entry), true)));
+}
+
+beforeEach(function () {
+    createEntries('total');
+
+    $this->databaseService = new SupabaseService;
 
     $this->balances = $this->databaseService->getHistoricalBalances();
 });
@@ -37,8 +42,7 @@ it('retrieves_the_historical_balances', function () {
 });
 
 it('retrieves_the_tokens', function () {
-    collect(json_decode(File::get(base_path() . "/tests/responses/tokens.json")))
-        ->each(fn($token) => Balance::create(json_decode(json_encode($token), true)));
+    createEntries('token');
 
     $tokens = $this->databaseService->getTokens();
 

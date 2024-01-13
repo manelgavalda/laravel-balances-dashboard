@@ -3,9 +3,16 @@
 use Carbon\Carbon;
 use App\Services\WiseService;
 use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 
 uses()->group('wise');
+
+function fakeRequest($url, $file) {
+    Http::fake([$url => Http::response(
+        File::get(base_path() . "/tests/responses/{$file}.json")
+    )]);
+}
 
 beforeEach(fn () =>
     $this->wiseService = new WiseService('fake_api_token', 'fake_profile_id')
