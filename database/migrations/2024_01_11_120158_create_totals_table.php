@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('totals', function (Blueprint $table) {
             $table->id();
-            $table->float('balance');
-            $table->float('price');
-            $table->float('price_eur');
+            $table->string('balance');
+            $table->string('price');
+            $table->string('price_eur');
             $table->timestamps();
         });
     }

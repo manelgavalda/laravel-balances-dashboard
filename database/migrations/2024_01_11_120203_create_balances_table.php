@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('balances', function (Blueprint $table) {
             $table->id();
             $table->string('pool');
-            $table->float('balance');
-            $table->float('price');
-            $table->float('price_eur');
+            $table->string('balance');
+            $table->string('price');
+            $table->string('price_eur');
             $table->string('parent')->nullable();
             $table->timestamps();
         });
