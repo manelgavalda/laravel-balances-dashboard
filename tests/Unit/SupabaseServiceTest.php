@@ -48,11 +48,11 @@ it('retrieves_the_tokens', function () {
 
     expect($tokens[0]['Token 3'])
         ->id->toBe(1)
-        ->pool->toBe('Token 3')
         ->price->toBe(5.0)
         ->parent->toBeNull()
         ->balance->toBe(10.0)
         ->price_eur->toBe(4.0)
+        ->pool->toBe('Token 3')
         ->created_at->toBe('2024-11-08T00:00:00.000000Z');
 
     expect(Carbon::parse($tokens[0]['Token 3']['created_at'])->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
