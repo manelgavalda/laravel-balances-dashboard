@@ -273,6 +273,9 @@
       getPriceHistory(pool) {
         return this.tokens.map(token => token[pool] ? (token[pool].balance * token[pool].price) : 0).reverse()
       },
+      currencyFormat(number) {
+        return new Intl.NumberFormat().format(number)
+      },
       refreshTokens() {
         this.loading = true
 
@@ -302,9 +305,6 @@
 
           this.loading = false
         })
-      },
-      currencyFormat(number) {
-        return new Intl.NumberFormat().format(number)
       }
     }
   }
