@@ -293,11 +293,8 @@
           }
 
           data.balances.forEach(newToken => {
-            const token = this.tokens[0][newToken.pool]
+            this.tokens[0][newToken.pool] = newToken
 
-            token.price = newToken.price
-            token.balance = newToken.balance
-            token.price_eur = newToken.price_eur
             this.totals.usd += newToken.price * newToken.balance
             this.totals.eur += newToken.price_eur * newToken.balance
             this.totals.eth += newToken.price * newToken.balance / this.totals.pricesUsd

@@ -162,7 +162,6 @@ it('refreshes_the_tokens', async () => {
     "price": 20,
     "balance": 10,
     "price_eur": 19,
-    "pool": "Token 1",
-    "created_at": "now"
+    "pool": "Token 1"
   })
 })
