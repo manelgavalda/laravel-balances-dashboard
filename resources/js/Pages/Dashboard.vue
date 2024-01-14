@@ -37,7 +37,7 @@
   <div class="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 mt-4">
     <header class="p-4 border-b border-slate-100 dark:border-slate-700 inline-flex">
       <h2 class="font-semibold text-slate-800 dark:text-slate-100 mr-2">Balances</h2>
-      <button class="bg-gray-500 hover:bg-gray-700 font-bold py-2 px-4 rounded inline-flex items-center h-6" :disabled="loading" :class="{ 'bg-gray-700': loading }" @click="refreshTokens" >
+      <button class="bg-gray-500 hover:bg-gray-700 font-bold py-2 px-4 rounded inline-flex items-center h-6" :disabled="loading" :class="{ 'bg-gray-700': loading }" @click="refreshTokens">
         <i class="fa fa-refresh" style="font-size:15px" :class="{ 'animate-spin': loading }"></i>
       </button>
     </header>
@@ -210,6 +210,7 @@
   </div>
 </template>
 <script>
+  import axios from "axios"
   import TokenChart  from '../components/Dashboard/TokenChart.vue'
   import BalancesChart  from '../components/Dashboard/BalancesChart.vue'
 
