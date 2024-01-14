@@ -267,14 +267,11 @@
 
         return ((token.balance - (this.tokens.at(-1)[index] || 0).balance) * token.price).toFixed(2)
       },
-      getTokensHistory(pool) {
-        return this.tokens.map(token => token[pool] || 0).reverse()
-      },
       getBalanceHistory(pool) {
-        return this.getTokensHistory(pool).map(({balance}) => balance)
+        return this.tokens.map(token => token[pool] ? token[pool].balance : 0).reverse()
       },
       getPriceHistory(pool) {
-        return this.getTokensHistory(pool).map(token => token.balance * token.price)
+        return this.tokens.map(token => token[pool] ? (token[pool].balance * token[pool].price) : 0).reverse()
       },
       refreshTokens() {
         this.loading = true
