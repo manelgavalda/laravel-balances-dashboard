@@ -3,6 +3,9 @@ import vue from "@vitejs/plugin-vue";
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
+    test: {
+        environment: 'happy-dom'
+    },
     plugins: [
         laravel({
             input: [
