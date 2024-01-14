@@ -280,14 +280,6 @@
         this.loading = true
 
         axios.get('get-tokens').then(({data}) => {
-          data.balances.forEach(newToken => {
-            const token = this.tokens[0][newToken.pool]
-
-            token.price = newToken.price
-            token.balance = newToken.balance
-            token.price_eur = newToken.price_eur
-          })
-
           this.totals = {
             usd: 0,
             eth: 0,
@@ -299,11 +291,16 @@
             btcPricesEur: data.bitcoinPrice.eur
           }
 
-          data.balances.forEach(token => {
-            this.totals.usd += token.price * token.balance
-            this.totals.eur += token.price_eur * token.balance
-            this.totals.eth += token.price * token.balance / this.totals.pricesUsd
-            this.totals.btc += token.price * token.balance / this.totals.btcPricesUsd
+          data.balances.forEach(newToken => {
+            const token = this.tokens[0][newToken.pool]
+
+            token.price = newToken.price
+            token.balance = newToken.balance
+            token.price_eur = newToken.price_eur
+            this.totals.usd += newToken.price * newToken.balance
+            this.totals.eur += newToken.price_eur * newToken.balance
+            this.totals.eth += newToken.price * newToken.balance / this.totals.pricesUsd
+            this.totals.btc += newToken.price * newToken.balance / this.totals.btcPricesUsd
           })
 
           this.loading = false
