@@ -89,6 +89,19 @@ const data = {
   }
 }
 
+it('is_created', async () => {
+  expect(dashboard.vm.totals).toEqual({
+    usd: 1,
+    btc: 1,
+    eth: 1,
+    eur: 1,
+    pricesUsd: 1,
+    pricesEur: 1,
+    btcPricesUsd: 1,
+    btcPricesEur: 1
+  })
+})
+
 it("returns_daily_change", async () => {
   expect(dashboard.vm.getDailyChange('Token 1')).toEqual("11.11")
 });
@@ -110,7 +123,7 @@ it("returns_monthly_gain", async () => {
 });
 
 it("returns_balance_history", async () => {
-  expect(dashboard.vm.getBalanceHistory('Token 1')).toEqual([7, 0, 0, 7, 5, 9, 10])
+  expect(dashboard.vm.getBalanceHistory('Token 1')).toEqual([7, undefined, undefined, 7, 5, 9, 10])
 });
 
 it("returns_price_history", async () => {
