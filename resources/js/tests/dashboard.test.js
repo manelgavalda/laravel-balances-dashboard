@@ -133,5 +133,23 @@ it('refreshes_the_tokens', async () => {
   await flushPromises()
 
   expect(dashboard.vm.loading).toEqual(false)
-  expect(dashboard.vm.totals.usd).toEqual(200)
+
+  expect(dashboard.vm.totals).toEqual({
+    "usd": 200,
+    "eur": 190,
+    "eth": 0.08,
+    "btc": 0.005,
+    "pricesEur": 2300,
+    "pricesUsd": 2500,
+    "btcPricesEur": 39000,
+    "btcPricesUsd": 40000
+  })
+
+  expect(dashboard.vm.tokens[0]['Token 1']).toEqual({
+    "price": 20,
+    "balance": 10,
+    "price_eur": 19,
+    "pool": "Token 1",
+    "created_at": "now"
+  })
 })
