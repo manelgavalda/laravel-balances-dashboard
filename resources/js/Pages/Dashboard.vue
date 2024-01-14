@@ -266,7 +266,7 @@
       getMonthlyGain(index) {
         const token = this.tokens[0][index]
 
-        return ((token.balance - (this.tokens.at(-1)[index] || {}).balance) * token.price).toFixed(2)
+        return ((token.balance - (this.tokens.at(-1)[index] || {}).balance) * token.price || 0).toFixed(2)
       },
       getBalanceHistory(pool) {
         return this.tokens.map(token => (token[pool] || {}).balance).reverse()
