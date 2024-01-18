@@ -75,6 +75,9 @@
             7 D gain
           </th>
           <th class="p-2 text-right">
+           Yearly APY
+          </th>
+          <th class="p-2 text-right">
             30 D APY
           </th>
           <th class="p-2 text-right">
@@ -128,6 +131,12 @@
               'text-red-500': getWeeklyGain(index) < 0,
               'text-green-500': getWeeklyGain(index) > 0
             }">${{ currencyFormat(getWeeklyGain(index)) }}</span>
+          </td>
+          <td class="p-2 text-right text-emerald-300">
+            <span v-if="getWeeklyApy(index) != 0" :class="{
+              'text-red-500': getYearlyApy(index) < 0,
+              'text-green-500': getYearlyApy(index) > 0
+            }">{{ currencyFormat(getYearlyApy(index)) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getMonthlyApy(index) != 0" :class="{
@@ -257,6 +266,13 @@
         const token = this.tokens[0][index]
 
         return ((token.balance - (this.tokens[6][index] || {}).balance) * token.price).toFixed(2)
+      },
+      getYearlyApy(index) {
+        const balance = this.tokens[0][index].balance
+
+        const apy = ((balance - (this.tokens[6][index] || {}).balance) / balance) * 100 || 0
+
+        return ((apy / 7) * 365).toFixed(2)
       },
       getMonthlyApy(index) {
         const balance = this.tokens[0][index].balance
