@@ -126,6 +126,10 @@ it("returns_yearly_apy", async () => {
   expect(dashboard.vm.getYearlyApy('Token 1')).toEqual("1564.29")
 });
 
+it("returns_yearly_gain", async () => {
+  expect(dashboard.vm.getYearlyGain('Token 1')).toEqual("1564.29")
+});
+
 it("returns_balance_history", async () => {
   expect(dashboard.vm.getBalanceHistory('Token 1')).toEqual([7, undefined, undefined, 7, 5, 9, 10])
 });
