@@ -158,10 +158,5 @@ it('refreshes_the_tokens', async () => {
     "btcPricesUsd": 40000
   })
 
-  expect(dashboard.vm.tokens[0]['Token 1']).toEqual({
-    "price": 20,
-    "balance": 10,
-    "price_eur": 19,
-    "pool": "Token 1"
-  })
+  expect(dashboard.vm.tokens[0]['Token 1']).toEqual(data.balances[0])
 })
