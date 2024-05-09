@@ -29,7 +29,7 @@
         label="Total"
         :dates="balances.dates"
         :data="balances.totals"
-        :total="'$' + currencyFormat(totals.usd.toFixed(2))"
+        :total="`$${currencyFormat(totals.usd.toFixed(2))} - $${currencyFormat(totals.debt.toFixed(2))} = $${currencyFormat((totals.usd-totals.debt).toFixed(2))}`"
         :subtotal="`(${currencyFormat(totals.eur.toFixed(2))} €)`"
       />
     </div>
@@ -250,6 +250,7 @@
     },
     created() {
       this.totals = {
+        debt: this.balances.debt.at(-1),
         usd: this.balances.totals.at(-1),
         btc: this.balances.bitcoin.at(-1),
         eth: this.balances.ethereum.at(-1),
