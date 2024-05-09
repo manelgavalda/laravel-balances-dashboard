@@ -24,6 +24,7 @@ it('retrieves_the_historical_balances', function () {
     $dates = $this->balances['dates'];
 
     expect(end($dates))->toBe('Nov 08 2024');
+    expect(end($this->balances['debt']))->toBe(5000.0);
     expect(end($this->balances['prices']))->toBe(2000.0);
     expect(end($this->balances['bitcoin']))->toBe(200.0);
     expect(end($this->balances['ethereum']))->toBe(2000.0);

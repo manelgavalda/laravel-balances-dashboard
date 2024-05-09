@@ -20,6 +20,7 @@ class SupabaseService
            ->reverse()->values();
 
         return [
+            'debt' => $balances->pluck('debt')->toArray(),
             'prices' => $balances->pluck('price')->toArray(), // eth_price
             'ethereum' => $balances->pluck('balance')->toArray(), // total_usd / eth_price
             'btc_prices' => $balances->pluck('btc_price')->toArray(), // btc_price

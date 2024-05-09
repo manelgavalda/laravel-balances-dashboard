@@ -9,6 +9,7 @@ class Total extends Model
     protected $guarded = [];
 
     protected $casts = [
+        'debt' => 'float',
         'price' => 'float',
         'balance' => 'float',
         'price_eur' => 'float',

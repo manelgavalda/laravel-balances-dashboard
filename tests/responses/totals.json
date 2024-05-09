@@ -1,5 +1,6 @@
 [
    {
+      "debt": 5000,
       "price": 2000,
       "price_eur": 1900,
       "balance": 2000,

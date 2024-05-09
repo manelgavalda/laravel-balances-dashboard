@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('balance');
             $table->string('price_eur');
+            $table->string('debt')->nullable();
             $table->string('btc_price')->nullable();
             $table->string('btc_price_eur')->nullable();
             $table->timestamps();
