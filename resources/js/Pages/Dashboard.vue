@@ -15,6 +15,12 @@
         :total="'$' + currencyFormat(totals.btcPricesUsd)"
         :subtotal="`(${currencyFormat(totals.btcPricesEur)} €)`"
       />
+      <balances-chart
+        label="Debt"
+        :dates="balances.dates"
+        :data="balances.debt"
+        :total="`$${currencyFormat(totals.debt.toFixed(2))}`"
+      />
     </div>
     <div class="w-1/2">
       <balances-chart
@@ -29,8 +35,14 @@
         label="Total"
         :dates="balances.dates"
         :data="balances.totals"
-        :total="`$${currencyFormat(totals.usd.toFixed(2))} - $${currencyFormat(totals.debt.toFixed(2))} = $${currencyFormat((totals.usd-totals.debt).toFixed(2))}`"
+        :total="`$${currencyFormat(totals.usd.toFixed(2))}`"
         :subtotal="`(${currencyFormat(totals.eur.toFixed(2))} €)`"
+      />
+      <balances-chart
+        label="Total"
+        :dates="balances.dates"
+        :data="[]"
+        :total="`$${currencyFormat(totals.usd-totals.debt)}`"
       />
     </div>
   </div>
