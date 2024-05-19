@@ -2,47 +2,35 @@
   <div class="flex">
     <div class="w-1/2">
       <balances-chart
-        label="ETH Price"
-        :dates="balances.dates"
-        :data="balances.prices"
-        :total="'$' + currencyFormat(totals.pricesUsd)"
-        :subtotal="`(${currencyFormat(totals.pricesEur)} €)`"
-      />
-      <balances-chart
-        label="BTC Price"
-        :dates="balances.dates"
-        :data="balances.btc_prices"
-        :total="'$' + currencyFormat(totals.btcPricesUsd)"
-        :subtotal="`(${currencyFormat(totals.btcPricesEur)} €)`"
+        label="ETH"
+        color="blue"
+        :dates="prices.dates"
+        :data="prices.eth"
+        :total="`$${currencyFormat(prices.eth.at(-1))}`"
+        :subtotal="`(${currencyFormat(prices.eth.at(-1) * eurPrice)} €)`"
       />
       <balances-chart
         label="Debt"
-        :dates="balances.dates"
-        :data="balances.debt"
-        :total="`$${currencyFormat(totals.debt.toFixed(2))}`"
+        :dates="totals.dates"
+        :data="totals.debts"
+        :total="`$${currencyFormat(totals.debts.at(-1))}`"
+        :subtotal="`(${currencyFormat(totals.debts.at(-1) * eurPrice)} €)`"
       />
     </div>
     <div class="w-1/2">
       <balances-chart
-        color="blue"
-        label="ETH"
-        :dates="balances.dates"
-        :data="balances.ethereum"
-        :total="totals.eth.toFixed(3)"
-        :subtotal="`(${totals.btc.toFixed(3)} BTC)`"
+        label="BTC"
+        :dates="prices.dates"
+        :data="prices.btc"
+        :total="'$' + currencyFormat(prices.btc.at(-1))"
+        :subtotal="`(${currencyFormat(prices.btc.at(-1) * eurPrice)} €)`"
       />
       <balances-chart
         label="Total"
-        :dates="balances.dates"
-        :data="balances.totals"
-        :total="`$${currencyFormat(totals.usd.toFixed(2))}`"
-        :subtotal="`(${currencyFormat(totals.eur.toFixed(2))} €)`"
-      />
-      <balances-chart
-        label="Total"
-        :dates="balances.dates"
-        :data="[]"
-        :total="`$${currencyFormat(totals.usd-totals.debt)}`"
+        :dates="totals.dates"
+        :data="totals.totals"
+        :total="`$${currencyFormat(totals.totals.at(-1))}`"
+        :subtotal="`(${currencyFormat(totals.totals.at(-1) * eurPrice)} €)`"
       />
     </div>
   </div>
@@ -109,13 +97,13 @@
       <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
         <tr v-for="(token, index) in tokens[0]">
           <td class="p-2 text-slate-800 dark:text-slate-100 pl-3 w-1/3">
-            {{ token.pool }}
+            {{ token.name }}
           </td>
           <td class="p-2 text-right text-yellow-300">
             {{ currencyFormat(token.balance.toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-red-300">
-            {{ currencyFormat(token.price_eur.toFixed(2)) }}
+            {{ currencyFormat((token.price * eurPrice).toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-red-300">
             ${{ currencyFormat(token.price.toFixed(2)) }}
@@ -127,13 +115,13 @@
             }">{{ currencyFormat(getDailyChange(index, token.price)) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
-            {{ currencyFormat((token.price_eur * token.balance).toFixed(2)) }}
+            {{ currencyFormat((token.price * eurPrice * token.balance).toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
             ${{ currencyFormat((token.price * token.balance).toFixed(2)) }}
           </td>
           <td class="p-2 text-right text-sky-300">
-            {{ currencyFormat((token.price * token.balance) / totals.pricesUsd) }}
+            {{ currencyFormat((token.price * token.balance) / prices.eth.at(-1)) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyApy(index) != 0" :class="{
@@ -174,13 +162,13 @@
           <td class="p-2 w-2/12">
             <token-chart
               :labels="Object.keys(tokens)"
-              :data="getBalanceHistory(token.pool)"
+              :data="getBalanceHistory(token.name)"
             />
           </td>
           <td class="p-2 w-2/12">
             <token-chart
               :labels="Object.keys(tokens)"
-              :data="getPriceHistory(token.pool)"
+              :data="getPriceHistory(token.name)"
             />
           </td>
         </tr>
@@ -250,28 +238,31 @@
       BalancesChart
     },
     props: {
-      tokens: Array,
+      prices: Object,
+      tokens: Object,
+      totals: Object,
       balance: Number,
-      balances: Object,
-      transactions: Array,
+      transactions: Object,
     },
     data() {
       return {
         loading: false,
+        eurPrice: 0
       }
     },
     created() {
-      this.totals = {
-        debt: this.balances.debt.at(-1),
-        usd: this.balances.totals.at(-1),
-        btc: this.balances.bitcoin.at(-1),
-        eth: this.balances.ethereum.at(-1),
-        eur: this.balances.totals_eur.at(-1),
-        pricesUsd: this.balances.prices.at(-1),
-        pricesEur: this.balances.prices_eur.at(-1),
-        btcPricesUsd: this.balances.btc_prices.at(-1),
-        btcPricesEur: this.balances.btc_prices_eur.at(-1)
-      }
+      this.eurPrice = this.prices.eur.at(-1).toFixed(2)
+      // this.totals = {
+      //   debt: this.balances.debts.at(-1),
+      //   totals: this.balances.totals.at(-1),
+        // btc: this.balances.bitcoin.at(-1),
+        // eth: this.balances.ethereum.at(-1),
+        // eur: this.balances.totals_eur.at(-1),
+        // pricesUsd: this.balances.prices.at(-1),
+        // pricesEur: this.balances.prices_eur.at(-1),
+        // btcPricesUsd: this.balances.btc_prices.at(-1),
+        // btcPricesEur: this.balances.btc_prices_eur.at(-1)
+      // }
     },
     methods: {
       getDailyChange(index) {
@@ -305,11 +296,11 @@
 
         return ((token.balance - (this.tokens.at(-1)[index] || {}).balance) * token.price || 0).toFixed(2)
       },
-      getBalanceHistory(pool) {
-        return this.tokens.map(token => (token[pool] || {}).balance).reverse()
+      getBalanceHistory(name) {
+        return this.tokens.map(token => (token[name] || {}).balance).reverse()
       },
-      getPriceHistory(pool) {
-        return this.tokens.map(token => token[pool] ? (token[pool].balance * token[pool].price) : 0).reverse()
+      getPriceHistory(name) {
+        return this.tokens.map(token => token[name] ? (token[name].balance * token[name].price) : 0).reverse()
       },
       currencyFormat(number) {
         return new Intl.NumberFormat().format(number)
@@ -317,29 +308,29 @@
       refreshTokens() {
         this.loading = true
 
-        axios.get('get-tokens').then(({data}) => {
-          this.totals = {
-            usd: 0,
-            eth: 0,
-            btc: 0,
-            eur: 0,
-            pricesEur: data.ethereumPrice.eur,
-            pricesUsd: data.ethereumPrice.usd,
-            btcPricesUsd: data.bitcoinPrice.usd,
-            btcPricesEur: data.bitcoinPrice.eur
-          }
+      //   axios.get('get-tokens').then(({data}) => {
+      //     this.totals = {
+      //       usd: 0,
+      //       eth: 0,
+      //       btc: 0,
+      //       eur: 0,
+      //       pricesEur: data.ethereumPrice.eur,
+      //       pricesUsd: data.ethereumPrice.usd,
+      //       btcPricesUsd: data.bitcoinPrice.usd,
+      //       btcPricesEur: data.bitcoinPrice.eur
+      //     }
 
-          data.balances.forEach(newToken => {
-            this.tokens[0][newToken.pool] = newToken
+      //     data.balances.forEach(newToken => {
+      //       this.tokens[0][newToken.name] = newToken
 
-            this.totals.usd += newToken.price * newToken.balance
-            this.totals.eur += newToken.price_eur * newToken.balance
-            this.totals.eth += newToken.price * newToken.balance / this.totals.pricesUsd
-            this.totals.btc += newToken.price * newToken.balance / this.totals.btcPricesUsd
-          })
+      //       this.totals.usd += newToken.price * newToken.balance
+      //       this.totals.eur += newToken.price_eur * newToken.balance
+      //       this.totals.eth += newToken.price * newToken.balance / this.totals.pricesUsd
+      //       this.totals.btc += newToken.price * newToken.balance / this.totals.btcPricesUsd
+      //     })
 
-          this.loading = false
-        })
+      //     this.loading = false
+      //   })
       }
     }
   }

@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Token extends Model
+class Price extends Model
 {
     protected $guarded = [];
 
     protected $casts = [
-        'price' => 'float',
-        'balance' => 'float',
+        'btc' => 'float',
+        'eth' => 'float',
+        'eur' => 'float',
     ];
 }

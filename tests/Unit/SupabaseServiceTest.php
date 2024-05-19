@@ -17,24 +17,32 @@ beforeEach(function () {
 
     $this->databaseService = new SupabaseService;
 
-    $this->balances = $this->databaseService->getHistoricalBalances();
+    $this->balances = $this->databaseService->getTotals();
 });
 
 it('retrieves_the_historical_balances', function () {
     $dates = $this->balances['dates'];
 
-    expect(end($dates))->toBe('Nov 08 2024');
-    expect(end($this->balances['debt']))->toBe(5000.0);
-    expect(end($this->balances['prices']))->toBe(2000.0);
-    expect(end($this->balances['bitcoin']))->toBe(200.0);
-    expect(end($this->balances['ethereum']))->toBe(2000.0);
-    expect(end($this->balances['totals']))->toBe(4000000.0);
-    expect(end($this->balances['prices_eur']))->toBe(1900.0);
-    expect(end($this->balances['btc_prices']))->toBe(20000.0);
-    expect(end($this->balances['totals_eur']))->toBe(3800000.0);
-    expect(end($this->balances['btc_prices_eur']))->toBe(19000.0);
+    expect($dates->last())->toBe('Nov 08 2024');
+    expect($this->balances['debts']->last())->toBe(5000.0);
+    expect($this->balances['totals']->last())->toBe(2000.0);
 
-    expect(Carbon::parse($dates[0])->lt(Carbon::createFromFormat('M d Y', end($dates))))->toBetrue();
+    expect(Carbon::parse($dates->first())->lt(Carbon::createFromFormat('M d Y', $dates->last())))->toBetrue();
+});
+
+it('retrieves_the_historical_prices', function () {
+    createEntries('price');
+
+    $this->prices = $this->databaseService->getPrices();
+
+    $dates = $this->prices['dates'];
+
+    expect($dates->last())->toBe('Nov 08 2024');
+    expect($this->prices['eth']->last())->toBe(2000.0);
+    expect($this->prices['eur']->last())->toBe(1900.0);
+    expect($this->prices['btc']->last())->toBe(20000.0);
+
+    expect(Carbon::parse($dates->first())->lt(Carbon::createFromFormat('M d Y', $dates->last())))->toBetrue();
 });
 
 it('retrieves_the_tokens', function () {
@@ -49,12 +57,10 @@ it('retrieves_the_tokens', function () {
     expect($tokens[0]['Token 3'])
         ->id->toBe(1)
         ->price->toBe(5.0)
-        ->parent->toBeNull()
         ->balance->toBe(10.0)
-        ->price_eur->toBe(4.0)
-        ->pool->toBe('Token 3')
-        ->created_at->toBe('2024-11-08T00:00:00.000000Z');
+        ->name->toBe('Token 3')
+        ->created_at->toString()->toBe('Fri Nov 08 2024 00:00:00 GMT+0000');
 
-    expect(Carbon::parse($tokens[0]['Token 3']['created_at'])->isSameDay(Carbon::parse(end($this->balances['dates']))))->toBeTrue();
-    expect(Carbon::parse($tokens[1]['Token 3']['created_at'])->isSameDay(Carbon::parse(prev($this->balances['dates']))))->toBeTrue();
+    expect(Carbon::parse($tokens[0]['Token 3']['created_at'])->isSameDay(Carbon::parse($this->balances['dates']->pop())))->toBeTrue();
+    expect(Carbon::parse($tokens[1]['Token 3']['created_at'])->isSameDay(Carbon::parse($this->balances['dates']->last())))->toBeTrue();
 });
