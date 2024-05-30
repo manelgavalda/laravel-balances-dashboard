@@ -23,6 +23,7 @@ class SupabaseService
         return [
             'debts' => $balances->pluck('debt'),
             'totals' => $balances->pluck('total'),
+            'totals_with_debt' => $balances->map(fn ($balance) => $balance->total - $balance->debt),
             'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d Y')),
         ];
     }
