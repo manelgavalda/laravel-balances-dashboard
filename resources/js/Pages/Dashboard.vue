@@ -21,7 +21,6 @@
         :dates="prices.dates"
         :data="prices.eur"
         :total="currencyFormat(eurPrice, 'EUR')"
-        subtotal="-"
       />
     </div>
     <div class="w-1/2">
