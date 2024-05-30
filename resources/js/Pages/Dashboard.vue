@@ -41,9 +41,9 @@
       <balances-chart
         label="Total"
         :dates="totals.dates"
-        :data="totals.totals"
-        :total="currencyFormat(total - debt)"
-        :subtotal="currencyFormat((total - debt) * eurPrice, 'EUR')"
+        :data="totals.totals_with_debts"
+        :total="currencyFormat(totalWithDebt)"
+        :subtotal="currencyFormat(totalWithDebt * eurPrice, 'EUR')"
       />
     </div>
   </div>
@@ -264,10 +264,11 @@
     },
     created() {
       this.debt = this.totals.debts.at(-1)
-      this.total = this.totals.totals.at(-1)
       this.eurPrice = this.prices.eur.at(-1)
       this.ethPrice = this.prices.eth.at(-1)
       this.btcPrice = this.prices.btc.at(-1)
+      this.total = this.totals.totals.at(-1)
+      this.totalWithDebt = this.totals.totals_with_debts.at(-1)
     },
     methods: {
       getDailyChange(index) {
@@ -329,6 +330,8 @@
 
             this.total += newToken.price * newToken.balance
           })
+
+          this.totalWithDebt = this.total - this.debt
 
           this.loading = false
         })
