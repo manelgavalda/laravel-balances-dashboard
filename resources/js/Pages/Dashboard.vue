@@ -7,20 +7,20 @@
         :dates="prices.dates"
         :data="prices.eth"
         :total="currencyFormat(ethPrice)"
-        :subtotal="currencyFormat(ethPrice * eurPrice)"
+        :subtotal="currencyFormat(ethPrice * eurPrice, 'EUR')"
       />
       <balances-chart
         label="BTC"
         :dates="prices.dates"
         :data="prices.btc"
         :total="currencyFormat(btcPrice)"
-        :subtotal="currencyFormat(btcPrice * eurPrice)"
+        :subtotal="currencyFormat(btcPrice * eurPrice, 'EUR')"
       />
       <balances-chart
         label="EUR"
         :dates="prices.dates"
         :data="prices.eur"
-        :total="currencyFormat(eurPrice)"
+        :total="currencyFormat(eurPrice, 'EUR')"
         subtotal="-"
       />
     </div>
@@ -30,21 +30,21 @@
         :dates="totals.dates"
         :data="totals.totals"
         :total="currencyFormat(total)"
-        :subtotal="currencyFormat(total * eurPrice)"
+        :subtotal="currencyFormat(total * eurPrice, 'EUR')"
       />
       <balances-chart
         label="Debt"
         :dates="totals.dates"
         :data="totals.debts"
         :total="currencyFormat(debt)"
-        :subtotal="currencyFormat(debt * eurPrice)"
+        :subtotal="currencyFormat(debt * eurPrice, 'EUR')"
       />
       <balances-chart
         label="Total"
         :dates="totals.dates"
         :data="totals.totals"
         :total="currencyFormat(total - debt)"
-        :subtotal="currencyFormat((total - debt) * eurPrice)"
+        :subtotal="currencyFormat((total - debt) * eurPrice, 'EUR')"
       />
     </div>
   </div>
@@ -117,7 +117,7 @@
             {{ token.balance.toFixed(3) }}
           </td>
           <td class="p-2 text-right text-red-300">
-            {{ currencyFormat(token.price * eurPrice) }}
+            {{ currencyFormat(token.price * eurPrice, 'EUR') }}
           </td>
           <td class="p-2 text-right text-red-300">
             {{ currencyFormat(token.price) }}
@@ -129,13 +129,13 @@
             }">{{ getDailyChange(index, token.price) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
-            {{ currencyFormat((token.price * eurPrice * token.balance)) }}
+            {{ currencyFormat(token.price * eurPrice * token.balance, 'EUR') }}
           </td>
           <td class="p-2 text-right text-emerald-300">
             {{ currencyFormat(token.price * token.balance) }}
           </td>
           <td class="p-2 text-right text-sky-300">
-            {{ (token.price * token.balance / ethPrice).toFixed(2) }}
+            {{ (token.price * token.balance / ethPrice).toFixed(3) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyApy(index) != 0" :class="{
@@ -266,7 +266,7 @@
     created() {
       this.debt = this.totals.debts.at(-1)
       this.total = this.totals.totals.at(-1)
-      this.eurPrice = this.prices.eur.at(-1).toFixed(2)
+      this.eurPrice = this.prices.eur.at(-1)
       this.ethPrice = this.prices.eth.at(-1)
       this.btcPrice = this.prices.btc.at(-1)
     },
@@ -308,8 +308,11 @@
       getPriceHistory(name) {
         return this.tokens.map(token => token[name] ? (token[name].balance * token[name].price) : 0).reverse()
       },
-      currencyFormat(number) {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
+      currencyFormat(number, currency='USD') {
+        return new Intl.NumberFormat(
+          currency=='EUR' ? 'es-ES' : 'en-US',
+          { style: 'currency', currency }
+        ).format(number);
       },
       refreshTokens() {
         this.loading = true
