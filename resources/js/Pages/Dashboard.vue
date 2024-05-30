@@ -6,21 +6,21 @@
         color="blue"
         :dates="prices.dates"
         :data="prices.eth"
-        :total="`$${currencyFormat(ethPrice)}`"
-        :subtotal="`(${currencyFormat(ethPrice * eurPrice)} €)`"
+        :total="currencyFormat(ethPrice)"
+        :subtotal="currencyFormat(ethPrice * eurPrice)"
       />
       <balances-chart
         label="BTC"
         :dates="prices.dates"
         :data="prices.btc"
-        :total="'$' + currencyFormat(btcPrice)"
-        :subtotal="`(${currencyFormat(btcPrice * eurPrice)} €)`"
+        :total="currencyFormat(btcPrice)"
+        :subtotal="currencyFormat(btcPrice * eurPrice)"
       />
       <balances-chart
         label="EUR"
         :dates="prices.dates"
         :data="prices.eur"
-        :total="currencyFormat(eurPrice) + '€'"
+        :total="currencyFormat(eurPrice)"
         subtotal="-"
       />
     </div>
@@ -29,22 +29,22 @@
         label="Total"
         :dates="totals.dates"
         :data="totals.totals"
-        :total="`$${currencyFormat(total)}`"
-        :subtotal="`(${currencyFormat(total * eurPrice)} €)`"
+        :total="currencyFormat(total)"
+        :subtotal="currencyFormat(total * eurPrice)"
       />
       <balances-chart
         label="Debt"
         :dates="totals.dates"
         :data="totals.debts"
-        :total="`$${currencyFormat(debt)}`"
-        :subtotal="`(${currencyFormat(debt * eurPrice)} €)`"
+        :total="currencyFormat(debt)"
+        :subtotal="currencyFormat(debt * eurPrice)"
       />
       <balances-chart
         label="Total"
         :dates="totals.dates"
         :data="totals.totals"
-        :total="`$${currencyFormat(total - debt)}`"
-        :subtotal="`(${currencyFormat((total - debt) * eurPrice)} €)`"
+        :total="currencyFormat(total - debt)"
+        :subtotal="currencyFormat((total - debt) * eurPrice)"
       />
     </div>
   </div>
@@ -114,64 +114,64 @@
             {{ token.name }}
           </td>
           <td class="p-2 text-right text-yellow-300">
-            {{ currencyFormat(token.balance.toFixed(2)) }}
+            {{ token.balance.toFixed(3) }}
           </td>
           <td class="p-2 text-right text-red-300">
-            {{ currencyFormat((token.price * eurPrice).toFixed(2)) }}
+            {{ currencyFormat(token.price * eurPrice) }}
           </td>
           <td class="p-2 text-right text-red-300">
-            ${{ currencyFormat(token.price.toFixed(2)) }}
+            {{ currencyFormat(token.price) }}
           </td>
           <td class="p-2 text-right text-white">
             <span :class="{
               'text-red-500': getDailyChange(index, token.price) < 0,
               'text-green-500': getDailyChange(index, token.price) > 0
-            }">{{ currencyFormat(getDailyChange(index, token.price)) }}%</span>
+            }">{{ getDailyChange(index, token.price) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
-            {{ currencyFormat((token.price * eurPrice * token.balance).toFixed(2)) }}
+            {{ currencyFormat((token.price * eurPrice * token.balance)) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
-            ${{ currencyFormat((token.price * token.balance).toFixed(2)) }}
+            {{ currencyFormat(token.price * token.balance) }}
           </td>
           <td class="p-2 text-right text-sky-300">
-            {{ currencyFormat((token.price * token.balance) / prices.eth.at(-1)) }}
+            {{ (token.price * token.balance / ethPrice).toFixed(2) }}
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyApy(index) != 0" :class="{
               'text-red-500': getWeeklyApy(index) < 0,
               'text-green-500': getWeeklyApy(index) > 0
-            }">{{ currencyFormat(getWeeklyApy(index)) }}%</span>
+            }">{{ getWeeklyApy(index) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyGain(index) != 0" :class="{
               'text-red-500': getWeeklyGain(index) < 0,
               'text-green-500': getWeeklyGain(index) > 0
-            }">${{ currencyFormat(getWeeklyGain(index)) }}</span>
+            }">{{ currencyFormat(getWeeklyGain(index)) }}</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getWeeklyApy(index) != 0" :class="{
               'text-red-500': getYearlyApy(index) < 0,
               'text-green-500': getYearlyApy(index) > 0
-            }">{{ currencyFormat(getYearlyApy(index)) }}%</span>
+            }">{{ getYearlyApy(index) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getYearlyGain(index) != 0" :class="{
               'text-red-500': getYearlyGain(index) < 0,
               'text-green-500': getYearlyGain(index) > 0
-            }">${{ currencyFormat(getYearlyGain(index)) }}</span>
+            }">{{ currencyFormat(getYearlyGain(index)) }}</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getMonthlyApy(index) != 0" :class="{
               'text-red-500': getMonthlyApy(index) < 0,
               'text-green-500': getMonthlyApy(index) > 0
-            }">{{ currencyFormat(getMonthlyApy(index)) }}%</span>
+            }">{{ getMonthlyApy(index) }}%</span>
           </td>
           <td class="p-2 text-right text-emerald-300">
             <span v-if="getMonthlyGain(index) != 0" :class="{
               'text-red-500': getMonthlyGain(index) < 0,
               'text-green-500': getMonthlyGain(index) > 0
-            }">${{ currencyFormat(getMonthlyGain(index)) }}</span>
+            }">{{ currencyFormat(getMonthlyGain(index)) }}</span>
           </td>
           <td class="p-2 w-2/12">
             <token-chart
@@ -309,7 +309,7 @@
         return this.tokens.map(token => token[name] ? (token[name].balance * token[name].price) : 0).reverse()
       },
       currencyFormat(number) {
-        return new Intl.NumberFormat().format(number)
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
       },
       refreshTokens() {
         this.loading = true
