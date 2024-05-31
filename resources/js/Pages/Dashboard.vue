@@ -319,9 +319,9 @@
 
         axios.get('get-tokens').then(({data}) => {
           this.debt = data.debt
-          this.btcPrice = data.bitcoinPrice.usd
-          this.ethPrice = data.ethereumPrice.usd
-          this.eurPrice = data.bitcoinPrice.eur / data.bitcoinPrice.usd
+          this.btcPrice = data.btcPrice
+          this.ethPrice = data.ethPrice
+          this.eurPrice = data.eurPrice
 
           this.total = 0
 
