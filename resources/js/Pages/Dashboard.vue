@@ -2,7 +2,7 @@
   <div class="flex">
     <div class="w-1/2">
       <balances-chart
-        label="ETH"
+        :label="`ETH (${(totalWithDebt / ethPrice).toFixed(2)})`"
         color="blue"
         :dates="prices.dates"
         :data="prices.eth"
@@ -10,7 +10,7 @@
         :subtotal="currencyFormat(ethPrice * eurPrice, 'EUR')"
       />
       <balances-chart
-        label="BTC"
+        :label="`BTC (${(totalWithDebt / btcPrice).toFixed(3)})`"
         :dates="prices.dates"
         :data="prices.btc"
         :total="currencyFormat(btcPrice)"
