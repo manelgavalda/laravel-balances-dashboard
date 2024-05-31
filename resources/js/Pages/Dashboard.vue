@@ -82,28 +82,28 @@
             Total ETH
           </th>
           <th class="p-2 text-right">
-            7 D APY
+            Weekly APY
           </th>
           <th class="p-2 text-right">
-            7 D gain
+            Weekly gain
           </th>
           <th class="p-2 text-right">
-           Yearly APY
+            Yearly APY
           </th>
           <th class="p-2 text-right">
-           Yearly gain
+            Yearly gain
           </th>
           <th class="p-2 text-right">
-            30 D APY
+            Monthly APY
           </th>
           <th class="p-2 text-right">
-            30 D gain
+            Monthly gain
           </th>
           <th class="p-2 text-center">
-            Last 30 D balance
+            Monthly balance
           </th>
           <th class="p-2 text-center">
-            Last 30 D price
+            Monthly price
           </th>
         </tr>
       </thead>
