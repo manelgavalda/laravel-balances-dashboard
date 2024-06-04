@@ -20,7 +20,7 @@
         label="EUR"
         :dates="prices.dates"
         :data="prices.eur"
-        :total="currencyFormat(eurPrice, 'EUR')"
+        :total="eurPrice.toFixed(3)"
       />
     </div>
     <div class="w-1/2">
