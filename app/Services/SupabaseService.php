@@ -24,7 +24,7 @@ class SupabaseService
             'debts' => $balances->pluck('debt'),
             'totals' => $balances->pluck('total'),
             'totals_with_debts' => $balances->map(fn ($balance) => $balance->total - $balance->debt),
-            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('M d Y')),
+            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('d-m-y')),
         ];
     }
 
@@ -37,7 +37,7 @@ class SupabaseService
             'eth' => $prices->pluck('eth'),
             'btc' => $prices->pluck('btc'),
             'eur' => $prices->pluck('eur'),
-            'dates' => $prices->map(fn ($price) => Carbon::parse($price->created_at)->format('M d Y')),
+            'dates' => $prices->map(fn ($price) => Carbon::parse($price->created_at)->format('d-m-y')),
         ];
     }
 }

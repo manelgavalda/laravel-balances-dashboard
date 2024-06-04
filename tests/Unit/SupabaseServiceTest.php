@@ -23,12 +23,12 @@ beforeEach(function () {
 it('retrieves_the_historical_balances', function () {
     $dates = $this->balances['dates'];
 
-    expect($dates->last())->toBe('Nov 08 2024');
+    expect($dates->last())->toBe('08-11-24');
     expect($this->balances['debts']->last())->toBe(5000.0);
     expect($this->balances['totals']->last())->toBe(2000.0);
     expect($this->balances['totals_with_debts']->last())->toBe(-3000.0);
 
-    expect(Carbon::parse($dates->first())->lt(Carbon::createFromFormat('M d Y', $dates->last())))->toBetrue();
+    expect(Carbon::parse($dates->first())->lt(Carbon::createFromFormat('d-m-y', $dates->last())))->toBetrue();
 });
 
 it('retrieves_the_historical_prices', function () {
@@ -38,12 +38,12 @@ it('retrieves_the_historical_prices', function () {
 
     $dates = $this->prices['dates'];
 
-    expect($dates->last())->toBe('Nov 08 2024');
+    expect($dates->last())->toBe('08-11-24');
     expect($this->prices['eth']->last())->toBe(2000.0);
     expect($this->prices['eur']->last())->toBe(1900.0);
     expect($this->prices['btc']->last())->toBe(20000.0);
 
-    expect(Carbon::parse($dates->first())->lt(Carbon::createFromFormat('M d Y', $dates->last())))->toBetrue();
+    expect(Carbon::parse($dates->first())->lt(Carbon::createFromFormat('d-m-y', $dates->last())))->toBetrue();
 });
 
 it('retrieves_the_tokens', function () {
@@ -62,6 +62,6 @@ it('retrieves_the_tokens', function () {
         ->name->toBe('Token 3')
         ->created_at->toString()->toBe('Fri Nov 08 2024 00:00:00 GMT+0000');
 
-    expect(Carbon::parse($tokens[0]['Token 3']['created_at'])->isSameDay(Carbon::parse($this->balances['dates']->pop())))->toBeTrue();
-    expect(Carbon::parse($tokens[1]['Token 3']['created_at'])->isSameDay(Carbon::parse($this->balances['dates']->last())))->toBeTrue();
+    expect(Carbon::parse($tokens[0]['Token 3']['created_at'])->isSameDay(Carbon::createFromFormat('d-m-y', $this->balances['dates']->pop())))->toBeTrue();
+    expect(Carbon::parse($tokens[1]['Token 3']['created_at'])->isSameDay(Carbon::createFromFormat('d-m-y', $this->balances['dates']->last())))->toBeTrue();
 });
