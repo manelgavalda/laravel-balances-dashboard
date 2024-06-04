@@ -26,7 +26,7 @@ it('retrieves_the_historical_balances', function () {
     expect($dates->last())->toBe('Nov 08 2024');
     expect($this->balances['debts']->last())->toBe(5000.0);
     expect($this->balances['totals']->last())->toBe(2000.0);
-    expect($this->balances['totals_with_debt']->last())->toBe(-3000.0);
+    expect($this->balances['totals_with_debts']->last())->toBe(-3000.0);
 
     expect(Carbon::parse($dates->first())->lt(Carbon::createFromFormat('M d Y', $dates->last())))->toBetrue();
 });
