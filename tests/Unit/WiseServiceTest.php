@@ -31,7 +31,7 @@ it('retrieves_the_total_balance', function () {
 it('retrieves_the_latest_transactions', function () {
     Carbon::setTestNow('2023-01-02');
 
-    fakeRequest('https://api.transferwise.com/v1/profiles/fake_profile_id/activities', 'latest_transactions');
+    fakeRequest('https://api.transferwise.com/v1/profiles/fake_profile_id/activities?size=100', 'latest_transactions');
 
     expect($transactions = $this->wiseService->getLatestTransactions())
         ->toBeCollection()->toHaveCount(10);

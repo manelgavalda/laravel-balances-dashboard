@@ -22,7 +22,7 @@ class WiseService
     public function getLatestTransactions()
     {
         return collect(
-            $this->getResult('activities', 1)->activities
+            $this->getResult('activities?size=100', 1)->activities
         )->map(function ($activity) {
             $activity->createdOn = Carbon::parse($activity->createdOn)->diffForHumans();
 
