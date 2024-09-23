@@ -23,11 +23,37 @@ class WiseService
     {
         return collect(
             $this->getResult('activities?size=100', 1)->activities
-        )->map(function ($activity) {
-            $activity->createdOn = Carbon::parse($activity->createdOn)->diffForHumans();
+        )->map(fn ($activity) => $this->parseActivity($activity));
+    }
 
-            return $activity;
+    protected function parseActivity($activity)
+    {
+        $date = Carbon::parse($activity->createdOn);
+
+        $activity->month = $date->format('M');
+
+        $activity->createdOn = $date->diffForHumans();
+
+        $activity->primaryAmount = (float) $activity->primaryAmount;
+
+        return $activity;
+    }
+
+    public function getMonthlySpending()
+    {
+        $spendings = [];
+
+        $this->getLatestTransactions()->each(function ($activity) use (&$spendings) {
+            if (!isset($spendings[$activity->month])) {
+                $spendings[$activity->month] = 0;
+            }
+
+            $spendings[$activity->month] += $activity->primaryAmount;
         });
+
+        array_pop($spendings);
+
+        return $spendings;
     }
 
     protected function getResult($uri, $version)

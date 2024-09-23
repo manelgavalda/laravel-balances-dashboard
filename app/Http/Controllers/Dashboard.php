@@ -18,6 +18,7 @@ class Dashboard extends Controller
             'prices' => $supabaseService->getPrices(),
             'tokens' => $supabaseService->getTokens(),
             'transactions' => $wiseService->getLatestTransactions(),
+            'monthlySpendings' => $wiseService->getMonthlySpending()
         ]);
     }
 }
