@@ -14,16 +14,14 @@ class WiseService
 
     public function getBalance()
     {
-        return $this->getResult(
-            "balances?types=STANDARD", 4
-        )[0]->amount->value;
+        return $this->getResult("balances?types=STANDARD", 4)[0]->amount->value;
     }
 
     public function getLatestTransactions()
     {
         return collect(
             $this->getResult('activities?size=100', 1)->activities
-        )->map(fn ($activity) => $this->parseActivity($activity));
+        )->map(fn($activity) => $this->parseActivity($activity));
     }
 
     protected function parseActivity($activity)

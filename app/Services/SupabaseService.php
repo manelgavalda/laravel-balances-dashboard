@@ -18,26 +18,26 @@ class SupabaseService
     public function getTotals()
     {
         $balances = Total::orderByDesc('created_at')->limit(31)->get()
-           ->reverse()->values();
+            ->reverse()->values();
 
         return [
             'debts' => $balances->pluck('debt'),
             'totals' => $balances->pluck('total'),
-            'totals_with_debts' => $balances->map(fn ($balance) => $balance->total - $balance->debt),
-            'dates' => $balances->map(fn ($balance) => Carbon::parse($balance->created_at)->format('d-m-y')),
+            'totals_with_debts' => $balances->map(fn($balance) => $balance->total - $balance->debt),
+            'dates' => $balances->map(fn($balance) => Carbon::parse($balance->created_at)->format('d-m-y')),
         ];
     }
 
     public function getPrices()
     {
         $prices = Price::orderByDesc('created_at')->limit(31)->get()
-           ->reverse()->values();
+            ->reverse()->values();
 
         return [
             'eth' => $prices->pluck('eth'),
             'btc' => $prices->pluck('btc'),
             'eur' => $prices->pluck('eur'),
-            'dates' => $prices->map(fn ($price) => Carbon::parse($price->created_at)->format('d-m-y')),
+            'dates' => $prices->map(fn($price) => Carbon::parse($price->created_at)->format('d-m-y')),
         ];
     }
 }
